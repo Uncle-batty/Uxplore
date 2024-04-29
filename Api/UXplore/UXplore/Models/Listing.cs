@@ -16,6 +16,8 @@ namespace UXplore.Models
         public string Location { get; set; }
         [Required]
         public string Phone { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         public string Order { get; set; }

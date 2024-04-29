@@ -2,7 +2,7 @@
 
 namespace UXplore.Models
 {
-    public class Rateing
+    public class Rating
     {
         [Key]
         public int Id { get; set; }

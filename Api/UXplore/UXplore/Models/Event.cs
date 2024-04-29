@@ -11,13 +11,14 @@ namespace UXplore.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public string hours { get; set; }
+        public string Hours { get; set; }
         [Required]
-        public string  location { get; set; }
+        public string  Location { get; set; }
        
-        public string phone { get; set; }
+        public string Phone { get; set; }
         [Required]
-        public string email { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
         [Required]
         public string Reserve { get; set; }
         

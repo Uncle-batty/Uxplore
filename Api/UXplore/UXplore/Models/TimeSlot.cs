@@ -13,8 +13,8 @@ namespace UXplore.Models
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public TimeSpan Start_Time { get; set; }
+        public string Start_Time { get; set; }
         [Required]
-        public TimeSpan End_Time { get; set; }
+        public string End_Time { get; set; }
     }
 }

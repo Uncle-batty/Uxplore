@@ -1,0 +1,6 @@
+@UXplore_HostAddress = http://localhost:5144
+
+GET {{UXplore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

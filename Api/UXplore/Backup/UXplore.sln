@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uxplore-API", "Uxplore-API\Uxplore-API.csproj", "{A5570169-E7FB-4550-ADD0-8E54E0F78A54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UXplore", "UXplore\UXplore.csproj", "{BE0F23FA-CEF8-41C9-A9CB-22D99C5EF7C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A5570169-E7FB-4550-ADD0-8E54E0F78A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5570169-E7FB-4550-ADD0-8E54E0F78A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5570169-E7FB-4550-ADD0-8E54E0F78A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5570169-E7FB-4550-ADD0-8E54E0F78A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0F23FA-CEF8-41C9-A9CB-22D99C5EF7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0F23FA-CEF8-41C9-A9CB-22D99C5EF7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0F23FA-CEF8-41C9-A9CB-22D99C5EF7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0F23FA-CEF8-41C9-A9CB-22D99C5EF7C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F4798EB3-E964-4F96-9FAE-E30AE607FADB}
+		SolutionGuid = {5C0E914C-AEEA-40C0-829A-A5C8FAF9BB4C}
 	EndGlobalSection
 EndGlobal

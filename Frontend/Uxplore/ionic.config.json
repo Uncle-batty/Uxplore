@@ -1,7 +1,0 @@
-{
-  "name": "Uxplore",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}

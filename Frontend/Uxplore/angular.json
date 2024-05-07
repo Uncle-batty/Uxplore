@@ -72,6 +72,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+     "protocol": "http"
+   },
           "configurations": {
             "production": {
               "buildTarget": "app:build:production"

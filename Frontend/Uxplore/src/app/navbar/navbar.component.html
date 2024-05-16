@@ -1,4 +1,4 @@
-<div class="side-nav">
+<div class="side-nav" *ngIf="(isMobile$ | async) === false">
   <div class="logo">
     <img src="../../assets/Logo.png">
   </div>

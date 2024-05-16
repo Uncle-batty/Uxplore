@@ -1,0 +1,7 @@
+{
+  "name": "UXplore",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,5 +1,5 @@
 <div class="custom-tab-bar" *ngIf="(isMobile$ | async)">
-  <button class="tab-button" routerLink="/tabs/tab1">
+  <button class="tab-button" (click)="navpage('/category')">
     <ion-icon size="large" name="search-outline"></ion-icon>
     <span class="label">Explore</span>
   </button>

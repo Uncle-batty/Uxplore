@@ -3,13 +3,13 @@
     <img src="../../assets/Logo.png">
   </div>
   <div class="links">
-    <button routerLink="/tabs/tab1"><ion-icon size="large" name="home-outline"></ion-icon>       Home</button>
-    <button routerLink="/tabs/tab2"><ion-icon size="large" name="search-outline"></ion-icon>     Explore</button>
-    <button><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
-    <button><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
-    <button><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
-    <button><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
-    <button><ion-icon size="large" name="search"></ion-icon>       Profile</button>
+    <button (click)="navpage('/home')" ><ion-icon size="large" name="home-outline"></ion-icon>       Home</button>
+    <button (click)="navpage('/tab1')" ><ion-icon size="large" name="search-outline"></ion-icon>     Explore</button>
+    <button (click)="navpage('/tab2')" ><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
+    <button (click)="navpage('/calender')" ><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
+    <button (click)="navpage('/home')" ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
+    <button (click)="navpage('/home')" ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
+    <button (click)="navpage('/home')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
   </div>
 </div>
 

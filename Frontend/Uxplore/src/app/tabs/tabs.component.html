@@ -1,20 +1,22 @@
 <div class="custom-tab-bar" *ngIf="(isMobile$ | async)">
-  <div class="tab-button" routerLink="/tabs/tab1">
-    <svg class="icon">
-      <polygon points="15,5 30,30 0,30"></polygon>
-    </svg>
-    <span class="label">Tab 1</span>
-  </div>
-  <div class="tab-button" routerLink="/tabs/tab2">
-    <svg class="icon">
-      <ellipse cx="15" cy="20" rx="15" ry="10"></ellipse>
-    </svg>
-    <span class="label">Tab 2</span>
-  </div>
-  <div class="tab-button" routerLink="/tabs/tab3">
-    <svg class="icon">
-      <rect x="0" y="10" width="30" height="20"></rect>
-    </svg>
-    <span class="label">Tab 3</span>
-  </div>
+  <button class="tab-button" routerLink="/tabs/tab1">
+    <ion-icon size="large" name="search-outline"></ion-icon>
+    <span class="label">Explore</span>
+  </button>
+  <button class="tab-button" routerLink="/tabs/tab1">
+    <ion-icon size="large" name="bookmark-outline"></ion-icon>
+    <span class="label">Saved</span>
+  </button>
+  <button (click)="navpage('/home')"  class="tab-button" routerLink="/tabs/tab2">
+    <ion-icon size="large" name="home-outline"></ion-icon>
+    <span class="label">Home</span>
+  </button>
+  <button class="tab-button" routerLink="/calender">
+    <ion-icon size="large" name="calendar-clear-outline"></ion-icon>
+    <span class="label">Calender</span>
+  </button>
+  <button class="tab-button" routerLink="/tabs/tab3">
+    <ion-icon size="large" name="calendar-clear-outline"></ion-icon>
+    <span class="label">Profile</span>
+  </button>
 </div>

@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { NavbarComponent } from './navbar.component';
-import { routes } from '../app.routes';
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+
+import { CalenderComponent } from './calender.component';
+
+describe('CalenderComponent', () => {
+  let component: CalenderComponent;
+  let fixture: ComponentFixture<CalenderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ],
-      imports: [IonicModule.forRoot(),routes]
+      declarations: [ CalenderComponent ],
+      imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(CalenderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

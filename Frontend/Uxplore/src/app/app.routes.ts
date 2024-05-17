@@ -19,8 +19,7 @@ export const routes: Routes = [
   { path: 'tab1', component: Tab1Page },
   { path: 'tab2', component: Tab2Page },
   { path: 'tab3', component: Tab3Page },
-  { path: 'tabs', redirectTo: 'tab1', pathMatch: 'full' },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/Landing', pathMatch: 'full' },
   {path: 'landing', component: LandingComponent}
 
 ];

@@ -1,8 +1,20 @@
-<p>
-  landing works!
-</p>
-<div style="margin-left: 17%; margin-bottom: 100px">
-  <button id="open-modal" expand="block" >Register</button>
+<link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+
+<div class="main-content container">
+  <div class="navBar">
+    <img id="img" src="../../assets/Logo.png">
+    <nav class="nav-buttons">
+      <a (click)="navpage('/home')" class="nav-button" expand="block">About</a>
+      <a  class="nav-button" expand="block">Are you a Buisness</a>
+      <a  class="nav-button"  expand="block">Login</a>
+    </nav>
+  </div>
+
+  <div class="Contentbox">
+    <h1>Discover and Experience <br>the hidden gems right <br>at your fingertips.</h1>
+    <h6>"We find... U Explore!"</h6>
+    <button class="button" id="open-modal" expand="block">SIGN UP</button>
+  </div>
 </div>
 
 <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">

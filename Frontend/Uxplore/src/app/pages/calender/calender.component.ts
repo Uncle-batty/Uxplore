@@ -11,31 +11,48 @@ import { IonCard, IonRow, IonCol, IonGrid } from "@ionic/angular/standalone";
 })
 export class CalenderComponent implements OnInit {
   Month!: string;
-  Day!: number;
-  monthindex!: number;
-  month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  days: number[][] = [
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,30],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,31],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,30,30],
-    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ,19,20,21,22,23,24,25,26,27,28,29,31],
-  ];
-
-  d = new Date();
+  day!: number;
+  monthIndex!: number;
+  currentYear!: number;
+  currentDate!: number;
+  weeks: (number | null)[][] = [];
+  monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   constructor() { }
 
   ngOnInit() {
-    this.monthindex = this.d.getMonth();
-    this.Month = this.month[this.monthindex];
-    this.Day = this.d.getDate(); // Corrected here
+    const today = new Date();
+    this.monthIndex = today.getMonth();
+    this.currentYear = today.getFullYear();
+    this.currentDate = today.getDate();
+    this.Month = this.monthNames[this.monthIndex];
+    this.generateCalendar(this.monthIndex, this.currentYear);
+}
+
+  generateCalendar(monthIndex: number, year: number) {
+    this.weeks = [];
+    const firstDay = new Date(year, monthIndex, 1).getDay();
+    const daysInMonth = this.daysInMonth[monthIndex];
+    let week: (number | null)[] = new Array(firstDay).fill(null);
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      week.push(day);
+      if (week.length === 7) {
+        this.weeks.push(week);
+        week = [];
+      }
+    }
+
+    if (week.length > 0) {
+      while (week.length < 7) {
+        week.push(null);
+      }
+      this.weeks.push(week);
+    }
+  }
+
+  isCurrentDay(day: number | null): boolean {
+    return day === this.currentDate && this.monthIndex === new Date().getMonth() && this.currentYear === new Date().getFullYear();
   }
 }

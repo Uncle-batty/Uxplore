@@ -4,62 +4,24 @@
   </div>
 
   <ion-grid class="grid">
-
     <ion-row class="header ion-align-items-center row">
-<ion-col size="1.7" class="ion-align-items-center ">
-  <ion-card class="card headercard">
-    <p>Sun</p>
-  </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card class="card headercard">
-      <p>Mon</p>
-    </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card class="card headercard">
-      <p>Tue</p>
-    </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card class="card headercard">
-      <p>Wed</p>
-    </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card class="card headercard">
-      <p>Thu</p>
-    </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card  class="card headercard">
-      <p>Fri</p>
-    </ion-card>
-  </ion-col>
-
-  <ion-col size="1.7" class="ion-align-items-center">
-    <ion-card class="card headercard">
-      <p>Sat</p>
-    </ion-card>
-  </ion-col>
-
+      <ion-col *ngFor="let header of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" size="1.7"
+        class="ion-align-items-center">
+        <ion-card class="card headercard">
+          <p>{{ header }}</p>
+        </ion-card>
+      </ion-col>
     </ion-row>
 
-  <ion-row class=" ion-align-items-center row">
-    <ion-col size="1.7" class="ion-align-items-center col" *ngFor="let day of days[monthindex]">
-      <ion-card class="card">
-        <h6 class="card-header">{{ day }}</h6>
-        <ion-card class="attendingcard">Test attending</ion-card>
+    <ion-row *ngFor="let week of weeks" class="ion-align-items-center row">
+      <ion-col *ngFor="let day of week" size="1.7" class="ion-align-items-center col">
+        <ion-card class="card" [ngClass]="{'highlight': isCurrentDay(day)}">
+          <h6 class="card-header">{{ day || '&nbsp;' }}</h6>
+          <ion-card class="attendingcard">Test attending</ion-card>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-        <ion-card class="attendingcard">Test attending</ion-card>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
 
 </div>

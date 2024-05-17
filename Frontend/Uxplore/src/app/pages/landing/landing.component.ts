@@ -1,6 +1,6 @@
 import { IonicModule } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,8 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent  implements OnInit {
   presentingElement = document.getElementById('0');
-  constructor() { }
+  constructor(private router: Router) { }
 
+    navpage(path : string) {
+
+  this.router.navigate([path]);
+}
   ngOnInit() {
     this.presentingElement = document.querySelector('.ion-page');
   }

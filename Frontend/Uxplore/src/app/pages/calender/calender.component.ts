@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonCard, IonRow, IonCol, IonGrid } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
   standalone: true,
   styleUrls: ['./calender.component.scss'],
-  imports: [CommonModule],
+  imports: [IonGrid, IonCol, IonRow, IonCard, CommonModule],
 })
 export class CalenderComponent implements OnInit {
   Month!: string;

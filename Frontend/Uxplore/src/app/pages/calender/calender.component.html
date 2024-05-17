@@ -1,8 +1,65 @@
-<div class="main-content">
-  <div class="Heading"><h2 >{{ Month }}</h2></div>
-
-   <div *ngFor="let day of days[monthindex] ">
-  <p> {{ day }} </p>
+<div class="main-content container">
+  <div class="Heading">
+    <h2>{{ Month }}</h2>
   </div>
-</div>
 
+  <ion-grid class="grid">
+
+    <ion-row class="header ion-align-items-center row">
+<ion-col size="1.7" class="ion-align-items-center ">
+  <ion-card class="card headercard">
+    <p>Sun</p>
+  </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card class="card headercard">
+      <p>Mon</p>
+    </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card class="card headercard">
+      <p>Tue</p>
+    </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card class="card headercard">
+      <p>Wed</p>
+    </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card class="card headercard">
+      <p>Thu</p>
+    </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card  class="card headercard">
+      <p>Fri</p>
+    </ion-card>
+  </ion-col>
+
+  <ion-col size="1.7" class="ion-align-items-center">
+    <ion-card class="card headercard">
+      <p>Sat</p>
+    </ion-card>
+  </ion-col>
+
+    </ion-row>
+
+  <ion-row class=" ion-align-items-center row">
+    <ion-col size="1.7" class="ion-align-items-center col" *ngFor="let day of days[monthindex]">
+      <ion-card class="card">
+        <h6 class="card-header">{{ day }}</h6>
+        <ion-card class="attendingcard">Test attending</ion-card>
+
+        <ion-card class="attendingcard">Test attending</ion-card>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</div>

@@ -94,3 +94,136 @@
   color: white;
   font-size: 20px;
 }
+
+
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 10;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  /* Ensure the modal is above other content */
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 40%;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -100%;
+  margin-right: 5%;
+  /* Initially hide the modal off-screen */
+  height: 70vh;
+  transition: right 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  right: 0;
+  /* Slide the modal in from the right */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+.forgot-password {
+  color: #fff;
+  margin-top: 10px;
+  text-decoration: none;
+  text-align: right;
+}
+
+.separator {
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
+
+#modelbtn {
+  margin-left: 35%;
+}
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 37%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+@media (max-width: 950px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top :auto;
+    margin-right: 0%;
+    transform: translateY(0);
+    #modelbtn {
+        margin-left: 20%;
+      }
+  }
+
+    /* General styles for the modal overlay and modal */
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.935);
+    }
+}

@@ -6,7 +6,7 @@
     <nav class="nav-buttons">
       <a (click)="navpage('/home')" class="nav-button" expand="block">About</a>
       <a  class="nav-button" expand="block">Are you a Buisness</a>
-      <a  class="nav-button"  expand="block">Login</a>
+      <a  class="nav-button" (click)="openModal()" expand="block">Login</a>
     </nav>
   </div>
 
@@ -17,6 +17,9 @@
   </div>
 </div>
 
+
+
+<!-- Sign up model -->
 <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
   <ng-template>
     <ion-header>
@@ -69,3 +72,27 @@
     </ion-content>
   </ng-template>
 </ion-modal>
+
+
+<!-- Login Modal -->
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Login</h2>
+      <div class="inputscon">
+        <input class="input" placeholder="Email" type="email" />
+        <input class="input" placeholder="Password" type="password" />
+        <a href="#" class="forgot-password">Forgot Password?</a>
+        <button id="modelbtn" class="button">Sign In</button>
+        <a href="#" style="text-align: center;" class="forgot-password">Don't have an account?</a>
+      </div>
+      <div class="separator">
+        <span>--------------------------------- OR ---------------------------------</span>
+      </div>
+    </div>
+  </div>
+</div>
+

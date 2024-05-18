@@ -18,6 +18,32 @@ export class NavbarComponent implements OnInit   {
 
    isMobile$: Observable<boolean> = new Observable<boolean>();
 
+    isGameModelOpen = false;
+    selectedFeeling: string = '';
+    feelings: { name: string; }[] = [
+  { name: 'Happy' },
+  { name: 'Sad' },
+  { name: 'Excited' },
+  { name: 'Angry' },
+  { name: 'Confused' },
+  { name: 'Content' },
+  { name: 'Grateful' },
+  { name: 'Hopeful' },
+  { name: 'Relaxed' },
+  { name: 'Stressed' },
+  { name: 'Surprised' },
+  { name: 'Proud' },
+  { name: 'Loved' },
+  { name: 'Lonely' },
+  { name: 'Disappointed' },
+  { name: 'Frustrated' },
+  { name: 'Optimistic' },
+  { name: 'Anxious' },
+  { name: 'Bored' },
+  { name: 'Energized' }
+  // Add more feelings as needed
+];
+
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
     addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline  });
    }
@@ -26,6 +52,23 @@ export class NavbarComponent implements OnInit   {
 
   this.router.navigate([path]);
 }
+openModal() {
+    this.isGameModelOpen = true;
+  }
+
+  closeModal() {
+    this.isGameModelOpen = false;
+  }
+
+   toggleFeeling(feeling: { name: string; }) {
+    this.selectedFeeling = feeling.name;
+  }
+
+  submitFeelings() {
+    console.log('Selected feeling:', this.selectedFeeling);
+    this.closeModal();
+  }
+
    ngOnInit(): void {
     this.isMobile$ = this.breakpointObserver.observe([
       Breakpoints.XSmall,

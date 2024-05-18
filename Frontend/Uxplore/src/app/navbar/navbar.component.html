@@ -7,9 +7,35 @@
     <button (click)="navpage('/category')" ><ion-icon size="large" name="search-outline"></ion-icon>     Explore</button>
     <button (click)="navpage('/tab2')" ><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
     <button (click)="navpage('/calender')" ><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
-    <button (click)="navpage('/home')" ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
+    <button (click)="openModal()"  ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
     <button (click)="navpage('/landing')" ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
     <button (click)="navpage('/home')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
   </div>
 </div>
+
+<!-- Game Model -->
+<div class="modal-overlay" [ngClass]="{'show': isGameModelOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isGameModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Select Your Feeling</h2>
+      <div class="checkboxes">
+        <div class="row" *ngFor="let feeling of feelings; let i = index">
+          <label class="container">
+            {{ feeling.name }}
+            <input class="checkmark" type="checkbox" [checked]="selectedFeeling === feeling.name"
+              (change)="toggleFeeling(feeling)">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="sign-in-btn" (click)="submitFeelings()">Submit</button>
+    </div>
+  </div>
+</div>
+
+
+
 

@@ -1,0 +1,89 @@
+<div class="main-content container">
+  <div class="navBar">
+    <img (click)="navpage('/landing')" id="img" src="../../assets/Logo.png">
+    <nav class="nav-buttons">
+      <a (click)="navpage('/about')" class="nav-button" expand="block">About</a>
+      <a class="nav-button" expand="block">Are you a Buisness</a>
+    </nav>
+  </div>
+
+  <div class="quote-section">
+    <div class="quote">
+      <h2>"Better to have a little accurate information than an overload of nonsense."</h2>
+      <p>- Team UXplore</p>
+    </div>
+  </div>
+
+  <div class="what-we-do-section">
+    <div class="row">
+      <div class="col">
+        <img src="../../../assets/about1.jpg" alt="Image 1">
+        <div class="des">
+          <h3>Discover hidden gems</h3>
+          <p>Description 2</p>
+        </div>
+      </div>
+      <div class="col">
+        <img src="../../../assets/about2.jpg" alt="Image 2">
+        <div class="des">
+          <h3>Background</h3>
+          <p>The app is designed to serve as a comprehensive platform for both individual users looking to find local events and
+          activities, and businesses aiming to promote their events. The app's core functionality revolves around providing a
+          user-friendly interface where users can browse, register, and participate in events, while businesses can manage,
+          advertise and improve on their offerings.</p>
+        </div>
+
+      </div>
+      <div class="col">
+        <img src="../../../assets/about3.jpg" alt="Image 3">
+        <div class="des">
+          <h3>Centrilized</h3>
+          <p>UXplore is a streamlined platform that simplifies the process of discovering and participating in local adventures</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ourTeam">
+    <img src="../../../assets/ourteam.jpg">
+    <div class="des">
+      <h2>Team Uxplore</h2>
+      <p>A Our team epitomizes true diversity, not just in cultural backgrounds but also in skills, ideas, and creativity. We
+      collaborate seamlessly, ensuring that every voice is heard and every valuable idea is integrated. This diversity isn't
+      just for show; it's our secret sauce for success. By leveraging our collective strengths, we tackle challenges with
+      ingenuity and finesse. Each team member brings a unique perspective and expertise to the table, enriching our projects
+      and propelling us towards excellence. With us, it's not about fitting into a mold; it's about breaking barriers and
+      creating something extraordinary together.</p>
+    </div>
+  </div>
+
+
+  <div class="contact-section">
+    <h2>Contact Us</h2>
+    <div class="form-container">
+      <div class="image-container">
+        <img src="../../../assets/How can we help.png" alt="Image">
+      </div>
+      <div class="form">
+        <form>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="subject">Subject:</label>
+          <select id="subject" name="subject" required>
+            <option value="general">General Inquiry</option>
+            <option value="support">Technical Support</option>
+            <option value="feedback">Feedback</option>
+            <!-- Add more options as needed -->
+          </select>
+
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -2,9 +2,9 @@
 
 <div class="main-content container">
   <div class="navBar">
-    <img id="img" src="../../assets/Logo.png">
+    <img (click)="navpage('/landing')" id="img" src="../../assets/Logo.png">
     <nav class="nav-buttons">
-      <a (click)="navpage('/home')" class="nav-button" expand="block">About</a>
+      <a (click)="navpage('/about')" class="nav-button" expand="block">About</a>
       <a  class="nav-button" expand="block">Are you a Buisness</a>
       <a  class="nav-button" (click)="openModal()" expand="block">Login</a>
     </nav>
@@ -86,7 +86,7 @@
         <input class="input" placeholder="Email" type="email" />
         <input class="input" placeholder="Password" type="password" />
         <a href="#" class="forgot-password">Forgot Password?</a>
-        <button class="sign-in-btn">Sign In</button>
+        <button class="sign-in-btn" (click)="navpage('/home')">Sign In</button>
         <a href="#" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
       <div class="separator">

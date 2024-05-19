@@ -10,6 +10,7 @@ import { CalenderComponent } from './pages/calender/calender.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { IndividualCategoryComponent } from './pages/individual-category/individual-category.component';
 import { LandingComponent } from './pages/landing/landing.component';
+import { AboutComponent } from './pages/about/about.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,8 +20,10 @@ export const routes: Routes = [
   { path: 'tab1', component: Tab1Page },
   { path: 'tab2', component: Tab2Page },
   { path: 'tab3', component: Tab3Page },
-  { path: '', redirectTo: '/Landing', pathMatch: 'full' },
-  {path: 'landing', component: LandingComponent}
+  { path: 'about', component: AboutComponent},
+   {path: 'landing', component: LandingComponent},
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+
 
 ];
 

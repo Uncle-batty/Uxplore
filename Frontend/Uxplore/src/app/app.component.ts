@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.showNavbarAndTabs = !this.router.url.includes('landing') && !this.router.url.includes('about');
+        this.showNavbarAndTabs = !this.router.url.includes('main');
 
       });
   }

@@ -2,6 +2,7 @@
 
 .main-content {
   padding-right: 20px;
+  height: auto;
 
 }
 @media  (min-width: 960px) {
@@ -19,7 +20,7 @@
 }
 
 .grid {
-  height: 100vh;
+  height: 100%;
 }
 
 .card {

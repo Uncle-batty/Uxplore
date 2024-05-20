@@ -55,6 +55,7 @@
  justify-content: center;
  justify-items: center;
   text-align: center;
+  padding: 3%;
 }
 
 .quote {
@@ -187,6 +188,7 @@ align-self: center;
     flex-direction: column;
     /* Stack items vertically */
 
+
     img {
       padding: 20px;
       height: 90%;
@@ -196,17 +198,18 @@ align-self: center;
 
     .des {
       margin-left: 5%;
-      width: 70%;
+      width: 90%;
     }
 
     h2 {
-      font-size: 6vh;
+      font-size: 4vh;
       color: #ffffff;
+      font-weight: 400;
     }
 
     p {
       color: #c0c0c0;
-      font-size: 4vh;
+      font-size: 2vh;
     }
   }
 

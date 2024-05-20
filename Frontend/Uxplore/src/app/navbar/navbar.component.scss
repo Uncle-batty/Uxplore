@@ -73,7 +73,7 @@
   border: 2px solid white;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
-  width: 40%;
+  width: 30%;
   padding: 20px;
   position: relative;
   height: 70vh;
@@ -220,4 +220,10 @@
   .modal-overlay {
     background: rgba(0, 0, 0, 0.935);
   }
+}
+@media (max-width:400px)
+{
+  .modal {
+    height: auto;
+}
 }

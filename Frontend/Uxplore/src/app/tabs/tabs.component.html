@@ -1,5 +1,13 @@
+<div class="gamebox" *ngIf="(isMobile$ | async)" >
+  <button class="" (click)="navpage('/category')">
+
+  <ion-icon size="large"  name="person-circle-outline"></ion-icon>
+</button>
+</div>
+
+
 <div class="custom-tab-bar" *ngIf="(isMobile$ | async)">
-  <button class="tab-button" (click)="navpage('/category')">
+  <button class="tab-button" (click)="navpage('/user/category')">
     <ion-icon size="large" name="search-outline"></ion-icon>
     <span class="label">Explore</span>
   </button>
@@ -7,16 +15,41 @@
     <ion-icon size="large" name="bookmark-outline"></ion-icon>
     <span class="label">Saved</span>
   </button>
-  <button (click)="navpage('/home')"  class="tab-button" routerLink="/tabs/tab2">
+  <button (click)="navpage('/user/home')"  class="tab-button" routerLink="/tabs/tab2">
     <ion-icon size="large" name="home-outline"></ion-icon>
     <span class="label">Home</span>
   </button>
-  <button class="tab-button" routerLink="/calender">
+  <button class="tab-button" (click)="navpage('/user/calender')" >
     <ion-icon size="large" name="calendar-clear-outline"></ion-icon>
     <span class="label">Calender</span>
   </button>
-  <button class="tab-button" routerLink="/tabs/tab3">
-    <ion-icon size="large" name="calendar-clear-outline"></ion-icon>
-    <span class="label">Profile</span>
+  <button class="tab-button" (click)="openModal()" >
+    <ion-icon size="large" name="game-controller-outline"></ion-icon>
+    <span class="label">Game</span>
   </button>
 </div>
+
+
+<!-- Game Model -->
+<div class="modal-overlay" [ngClass]="{'show': isGameModelOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isGameModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Select Your Feeling</h2>
+      <div class="checkboxes">
+        <div class="row" *ngFor="let feeling of feelings; let i = index">
+          <label class="container">
+            {{ feeling.name }}
+            <input class="checkmark" type="checkbox" [checked]="selectedFeeling === feeling.name"
+              (change)="toggleFeeling(feeling)">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="sign-in-btn" (click)="submitFeelings()">Submit</button>
+    </div>
+  </div>
+</div>
+

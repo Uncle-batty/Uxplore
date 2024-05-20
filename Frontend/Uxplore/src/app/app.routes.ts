@@ -12,18 +12,24 @@ import { IndividualCategoryComponent } from './pages/individual-category/individ
 import { LandingComponent } from './pages/landing/landing.component';
 import { AboutComponent } from './pages/about/about.component';
 
-export const routes: Routes = [
+
+const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   {path: 'calender', component: CalenderComponent},
   {path : 'category', component: CategoryComponent},
   {path : 'individualCategory', component: IndividualCategoryComponent},
-  { path: 'tab1', component: Tab1Page },
-  { path: 'tab2', component: Tab2Page },
-  { path: 'tab3', component: Tab3Page },
-  { path: 'about', component: AboutComponent},
-   {path: 'landing', component: LandingComponent},
-  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+];
 
+const mainRoutes: Routes = [
+{ path: 'about', component: AboutComponent},
+   {path: 'landing', component: LandingComponent},
+];
+const businessComponent: Routes = [];
+export const routes: Routes = [
+  {path: 'user', children: userRoutes},
+  {path: 'main', children: mainRoutes},
+  {path: 'business', children: businessComponent},
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
 
 ];
 

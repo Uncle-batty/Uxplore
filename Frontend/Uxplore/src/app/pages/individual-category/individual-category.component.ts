@@ -29,13 +29,13 @@ export class IndividualCategoryComponent  implements OnInit {
     });
   }
 
-  navpage(path : string, eventid: number = 1) {
+  navpage(path : string, eventid: string = "1") {
 
   this.router.navigate([path], { queryParams: {id: eventid} });
 }
 
 createTestEvents() {
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 100; index++) {
       let event1: Event = {
         Id: index.toString(),
         Name: "RocoMamas",

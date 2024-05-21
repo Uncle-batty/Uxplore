@@ -4,6 +4,7 @@ import { EventCardComponent } from 'src/app/event-card/event-card.component';
 import { Event } from 'src/Models/event-card';
 import { CommonModule } from '@angular/common';
 import { ThisReceiver } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-individual-category',
@@ -16,18 +17,21 @@ export class IndividualCategoryComponent  implements OnInit {
   events: Event[] = [];
   categoryName : string = "Category Name"
   @Input() bannerImage:string = ""
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
     this.createTestEvents();
     this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`
+    this.route.queryParams.subscribe(params => {
+      this.categoryName = params['id'];
+    });
   }
 
-  navpage(path : string) {
+  navpage(path : string, eventid: number = 1) {
 
-  this.router.navigate([path]);
+  this.router.navigate([path], { queryParams: {id: eventid} });
 }
 
 createTestEvents() {

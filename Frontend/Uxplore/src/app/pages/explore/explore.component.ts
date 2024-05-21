@@ -14,9 +14,9 @@ import { Router } from '@angular/router';
 export class ExploreComponent implements OnInit {
   constructor(private router: Router) {}
 
-  navpage(path : string) {
+  navpage(path : string, name : string = "Adrenaline") {
 
-  this.router.navigate([path]);
+  this.router.navigate([path], { queryParams: {id: name} });
 }
 
   ngOnInit() {

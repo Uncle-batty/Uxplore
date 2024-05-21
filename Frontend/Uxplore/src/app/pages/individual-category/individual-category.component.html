@@ -1,10 +1,10 @@
 <div class="main-content">
   <div class="Heading">
     <div class="headerImage" [ngStyle]="{'background': bannerImage}"></div>
-    <h2>Category Name</h2>
+    <h2>{{ categoryName }}</h2>
   </div>
 <div class="cardContainer">
-<app-event-card *ngFor="let item of events" [event]="item"></app-event-card>
+<app-event-card *ngFor="let item of events" [event]="item" (click)="navpage('/user/activity')"></app-event-card>
 </div>
 
 </div>

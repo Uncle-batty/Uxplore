@@ -1,0 +1,145 @@
+.main-content {
+  padding-right: 20px;
+  height: 100%;
+  margin-bottom: 5%;
+}
+
+@media (min-width: 960px) {
+  .main-content {
+    margin-left: 17%;
+    /* Adjust margin-left to 15% */
+    width: 83%;
+  }
+}
+
+.buttonprimary{
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  font-size: 20px;
+}
+
+.activity-details {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px;
+  border-radius: 10px;
+  color: white;
+}
+
+.activity-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.activity-info {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-meta p {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.activity-meta ion-icon {
+  margin-right: 8px;
+}
+
+.activity-rating {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.activity-rating ion-icon {
+  color: gold;
+}
+
+.activity-title {
+  font-size: 24px;
+  margin: 8px 0;
+}
+
+.activity-description {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.book-now-button {
+  margin-top: 16px;
+}
+
+.deals-section {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.deals-section h3 {
+  margin-bottom: 16px;
+  color: white;
+}
+
+ion-slides {
+  height: 200px;
+}
+
+ion-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+ion-slide p {
+  margin-top: 8px;
+  color: white;
+}
+
+.comments-section {
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.comments-section h3 {
+  margin-bottom: 16px;
+  color: white;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 10px;
+}
+
+.comment ion-icon {
+  margin-right: 16px;
+  font-size: 36px;
+}
+
+.comment p {
+  flex: 1;
+  margin: 0;
+}
+
+.comment-rating ion-icon {
+  color: gold;
+  margin-right: 4px;
+}

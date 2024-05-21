@@ -63,6 +63,59 @@
     font-size: 4vh;
   }
 }
+
+.checkboxes {
+  display: grid;
+  grid-template-columns: auto auto;
+  height: auto;
+  justify-content: space-evenly;
+  padding: 2rem;
+}
+
+.checkItem{
+  display: flex;
+  justify-content: start;
+}
+
+
+
+
+
+.checkmark {
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  // border: 2px solid #7332B4;
+  border-radius: 5px;
+}
+
+.checkmark:after {
+  // content: "+";
+  font-size: 20px;
+  color: #7332B4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container input:checked~.checkmark:after {
+  // content: "-";
+}
+
+.container input:checked~.checkmark {
+  background-color: linear-gradient(to right, #7332b4, #32164e);
+}
+
+.container:hover input~.checkmark {
+  background-color: #ccc;
+}
+
+.container:hover input~.checkmark:after {
+  color: #32164e;
+}
+
 @media  (max-width: 1024px) {
   .Contentbox {
 

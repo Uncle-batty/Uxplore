@@ -17,61 +17,53 @@
   </div>
 </div>
 
+<!-- Registration Model -->
+<div class="modal-overlay" [ngClass]="{'show': isRegistrationModelOpen}" (click)="closeRegModel()">
+  <div class="modal" [ngClass]="{'show': isRegistrationModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeRegModel() ">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Register</h2>
+      <div class="inputscon">
+        <input class="input" placeholder="Username" type="text" />
+        <input class="input" placeholder="Email" type="email" />
+        <input class="input" placeholder="Password" type="password" />
+        <input class="input" placeholder="Confirm Password" type="password" />
+        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
+        <a  style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interests Model -->
+<div class="modal-overlay" [ngClass]="{'show': isInterestsModelOpen}" (click)="closeInterestsModel()">
+  <div class="modal" [ngClass]="{'show': isInterestsModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeInterestsModel() ">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>What are your Interests</h2>
+      <div class="checkboxes">
+        <div class="checkItem" *ngFor="let interest of interests; let i = index">
+          <label class="container">
+
+            <input class="checkmark" type="checkbox" [checked]="toggleInterest(interest)"
+              (change)="toggleInterest(interest)">
+            <span class="checkmark"></span>
+            {{ interest.name }}
+          </label>
+        </div>
+      </div>
+      <div class="inputscon">
+        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
+      </div>
 
 
-<!-- Sign up model -->
-<ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="modal.dismiss()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-avatar slot="start">
-            <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h2>Connor Smith</h2>
-            <p>Sales Rep</p>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-avatar slot="start">
-            <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h2>Daniel Smith</h2>
-            <p>Product Designer</p>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-avatar slot="start">
-            <ion-img src="https://i.pravatar.cc/300?u=d"></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h2>Greg Smith</h2>
-            <p>Director of Operations</p>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-avatar slot="start">
-            <ion-img src="https://i.pravatar.cc/300?u=e"></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h2>Zoey Smith</h2>
-            <p>CEO</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+    </div>
+  </div>
+</div>
 
 
 <!-- Login Modal -->
@@ -85,9 +77,9 @@
       <div class="inputscon">
         <input class="input" placeholder="Email" type="email" />
         <input class="input" placeholder="Password" type="password" />
-        <a href="#" class="forgot-password">Forgot Password?</a>
+        <a class="forgot-password">Forgot Password?</a>
         <button class="sign-in-btn" (click)="navpage('/user/home')">Sign In</button>
-        <a href="#" style="text-align: center;" class="forgot-password">Don't have an account?</a>
+        <a  (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
       <div class="separator">
         <span>--------------------------------- OR ---------------------------------</span>

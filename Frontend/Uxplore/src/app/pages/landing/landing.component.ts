@@ -11,8 +11,19 @@ import { CommonModule } from '@angular/common';
   imports : [IonicModule, CommonModule]
 })
 export class LandingComponent  implements OnInit {
-  presentingElement = document.getElementById('0');
+
   isModalOpen = false;
+  isRegistrationModelOpen = false;
+  isInterestsModelOpen = false;
+  selectedInterests : string[] = []
+  interests: selectedInterest[] = [
+  { name: 'Adrenaline', selected : false },
+  { name: 'Outdoors', selected : false },
+  { name: 'Night Life', selected : false },
+  { name: 'family friendly', selected : false },
+  { name: 'Fitness', selected : false },
+  { name: 'Adventure', selected : false }]
+
   constructor(private router: Router) { }
 
     navpage(path : string) {
@@ -20,15 +31,48 @@ export class LandingComponent  implements OnInit {
   this.router.navigate([path]);
 }
   ngOnInit() {
-    this.presentingElement = document.querySelector('.ion-page');
+
   }
 
   openModal() {
     this.isModalOpen = true;
+    this.closeRegModel();
+    this.closeInterestsModel();
   }
 
   closeModal() {
     this.isModalOpen = false;
   }
 
+  openRegModel(){
+    this.closeModal();
+    this.closeInterestsModel();
+    this.isRegistrationModelOpen = true;
+  }
+
+  closeRegModel() {
+    this.isRegistrationModelOpen = false;
+  }
+
+  openInterestsModel(){
+    this.closeModal();
+    this.closeRegModel();
+    this.isInterestsModelOpen = true;
+  }
+
+  closeInterestsModel(){
+    this.isInterestsModelOpen = false;
+  }
+
+  toggleInterest(interest: selectedInterest){
+
+  }
+
+
+
+}
+
+export interface selectedInterest {
+  name: string,
+  selected : boolean
 }

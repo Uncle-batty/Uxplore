@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventCardComponent } from 'src/app/event-card/event-card.component';
 import { Event } from 'src/Models/event-card';
 import { CommonModule } from '@angular/common';
+import { ThisReceiver } from '@angular/compiler';
+
 @Component({
   selector: 'app-individual-category',
   standalone: true,
@@ -12,12 +14,15 @@ import { CommonModule } from '@angular/common';
 })
 export class IndividualCategoryComponent  implements OnInit {
   events: Event[] = [];
+  categoryName : string = "Category Name"
+  @Input() bannerImage:string = ""
   constructor(private router: Router) {
 
   }
 
   ngOnInit() {
     this.createTestEvents();
+    this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`
   }
 
   navpage(path : string) {
@@ -40,5 +45,7 @@ createTestEvents() {
       this.events.push(event1);
     }
   }
+
+
 
 }

@@ -38,11 +38,11 @@ createTestEvents() {
     for (let index = 0; index < 100; index++) {
       let event1: Event = {
         Id: index.toString(),
-        Name: "RocoMamas",
-        Location: "Campus Square",
-        PriceRange: "70 - 250",
-        Times: "9am - 7pm",
-        Rating: "4",
+        Name: "level 4 ",
+        Location: "Santon",
+        PriceRange: "180 - 340",
+        Times: "9am - 21pm",
+        Rating: "4.5",
         SafetyRating: "Safe",
         ImageData: ''
       };

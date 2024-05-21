@@ -2,6 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-landing',

@@ -3,14 +3,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { Tab1Page } from './tab1/tab1.page';
-import { Tab2Page } from './tab2/tab2.page';
-import { Tab3Page } from './tab3/tab3.page';
 import { CalenderComponent } from './pages/calender/calender.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { IndividualCategoryComponent } from './pages/individual-category/individual-category.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { AboutComponent } from './pages/about/about.component';
+import { OneActivityComponent } from './pages/one-activity/one-activity.component';
+import { ExploreComponent } from './pages/explore/explore.component';
 
 
 const userRoutes: Routes = [
@@ -18,6 +17,8 @@ const userRoutes: Routes = [
   {path: 'calender', component: CalenderComponent},
   {path : 'category', component: CategoryComponent},
   {path : 'individualCategory', component: IndividualCategoryComponent},
+  {path : 'activity', component: OneActivityComponent},
+  {path : 'explore', component: ExploreComponent}
 ];
 
 const mainRoutes: Routes = [

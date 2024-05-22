@@ -6,7 +6,11 @@ import {
   pricetagOutline,
   callOutline,
   timeOutline,
+  heartOutline,
+  bookmarkOutline,
   star,
+  shareSocialOutline,
+  globeOutline,
   personCircleOutline
 } from 'ionicons/icons';
 import { IonicModule } from '@ionic/angular';
@@ -46,6 +50,10 @@ export class OneActivityComponent implements OnInit {
       'call-outline': callOutline,
       'time-outline': timeOutline,
       'star': star,
+      'globe-outline': globeOutline,
+      'share-social-outline': shareSocialOutline,
+      'bookmark-outline': bookmarkOutline,
+      'heart-outline': heartOutline,
       'person-circle-outline': personCircleOutline
     });
   }

@@ -33,7 +33,7 @@ export const routes: Routes = [
   {path: 'user', children: userRoutes},
   {path: 'main', children: mainRoutes},
   {path: 'business', children: businessComponent},
-  { path: '', redirectTo: '/main', pathMatch: 'full' },
+  { path: '', redirectTo: '/main/landing', pathMatch: 'full' },
 
 ];
 

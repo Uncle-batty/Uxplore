@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsersService } from 'src/app/services/users.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
-  imports : [IonicModule, CommonModule]
+  imports : [IonicModule, CommonModule, FormsModule],
+  providers: [ UsersService ]
 })
 export class LandingComponent  implements OnInit {
 
@@ -25,7 +27,9 @@ export class LandingComponent  implements OnInit {
   { name: 'Fitness', selected : false },
   { name: 'Adventure', selected : false }]
 
-  constructor(private router: Router) { }
+  email: string = ''
+  password: string = ''
+  constructor(private router: Router, private service : UsersService) { }
 
     navpage(path : string) {
 
@@ -69,6 +73,9 @@ export class LandingComponent  implements OnInit {
 
   }
 
+ login() {
+
+ }
 
 
 }

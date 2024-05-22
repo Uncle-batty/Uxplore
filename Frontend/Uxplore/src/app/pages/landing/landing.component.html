@@ -26,7 +26,7 @@
     <div class="modal-content">
       <h2>Register</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Username" type="text" />
+        <input class="input" placeholder="Username" type="text"  />
         <input class="input" placeholder="Email" type="email" />
         <input class="input" placeholder="Password" type="password" />
         <input class="input" placeholder="Confirm Password" type="password" />
@@ -75,10 +75,10 @@
     <div class="modal-content">
       <h2>Login</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Email" type="email" />
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email"/>
         <input class="input" placeholder="Password" type="password" />
         <a class="forgot-password">Forgot Password?</a>
-        <button class="sign-in-btn" (click)="navpage('/user/home')">Sign In</button>
+        <button class="sign-in-btn" (click)="login()">Sign In</button>
         <a  (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
       <div class="separator">

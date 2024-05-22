@@ -1,0 +1,23 @@
+.main-content {
+  margin-left: 17%;
+  /* Adjust margin-left to 15% */
+  width: 83%;
+  /* Adjust width to 70% */
+  float: right;
+  /* Float content to the right */
+
+  overflow-y: scroll;
+
+  height: auto;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  height: auto;
+
+}
+
+h1{
+    text-align: center;
+}

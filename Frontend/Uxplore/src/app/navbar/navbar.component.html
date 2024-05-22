@@ -8,7 +8,7 @@
     <button (click)="navpage('/user/saved')" ><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
     <button (click)="navpage('/user/calender')" ><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
     <button (click)="openModal()"  ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
-    <button (click)="navpage('/main/landing')" ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
+    <button (click)="openNotificationsModal() " ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
     <button (click)="navpage('/user/home')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
   </div>
 </div>
@@ -35,6 +35,35 @@
     </div>
   </div>
 </div>
+
+<!--Notifications model-->
+<div class="modal-overlay" [ngClass]="{'show': isNotificationsModalOpen}" (click)="closeNotificationsModal()">
+  <div class="modal" [ngClass]="{'show': isNotificationsModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeNotificationsModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Notifications</h2>
+      <ion-card class="notification-card" *ngFor="let notification of notifications" color="light">
+        <ion-card-header>
+          <div>
+            <ion-label>
+              <ion-card-title class="start">
+                <ion-icon class="" name="notifications-outline"></ion-icon>
+                <strong>{{ notification.username }}</strong> {{ notification.activity }}<br>
+                <ion-card-subtitle class="timestamp">{{ notification.timestamp }}</ion-card-subtitle>
+              </ion-card-title>
+            </ion-label>
+          </div>
+        </ion-card-header>
+      </ion-card>
+      <div>
+        <button class="view-all-button" (click)="navpage('/user/notifications')"> View All</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

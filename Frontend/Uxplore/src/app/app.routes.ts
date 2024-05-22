@@ -11,7 +11,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { OneActivityComponent } from './pages/one-activity/one-activity.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { SavedComponent } from './pages/saved/saved.component';
-
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,7 +20,8 @@ const userRoutes: Routes = [
   {path : 'individualCategory', component: IndividualCategoryComponent},
   {path : 'activity', component: OneActivityComponent},
   {path : 'explore', component: ExploreComponent},
-  {path: 'saved', component: SavedComponent}
+  {path: 'saved', component: SavedComponent},
+  {path: 'notifications', component: NotificationsComponent}
 ];
 
 const mainRoutes: Routes = [

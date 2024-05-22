@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonIcon, IonTabButton, IonLabel } from '@ionic/angular/standalone';
+import { IonIcon, IonTabButton, IonLabel, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline} from 'ionicons/icons';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
    standalone: true,
-   imports: [IonLabel, IonTabButton, IonIcon, CommonModule],
+   imports: [IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle, IonLabel, IonTabButton, IonIcon, CommonModule],
 })
 export class NavbarComponent implements OnInit   {
 
@@ -44,6 +44,14 @@ export class NavbarComponent implements OnInit   {
   // Add more feelings as needed
 ];
 
+isNotificationsModalOpen = false;
+notifications = [
+  { username: 'John', activity: 'liked your post', timestamp: '5 min ago' },
+  { username: 'Rocky', activity: 'commented on your photo', timestamp:'8 min ago' },
+  { username: 'Kanye', activity: 'liked your comment', timestamp:'12 min ago'}
+  // Add more notifications as needed
+];
+
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
     addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline  });
    }
@@ -58,6 +66,14 @@ openModal() {
 
   closeModal() {
     this.isGameModelOpen = false;
+  }
+
+  openNotificationsModal() {
+    this.isNotificationsModalOpen = true;
+  }
+
+  closeNotificationsModal() {
+    this.isNotificationsModalOpen = false;
   }
 
    toggleFeeling(feeling: { name: string; }) {

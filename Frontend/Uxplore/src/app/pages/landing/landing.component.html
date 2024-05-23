@@ -75,11 +75,15 @@
     <div class="modal-content">
       <h2>Login</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Email" type="email" [(ngModel)]="email"/>
-        <input class="input" placeholder="Password" type="password" />
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" required />
+        <p class="error" [hidden]="!showEmailError">Please enter a valid email address</p>
+
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" required />
+        <p class="error" [hidden]="!showPasswordError">Please enter a valid password</p>
+
         <a class="forgot-password">Forgot Password?</a>
         <button class="sign-in-btn" (click)="login()">Sign In</button>
-        <a  (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
+        <a (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
       <div class="separator">
         <span>--------------------------------- OR ---------------------------------</span>
@@ -87,4 +91,5 @@
     </div>
   </div>
 </div>
+
 

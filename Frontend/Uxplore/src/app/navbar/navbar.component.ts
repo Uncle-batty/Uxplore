@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonLabel, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline} from 'ionicons/icons';
+import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline} from 'ionicons/icons';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -53,7 +53,7 @@ notifications = [
 ];
 
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
-    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline  });
+    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline,logOutOutline  });
    }
 
    navpage(path : string) {
@@ -84,7 +84,10 @@ openModal() {
     console.log('Selected feeling:', this.selectedFeeling);
     this.closeModal();
   }
-
+  logout() {
+    localStorage.removeItem('user');
+    this.navpage('/main/landing');
+  }
    ngOnInit(): void {
     this.isMobile$ = this.breakpointObserver.observe([
       Breakpoints.XSmall,

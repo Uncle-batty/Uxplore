@@ -18,11 +18,17 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.router.navigate(['/user/home']);
+    } else {
+      this.router.navigate(['/main/landing']);
+    }
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.showNavbarAndTabs = !this.router.url.includes('main');
-
       });
   }
 }

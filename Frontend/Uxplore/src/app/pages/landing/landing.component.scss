@@ -293,3 +293,18 @@
       background: rgba(0, 0, 0, 0.935);
     }
 }
+
+/* Add this to your component's stylesheet (e.g., landing.component.scss) */
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+
+#passworderror {
+  visibility: hidden;
+}
+
+#emailerror {
+  visibility: hidden;
+}

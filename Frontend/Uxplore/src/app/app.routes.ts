@@ -1,5 +1,3 @@
-// app-routing.module.ts
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
@@ -12,29 +10,31 @@ import { OneActivityComponent } from './pages/one-activity/one-activity.componen
 import { ExploreComponent } from './pages/explore/explore.component';
 import { SavedComponent } from './pages/saved/saved.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { AuthGuard } from './services/auth.guard';// Import the guard
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  {path: 'calender', component: CalenderComponent},
-  {path : 'category', component: CategoryComponent},
-  {path : 'individualCategory', component: IndividualCategoryComponent},
-  {path : 'activity', component: OneActivityComponent},
-  {path : 'explore', component: ExploreComponent},
-  {path: 'saved', component: SavedComponent},
-  {path: 'notifications', component: NotificationsComponent}
+  { path: 'calender', component: CalenderComponent },
+  { path: 'category', component: CategoryComponent },
+  { path: 'individualCategory', component: IndividualCategoryComponent },
+  { path: 'activity', component: OneActivityComponent },
+  { path: 'explore', component: ExploreComponent },
+  { path: 'saved', component: SavedComponent },
+  { path: 'notifications', component: NotificationsComponent }
 ];
 
 const mainRoutes: Routes = [
-{ path: 'about', component: AboutComponent},
-   {path: 'landing', component: LandingComponent},
+  { path: 'about', component: AboutComponent },
+  { path: 'landing', component: LandingComponent },
 ];
-const businessComponent: Routes = [];
-export const routes: Routes = [
-  {path: 'user', children: userRoutes},
-  {path: 'main', children: mainRoutes},
-  {path: 'business', children: businessComponent},
-  { path: '', redirectTo: '/main/landing', pathMatch: 'full' },
 
+const businessComponent: Routes = [];
+
+export const routes: Routes = [
+  { path: 'user', children: userRoutes },
+  { path: 'main', children: mainRoutes },
+  { path: 'business', children: businessComponent },
+  { path: '', canActivate: [AuthGuard], children: [] }, // Use the guard for the root path
 ];
 
 @NgModule({

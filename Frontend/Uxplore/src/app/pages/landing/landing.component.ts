@@ -4,13 +4,16 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsersService } from 'src/app/services/users.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
-  imports : [IonicModule, CommonModule, FormsModule],
+  imports : [IonicModule, CommonModule, FormsModule,HttpClientModule],
   providers: [ UsersService ]
 })
 export class LandingComponent  implements OnInit {

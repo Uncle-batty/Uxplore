@@ -9,12 +9,14 @@ import { ListingsService } from 'src/app/services/listings.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Listing } from 'src/app/interfaces/interfaces';
 
+
 @Component({
   selector: 'app-individual-category',
   standalone: true,
   templateUrl: './individual-category.component.html',
   styleUrls: ['./individual-category.component.scss'],
-  imports: [EventCardComponent,CommonModule, HttpClientModule]
+  imports: [EventCardComponent,CommonModule, HttpClientModule],
+  providers: [ListingsService]
 })
 export class IndividualCategoryComponent  implements OnInit {
   events: Event[] = [];
@@ -26,40 +28,44 @@ export class IndividualCategoryComponent  implements OnInit {
 
   listings: Listing[] = [];
   ngOnInit() {
-    this.createTestEvents();
+
     this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`
     this.route.queryParams.subscribe(params => {
       this.categoryName = params['id'];
+    });
 
     this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
       this.listings = data;
-    });
     console.log(this.listings);
+    console.log("Events:",this.popevents(data));
 
     });
+
+
+
   }
 
-  navpage(path : string, eventid: string = "1") {
+  navpage(path : string, eventid: number = 1) {
 
   this.router.navigate([path], { queryParams: {id: eventid} });
 }
 
-createTestEvents() {
-    for (let index = 0; index < 100; index++) {
-      let event1: Event = {
-        Id: index.toString(),
-        Name: "level 4 ",
-        Location: "Santon",
-        PriceRange: "180 - 340",
-        Times: "9am - 21pm",
-        Rating: "4.5",
-        SafetyRating: "Safe",
-        ImageData: ''
-      };
-      this.events.push(event1);
+
+popevents(currentListing : Listing[]) : Event[] {
+  currentListing.forEach((listing) => {
+    let newEvent : Event = {
+      Id : listing.id,
+      Name: listing.name,
+      Location: listing.location,
+      PriceRange: "9 - 5",
+      Times: listing.hours,
+      Rating: "",
+      SafetyRating: "",
+      ImageData: "",
     }
-  }
+    this.events.push(newEvent);
+});
+return this.events
 
-
-
+}
 }

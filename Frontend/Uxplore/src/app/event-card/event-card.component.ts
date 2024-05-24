@@ -18,7 +18,7 @@ export class EventCardComponent  implements OnInit {
   @Input() bgColor : string = "#23a425";
   @Input() boxShadow : string = "";
    @Input() event: Event = {
-    Id: '',
+    Id: 0,
     Name: '',
     Location: '',
     PriceRange: '',

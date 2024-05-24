@@ -1,0 +1,6 @@
+@UxploreAPI_HostAddress = http://localhost:5196
+
+GET {{UxploreAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

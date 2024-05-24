@@ -35,7 +35,7 @@ export class SavedComponent implements OnInit {
   createTestEvents() {
     for (let index = 0; index < 12; index++) {
       let event: Event = {
-        Id: index.toString(),
+        Id: index,
         Name: 'level 4 ',
         Location: 'Santon',
         PriceRange: '180 - 340',

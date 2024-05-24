@@ -1,5 +1,5 @@
 export interface Event {
-  Id: string;
+  Id: number;
   Name: string;
   Location: string;
   PriceRange: string;

@@ -1,7 +1,7 @@
 <div class="main-content">
 <div class="Heading"><h1>Saved Items</h1></div>
 <div class="cardContainer">
-<app-event-card *ngFor="let item of events" [event]="item" (click)="navpage('/user/activity', item.Id)"></app-event-card>
+<app-event-card *ngFor="let item of events" [event]="item" (click)="navpage('/user/activity', item.Id.toString())"></app-event-card>
 </div>
 </div>
 

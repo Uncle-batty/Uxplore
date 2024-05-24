@@ -5,27 +5,37 @@ import { Event } from 'src/Models/event-card';
 import { CommonModule } from '@angular/common';
 import { ThisReceiver } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
+import { ListingsService } from 'src/app/services/listings.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Listing } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-individual-category',
   standalone: true,
   templateUrl: './individual-category.component.html',
   styleUrls: ['./individual-category.component.scss'],
-  imports: [EventCardComponent,CommonModule]
+  imports: [EventCardComponent,CommonModule, HttpClientModule]
 })
 export class IndividualCategoryComponent  implements OnInit {
   events: Event[] = [];
   categoryName : string = "Category Name"
   @Input() bannerImage:string = ""
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private lservice: ListingsService) {
 
   }
 
+  listings: Listing[] = [];
   ngOnInit() {
     this.createTestEvents();
     this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`
     this.route.queryParams.subscribe(params => {
       this.categoryName = params['id'];
+
+    this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
+      this.listings = data;
+    });
+    console.log(this.listings);
+
     });
   }
 

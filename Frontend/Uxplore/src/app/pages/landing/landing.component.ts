@@ -106,6 +106,7 @@ export class LandingComponent implements OnInit {
         (error) => {
           console.error('Login request failed', error);
           this.showEmailError = true;
+          this.showPasswordError = true;
         }
       );
     }

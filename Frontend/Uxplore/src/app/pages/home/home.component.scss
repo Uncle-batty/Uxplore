@@ -21,7 +21,7 @@
 }
 
 .ad-container img {
-  width: 100%;
+  width: auto;
   height: auto;
   max-width: 600px;
   /* Adjust as needed */
@@ -56,7 +56,6 @@
   position: absolute;
   width: 424px;
   height: 46px;
-  left: calc(50% - 424px/2 - 204px);
   top: 170px;
 
   font-family: 'League Spartan'; font-style: normal; font-weight: 600;
@@ -154,4 +153,75 @@
   transform: translateX(-50%);
   z-index: 2;
   /* text-align: center; */
+}
+
+.explore-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.explore-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  border-radius: 10px;
+}
+
+.card-title {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.arrow-icon {
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  color: white;
+  font-size: 24px;
+}
+
+.explore-card:hover {
+  transform: scale(1.05);
+}
+
+.explore-card:hover .arrow-icon {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  ion-col[size="4"] {
+    --ion-grid-column-size: 50%;
+  }
+
+  .arrow-icon {
+    opacity: 1;
+  }
+
+  .main-content {
+    margin-bottom: 20%;
+  }
 }

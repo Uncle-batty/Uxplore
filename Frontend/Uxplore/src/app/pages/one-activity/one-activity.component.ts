@@ -16,6 +16,12 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
+import { ListingsService } from 'src/app/services/listings.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Listing } from 'src/app/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,8 +29,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   templateUrl: './one-activity.component.html',
   styleUrls: ['./one-activity.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [IonicModule, CommonModule,HttpClientModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [ListingsService]
 })
 export class OneActivityComponent implements OnInit {
 
@@ -35,14 +42,27 @@ export class OneActivityComponent implements OnInit {
     spaceBetween: 10,
     loop: true
   };
-
-
-  constructor() {}
+  Actid: number|undefined;
+  activity: Listing|undefined;
+  constructor(private router: Router, private route: ActivatedRoute, private lservice: ListingsService) {}
 
 
 
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.Actid = params['id'];
+    });
+
+    this.lservice.listoneactivity(this.Actid).subscribe(
+      Response => {
+          this.activity = Response;
+      },
+      (error) =>
+        {
+            console.log(error);
+        }
+    );
     addIcons({
       'shield-checkmark-outline': shieldCheckmarkOutline,
       'location-outline': locationOutline,
@@ -57,4 +77,10 @@ export class OneActivityComponent implements OnInit {
       'person-circle-outline': personCircleOutline
     });
   }
+
+  getGoogleMapsUrl(): string {
+  const location = this.activity?.location ?? '';
+  return `https://www.google.co.za/maps/place/${encodeURIComponent(location)}`;
+}
+
 }

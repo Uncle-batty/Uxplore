@@ -42,4 +42,6 @@ app.MapNotificationsEndpoints();
 
 app.MapCategoryEndpoints();
 
+app.MapCommentsEndpoints();
+
 app.Run();

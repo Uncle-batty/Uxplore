@@ -12,11 +12,8 @@ namespace UXplore.Models
         public int User_ID { get; set; }
 
         // Navigation property
-        public User user { get; set; }
         [Required]
         [ForeignKey("Category")]
-        public int Catagory_ID { get; set; }
-        public Category category { get; set; }
-
+        public int Category_ID { get; set; }  // Ensure correct spelling and casing
     }
 }

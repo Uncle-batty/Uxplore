@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id?: number;
   fName: string;
   lName: string;
   email: string;
@@ -18,5 +18,11 @@ export interface Listing {
     order: string;
     reserve: number;
     site?: string;
-    avgPrice: number;
+    avG_price: number;
+}
+
+export interface interests {
+  id?: number;
+  User_id: number;
+  Category_id: number;
 }

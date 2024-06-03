@@ -57,13 +57,28 @@ namespace UxploreAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
+        [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+            try
+            {
+                // Send confirmation email
+                SMTP smtp = new SMTP();
+                smtp.sendConformationEmail(user.Email);  // Ensure 'Email' is a property of your 'User' model
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (consider using a logging framework like Serilog or NLog)
+                Console.WriteLine($"Failed to send confirmation email: {ex.Message}");
+            }
+
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
+
+
 
         // PUT: api/Users/5
         [HttpPut("{id}")]

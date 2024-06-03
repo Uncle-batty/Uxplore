@@ -26,11 +26,22 @@
     <div class="modal-content">
       <h2>Register</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Username" type="text"  />
-        <input class="input" placeholder="Email" type="email" />
-        <input class="input" placeholder="Password" type="password" />
-        <input class="input" placeholder="Confirm Password" type="password" />
-        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
+        <input class="input" placeholder="Name" type="text" [(ngModel)]="Fullname" />
+        <ion-toast
+        [isOpen] = 'isEmailToast'
+          message = 'enter a valid email address'
+          duration = '5000'
+          (didDismiss) = 'setOpen(false)'>
+        </ion-toast>
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" />
+        <ion-toast
+        [isOpen]="isPasswordToast"
+        message="Password must contain at least one upper case character and be over 8 characters"
+        duration="5000"
+        (didDismiss)="setOpen(false)"></ion-toast>
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" />
+        <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Confermpassword" />
+        <button class="sign-in-btn" (click)="logregdetails()">Confirm</button>
         <a  style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
       </div>
     </div>
@@ -41,26 +52,25 @@
 <div class="modal-overlay" [ngClass]="{'show': isInterestsModelOpen}" (click)="closeInterestsModel()">
   <div class="modal" [ngClass]="{'show': isInterestsModelOpen}" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <button class="close-btn" (click)="closeInterestsModel() ">X</button>
+      <button class="close-btn" (click)="closeInterestsModel()">X</button>
     </div>
     <div class="modal-content">
       <h2>What are your Interests</h2>
       <div class="checkboxes">
         <div class="checkItem" *ngFor="let interest of interests; let i = index">
           <label class="container">
-
-            <input class="checkmark" type="checkbox" [checked]="toggleInterest(interest)"
-              (change)="toggleInterest(interest)">
+            <input class="checkmark" type="checkbox" [checked]="interest.selected" (change)="toggleInterest(interest)">
             <span class="checkmark"></span>
             {{ interest.name }}
           </label>
         </div>
       </div>
+      <ion-toast [isOpen]="isFailedtoast"
+        message="Failed to create user. Please make sure this email isn't used with another account." duration="5000"
+        (didDismiss)="setOpen(false)"></ion-toast>
       <div class="inputscon">
-        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
+        <button class="sign-in-btn" (click)="submituser()">Confirm</button>
       </div>
-
-
     </div>
   </div>
 </div>

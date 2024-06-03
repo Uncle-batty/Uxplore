@@ -9,16 +9,16 @@
     <ion-icon name="shield-checkmark-outline" style="font-size: 1.5rem;"></ion-icon> Safety Rating: SAFE
   </p>
   <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="location-outline" style="font-size: 1.5rem;"></ion-icon> Location: 12 Central Ave, Rosebank
+    <a [href]="getGoogleMapsUrl()" target="_blank"><ion-icon name="location-outline" style="font-size: 1.5rem;"></ion-icon></a> Location: {{ activity?.location}}
   </p>
   <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R450 - R1000
+    <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price}}
   </p>
   <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="call-outline" style="font-size: 1.5rem;"></ion-icon> Call: 011 643 9432
+    <ion-icon name="call-outline" style="font-size: 1.5rem;"></ion-icon> Call: {{ activity?.phone}}
   </p>
   <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours
+    <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours}}
   </p>
 </div>
 
@@ -32,20 +32,16 @@
       <ion-icon name="star"></ion-icon>
     </div>
     <div style="display: flex;align-items: center;">
-      <h2 class="activity-title">Level 4 Restaurant</h2>
+      <h2 class="activity-title">{{ activity?.name }}</h2>
     <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
     <ion-icon style="font-size: 1.5rem;"  name="bookmark-outline"></ion-icon>
     <ion-icon style="font-size: 1.5rem;"  name="share-social-outline"></ion-icon>
-    <ion-icon style="font-size: 1.5rem;"  name="globe-outline"></ion-icon>
+    <a href="{{ activity?.site}}"><ion-icon style="font-size: 1.5rem;"  name="globe-outline"></ion-icon></a>
     </div>
 
     <div class="descrip" >
           <p class="activity-description" >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-      laborum.
+      {{ activity?.description}}
     </p>
     <button  class="buttonprimary">Book Now!</button>
     </div>

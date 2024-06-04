@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.IO;
 using UXplore.Models;
+using UxploreAPI.Models;
 
 
 namespace UXplore.Context
@@ -23,5 +24,7 @@ namespace UXplore.Context
         public DbSet<User_Interactions> User_Interactions { get; set; }
         public DbSet<User_interests> User_Interests { get; set; }
         public DbSet<User_Setting> User_Settings { get; set; }
+        public DbSet<ListingImage> ListingImages { get; set; }
+
     }
 }

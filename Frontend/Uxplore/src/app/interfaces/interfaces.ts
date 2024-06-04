@@ -1,3 +1,4 @@
+
 export interface User {
   id?: number;
   fName: string;
@@ -25,4 +26,19 @@ export interface interests {
   id?: number;
   User_id: number;
   Category_id: number;
+}
+
+export interface rateing {
+  id: number;
+  event_ID: number;
+  listing_id: number;
+  user_id: number;
+  ratevalue: number;
+  type: string;
+}
+
+export interface listingimages {
+  id: number;
+  listingid: number;
+  image: string;
 }

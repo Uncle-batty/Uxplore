@@ -36,7 +36,6 @@ export class IndividualCategoryComponent  implements OnInit {
 
     this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
       this.listings = data;
-    console.log(this.listings);
     console.log("Events:",this.popevents(data));
 
     });
@@ -53,17 +52,26 @@ export class IndividualCategoryComponent  implements OnInit {
 
 popevents(currentListing : Listing[]) : Event[] {
   currentListing.forEach((listing) => {
-    let newEvent : Event = {
-      Id : listing.id,
-      Name: listing.name,
-      Location: listing.location,
-      PriceRange: "9 - 5",
-      Times: listing.hours,
-      Rating: "",
-      SafetyRating: "",
-      ImageData: "",
-    }
-    this.events.push(newEvent);
+    this.lservice.getlistingimages(listing.id).subscribe(
+      (data) => {
+          let newEvent: Event = {
+            Id: listing.id,
+            Name: listing.name,
+            Location: listing.location,
+            PriceRange: '9 - 5',
+            Times: listing.hours,
+            Rating: '',
+            SafetyRating: '',
+            ImageData: data[0].image,
+          };
+          this.events.push(newEvent);
+      },
+      (error) => {
+
+      }
+    );
+
+
 });
 return this.events
 

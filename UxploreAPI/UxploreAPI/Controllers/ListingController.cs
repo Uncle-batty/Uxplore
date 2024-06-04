@@ -42,5 +42,22 @@ namespace UXplore.Controllers
 
             return Ok(listings);
         }
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<Listing>>> Search(string term)
+        {
+            if (string.IsNullOrEmpty(term))
+            {
+                return BadRequest("Search term cannot be empty");
+            }
+
+            string normalizedTerm = term.ToLower().Replace(" ", "");
+
+            var listings = await _context.Listings
+                .Where(l => EF.Functions.Like(l.Name.ToLower().Replace(" ", ""), $"%{normalizedTerm}%") || EF.Functions.Like(l.Description.ToLower().Replace(" ", ""), $"%{normalizedTerm}%"))
+                .ToListAsync();
+
+            return Ok(listings);
+        }
+
     }
 }

@@ -67,7 +67,7 @@ namespace UxploreAPI.Controllers
             {
                 // Send confirmation email
                 SMTP smtp = new SMTP();
-                smtp.sendConformationEmail(user.Email);  // Ensure 'Email' is a property of your 'User' model
+                smtp.sendConformationEmail(user.Email, user.FName);  // Ensure 'Email' is a property of your 'User' model
             }
             catch (Exception ex)
             {

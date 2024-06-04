@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Mail;
 
@@ -20,7 +21,7 @@ namespace UxploreAPI
 
         }
 
-        public void sendConformationEmail(string useremail)
+        public void sendConformationEmail(string useremail, string username)
         {
             string body = @"
 <!DOCTYPE html>
@@ -37,6 +38,7 @@ namespace UxploreAPI
             padding: 0;
         }
         .email-container {
+            background-image: radial-gradient(circle at center center, rgba(79,22,97, 0.05) 0%, rgba(79,22,97, 0.05) 15%,rgba(91,13,123, 0.05) 15%, rgba(91,13,123, 0.05) 34%,rgba(73,34,126, 0.05) 34%, rgba(73,34,126, 0.05) 51%,rgba(237, 237, 237,0.05) 51%, rgba(237, 237, 237,0.05) 75%,rgba(83,25,123, 0.05) 75%, rgba(83,25,123, 0.05) 89%,rgba(28,9,37, 0.05) 89%, rgba(28,9,37, 0.05) 100%),radial-gradient(circle at center center, rgb(8,8,8) 0%, rgb(8,8,8) 6%,rgb(8,8,8) 6%, rgb(8,8,8) 12%,rgb(8,8,8) 12%, rgb(8,8,8) 31%,rgb(8,8,8) 31%, rgb(8,8,8) 92%,rgb(8,8,8) 92%, rgb(8,8,8) 97%,rgb(8,8,8) 97%, rgb(8,8,8) 100%); background-size: 42px 42px;
             max-width: 600px;
             margin: 20px auto;
             background-color: #ffffff;
@@ -44,19 +46,22 @@ namespace UxploreAPI
             border-radius: 5px;
             padding: 20px;
             text-align: center;
-        }
-        .email-header {
-            background-color: #4CAF50;
+            }
+            .email-header {
+            background: linear-gradient(to right, #3f3d3d, rgb(8, 7, 7));
             color: white;
             padding: 10px 0;
             border-radius: 5px 5px 0 0;
+            border: 3px solid #ffffff; /* Adjusted the border width and added the shorthand property */
         }
+
         .email-header img {
             max-width: 150px;
             margin-bottom: 10px;
         }
         .email-body {
             padding: 20px;
+            color: white;
         }
         .email-footer {
             background-color: #f4f4f4;
@@ -65,7 +70,7 @@ namespace UxploreAPI
             border-radius: 0 0 5px 5px;
         }
         .btn-confirm {
-            background-color: #4CAF50;
+            background: linear-gradient(to right, black, #4CAF50);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
@@ -79,17 +84,51 @@ namespace UxploreAPI
 <body>
     <div class='email-container'>
         <div class='email-header'>
-            <img src='[Logo URL]' alt='Your Company Logo'>
+            <img src='https://i.ibb.co/qWsTJDv/Logo.png' alt='Your Company Logo'>
             <h1>Thank You for Signing Up!</h1>
         </div>
         <div class='email-body'>
-            <p>Hi [User's Name],</p>
-            <p>Thank you for signing up for our service. We're excited to have you on board. Please click the button below to confirm your email address and complete your registration.</p>
-            <a href='[Confirmation Link]' class='btn-confirm'>Confirm Email</a>
-            <p>If you did not sign up for this account, you can ignore this email.</p>
+            <p>Hi {username},</p>
+            <p>Thank you for signing up at UXPlore. We're excited to have you explore your travel interests based on your mood.</p>
+                <style>
+        @keyframes slide {
+            0% { transform: translateX(0%); }
+            20% { transform: translateX(0%); }
+            25% { transform: translateX(-100%); }
+            45% { transform: translateX(-100%); }
+            50% { transform: translateX(-200%); }
+            70% { transform: translateX(-200%); }
+            75% { transform: translateX(-300%); }
+            95% { transform: translateX(-300%); }
+            100% { transform: translateX(0%); }
+        }
+
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            width: 400%;
+            animation: slide 6s infinite;
+        }
+
+        .carousel img {
+            width: 25%;
+            transition: transform 4s;
+        }
+    </style>
+</head>
+<body>
+    <div class='email-body'>
+
+        
+            <h3>We Find...U Explore</h3>
         </div>
         <div class='email-footer'>
-            <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+            <p>&copy; 2024 Uxplore.All rights reserved.</p>
         </div>
     </div>
 </body>

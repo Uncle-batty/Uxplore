@@ -1,100 +1,104 @@
 <div class="main-content">
 
-<ion-content>
-  <div class="activity-details">
-    <img src="assets/Images/resturant.jpg" alt="Restaurant Image" class="activity-image">
-    <div class="activity-info">
-<div class="activity-meta">
-  <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="shield-checkmark-outline" style="font-size: 1.5rem;"></ion-icon> Safety Rating: SAFE
-  </p>
-  <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <a [href]="getGoogleMapsUrl()" target="_blank"><ion-icon name="location-outline" style="font-size: 1.5rem;"></ion-icon></a> Location: {{ activity?.location}}
-  </p>
-  <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price}}
-  </p>
-  <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="call-outline" style="font-size: 1.5rem;"></ion-icon> Call: {{ activity?.phone}}
-  </p>
-  <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-    <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours}}
-  </p>
-</div>
+  <ion-content>
+    <div class="activity-details">
+      <img [src]="images[currentImageIndex]?.image" alt="Restaurant Image" class="activity-image">
+
+      <div class="activity-info">
+        <div class="activity-meta">
+          <p style="margin-bottom: 2rem; font-size: 1.2rem;">
+            <ion-icon name="shield-checkmark-outline" style="font-size: 1.5rem;"></ion-icon> Safety Rating:
+            {{safetyrateings}}
+          </p>
+          <p style="margin-bottom: 2rem; font-size: 1.2rem;">
+            <a [href]="getGoogleMapsUrl()" target="_blank"><ion-icon name="location-outline"
+                style="font-size: 1.5rem;"></ion-icon></a> Location: {{ activity?.location}}
+          </p>
+          <p style="margin-bottom: 2rem; font-size: 1.2rem;">
+            <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price}}
+          </p>
+          <p style="margin-bottom: 2rem; font-size: 1.2rem;">
+            <ion-icon name="call-outline" style="font-size: 1.5rem;"></ion-icon> Call: {{ activity?.phone}}
+          </p>
+          <p style="margin-bottom: 2rem; font-size: 1.2rem;">
+            <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours}}
+          </p>
+        </div>
 
 
-  </div>
+      </div>
 
-  <div style="margin-top: 2rem;">
-    <div class="activity-rating">
-      <ion-icon name="star"></ion-icon>
-      <ion-icon name="star"></ion-icon>
-      <ion-icon name="star"></ion-icon>
-    </div>
-    <div style="display: flex;align-items: center;">
-      <h2 class="activity-title">{{ activity?.name }}</h2>
-    <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
-    <ion-icon style="font-size: 1.5rem;"  name="bookmark-outline"></ion-icon>
-    <ion-icon style="font-size: 1.5rem;"  name="share-social-outline"></ion-icon>
-    <a href="{{ activity?.site}}"><ion-icon style="font-size: 1.5rem;"  name="globe-outline"></ion-icon></a>
-    </div>
+      <div style="margin-top: 2rem;">
+        <div class="activity-rating">
+          <!-- rating.component.html -->
+          <ion-icon name="star" *ngFor="let star of ratingArray"></ion-icon>
+          <ion-icon name="star-outline" *ngFor="let empty of emptyStarsArray"></ion-icon>
 
-    <div class="descrip" >
-          <p class="activity-description" >
-      {{ activity?.description}}
-    </p>
-    <button  class="buttonprimary">Book Now!</button>
-    </div>
+        </div>
+        <div style="display: flex;align-items: center;">
+          <h2 class="activity-title">{{ activity?.name }}</h2>
+          <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
+          <ion-icon style="font-size: 1.5rem;" name="bookmark-outline"></ion-icon>
+          <ion-icon style="font-size: 1.5rem;" name="share-social-outline"></ion-icon>
+          <a href="{{ activity?.site}}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
+        </div>
 
-    </div>
-  </div>
+        <div class="descrip">
+          <p class="activity-description">
+            {{ activity?.description}}
+          </p>
+          <button class="buttonprimary">Book Now!</button>
+        </div>
 
-<div class="deals-section">
-  <h3>Our Deals!</h3>
-  <ion-slides class="slides"  [options]="slideOpts">
-    <ion-slide>
-      <img style="width:80%" src="assets/Images/ad1.png" alt="Deal 1">
-    </ion-slide>
-    <ion-slide>
-      <img style="width:80%" src="assets/Images/ad2.png" alt="Deal 2">
-    </ion-slide>
-    <ion-slide>
-      <img style="width:80%" src="assets/Images/ad3.png" alt="Deal 3">
-    </ion-slide>
-
-  </ion-slides>
-</div>
-
-
-  <div class="comments-section">
-    <h3>Comments</h3>
-    <div class="comment">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <p>Service was really good...</p>
-      <div class="comment-rating">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
       </div>
     </div>
-    <div class="comment">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <p>Service was really good...</p>
-      <div class="comment-rating">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
+
+    <div class="deals-section">
+      <h3>Our Deals!</h3>
+      <ion-slides class="slides" [options]="slideOpts">
+        <ion-slide>
+          <img style="width:80%" src="assets/Images/ad1.png" alt="Deal 1">
+        </ion-slide>
+        <ion-slide>
+          <img style="width:80%" src="assets/Images/ad2.png" alt="Deal 2">
+        </ion-slide>
+        <ion-slide>
+          <img style="width:80%" src="assets/Images/ad3.png" alt="Deal 3">
+        </ion-slide>
+
+      </ion-slides>
+    </div>
+
+
+    <div class="comments-section">
+      <h3>Comments</h3>
+      <div class="comment">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <p>Service was really good...</p>
+        <div class="comment-rating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </div>
+      </div>
+      <div class="comment">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <p>Service was really good...</p>
+        <div class="comment-rating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </div>
+      </div>
+      <div class="comment">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <p>Service was really good...</p>
+        <div class="comment-rating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </div>
       </div>
     </div>
-    <div class="comment">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <p>Service was really good...</p>
-      <div class="comment-rating">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-      </div>
-    </div>
-  </div>
-</ion-content>
+  </ion-content>
 </div>

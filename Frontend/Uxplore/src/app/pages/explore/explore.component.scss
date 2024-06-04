@@ -76,6 +76,12 @@
   opacity: 1;
 }
 
+.cardContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  height: auto;
+
+}
 @media (max-width: 767px) {
   ion-col[size="4"] {
     --ion-grid-column-size: 50%;
@@ -86,4 +92,10 @@
   .main-content{
     margin-bottom: 20%;
   }
+    .cardContainer {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      height: auto;
+
+    }
 }

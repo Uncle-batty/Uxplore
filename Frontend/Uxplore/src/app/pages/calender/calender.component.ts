@@ -78,51 +78,61 @@ export class CalenderComponent implements OnInit {
   }
 
   loadEvents() {
-    const userId = 21; // Replace with actual user ID
-    this.usersService
-      .getUserInteractions(userId)
-      .pipe(
-        switchMap((interactions: UserInteraction[]) => {
-          console.log('User Interactions:', interactions); // Debug log
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const user = JSON.parse(userString);
+      const userId = user.id;
+      // Now you can use userId
 
-          if (!Array.isArray(interactions)) {
-            throw new Error('Expected an array of interactions');
-          }
+      this.usersService
+        .getUserInteractions(userId)
+        .pipe(
+          switchMap((interactions: UserInteraction[]) => {
+            console.log('User Interactions:', interactions); // Debug log
 
-          const eventsByDate: { [key: number]: Observable<string>[] } = {};
-
-          interactions.forEach((interaction) => {
-            const eventDate = new Date(interaction.interaction_Date).getDate();
-            if (!eventsByDate[eventDate]) {
-              eventsByDate[eventDate] = [];
+            if (!Array.isArray(interactions)) {
+              throw new Error('Expected an array of interactions');
             }
 
-            eventsByDate[eventDate].push(
-              this.listingsService
-                .listoneactivity(interaction.listing_ID)
-                .pipe(map((listing: Listing) => listing.name))
-            );
-          });
+            const eventsByDate: { [key: number]: Observable<string>[] } = {};
 
-          const eventObservables = Object.keys(eventsByDate).map((date) => {
-            return forkJoin(eventsByDate[+date]).pipe(
-              map((names: string[]) => ({ date: +date, names }))
-            );
-          });
+            interactions.forEach((interaction) => {
+              const eventDate = new Date(
+                interaction.interaction_Date
+              ).getDate();
+              if (!eventsByDate[eventDate]) {
+                eventsByDate[eventDate] = [];
+              }
 
-          return forkJoin(eventObservables);
-        })
-      )
-      .subscribe(
-        (events: { date: number; names: string[] }[]) => {
-          events.forEach((event) => {
-            this.events[event.date] = event.names;
-          });
-        },
-        (error) => {
-          console.error('Error loading events:', error); // Error handling
-        }
-      );
+              eventsByDate[eventDate].push(
+                this.listingsService
+                  .listoneactivity(interaction.listing_ID)
+                  .pipe(map((listing: Listing) => listing.name))
+              );
+            });
+
+            const eventObservables = Object.keys(eventsByDate).map((date) => {
+              return forkJoin(eventsByDate[+date]).pipe(
+                map((names: string[]) => ({ date: +date, names }))
+              );
+            });
+
+            return forkJoin(eventObservables);
+          })
+        )
+        .subscribe(
+          (events: { date: number; names: string[] }[]) => {
+            events.forEach((event) => {
+              this.events[event.date] = event.names;
+            });
+          },
+          (error) => {
+            console.error('Error loading events:', error); // Error handling
+          }
+        );
+    } else {
+      console.error('No user found in localStorage');
+    }
   }
 
   isCurrentDay(day: number | null): boolean {

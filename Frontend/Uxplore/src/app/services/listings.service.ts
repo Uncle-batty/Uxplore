@@ -32,6 +32,6 @@ export class ListingsService {
   }
 
   getalllistings(): Observable<Listing[]> {
-    return this.http.get<Listing[]>(this.baseUrl);
+    return this.http.get<Listing[]>(`https://localhost:7088/api/Listing`);
   }
 }

@@ -44,6 +44,9 @@ export class IndividualCategoryComponent  implements OnInit {
       case 'Outdoors':
         this.color = ' #2B3628';
         break;
+      case 'Family Friendly':
+        this.color = ' #8a2be2';
+        break;
     }
     if (this.categoryName === 'all') {
         this.lservice.getalllistings().subscribe((alllistings) => {

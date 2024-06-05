@@ -30,4 +30,8 @@ export class ListingsService {
   searchlistings(term: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(`https://localhost:7088/api/Listings/Search?term=${term}`);
   }
+
+  getalllistings(): Observable<Listing[]> {
+    return this.http.get<Listing[]>(this.baseUrl);
+  }
 }

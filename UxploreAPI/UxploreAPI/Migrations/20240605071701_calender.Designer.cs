@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UXplore.Context;
 
@@ -11,9 +12,11 @@ using UXplore.Context;
 namespace UxploreAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240605071701_calender")]
+    partial class calender
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -347,9 +350,6 @@ namespace UxploreAPI.Migrations
                     b.Property<int>("Event_ID")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Interaction_Date")
-                        .HasColumnType("date");
-
                     b.Property<string>("Interaction_Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -360,7 +360,12 @@ namespace UxploreAPI.Migrations
                     b.Property<int>("User_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("User_Interactions");
                 });
@@ -429,6 +434,17 @@ namespace UxploreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ListingImages");
+                });
+
+            modelBuilder.Entity("UXplore.Models.User_Interactions", b =>
+                {
+                    b.HasOne("UXplore.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("UXplore.Models.User_Setting", b =>

@@ -42,3 +42,12 @@ export interface listingimages {
   listingid: number;
   image: string;
 }
+
+export interface UserInteraction {
+  id: number;
+  event_ID: number;
+  listing_ID: number;
+  user_ID: number;
+  interaction_Type: string;
+  interaction_Date: string;
+}

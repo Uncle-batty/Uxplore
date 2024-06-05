@@ -17,11 +17,11 @@
       <ion-col *ngFor="let day of week" size="1.7" class="ion-align-items-center col">
         <ion-card class="card" [ngClass]="{'highlight': isCurrentDay(day)}">
           <h6 class="card-header">{{ day || '&nbsp;' }}</h6>
-          <ion-card class="attendingcard">Test attending</ion-card>
+          <div *ngIf="day && events[day]">
+            <ion-card class="attendingcard" *ngFor="let event of events[day]">{{ event }}</ion-card>
+          </div>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 </div>

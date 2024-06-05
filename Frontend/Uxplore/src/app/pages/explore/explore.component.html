@@ -1,11 +1,11 @@
 <div class="main-content">
-  <ion-content>
+
     <div class="search-bar">
       <ion-searchbar placeholder="What do you want to explore ?"
      (ionInput)="serach($event)">
     </ion-searchbar>
     <div class="cardContainer">
-      <app-event-card *ngFor="let item of events" [event]="item"></app-event-card>
+      <app-event-card *ngFor="let item of events" [event]="item" bgColor="#fff" ></app-event-card>
     </div>
     </div>
 
@@ -107,7 +107,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-content>
+
 
 
 

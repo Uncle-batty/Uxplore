@@ -60,8 +60,8 @@ export class ExploreComponent implements OnInit {
       let newEvent: Event = {
         Id: listing.id,
         Name: listing.name,
-        Location: listing.location,
-        PriceRange: '9 - 5',
+        Location: listing.location.substring(0, 10) + '...',
+        PriceRange: listing.avG_price.toString(),
         Times: listing.hours,
         Rating: '',
         SafetyRating: '',

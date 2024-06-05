@@ -16,11 +16,11 @@ namespace UXplore.Models
         [ForeignKey("User")]
         public int User_ID { get; set; }
 
-        // Navigation property
-        public User user { get; set; }
 
         [Required]
         public string Interaction_Type { get; set; }
+
+        public DateTime Interaction_Date { get; set; }
         
     }
 }

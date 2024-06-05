@@ -1,13 +1,20 @@
+import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonRow, IonCol, IonGrid } from "@ionic/angular/standalone";
+import { IonCard, IonRow, IonCol, IonGrid } from '@ionic/angular/standalone';
+import { UsersService } from 'src/app/services/users.service';
+import { ListingsService } from 'src/app/services/listings.service';
+import { Listing, UserInteraction } from 'src/app/interfaces/interfaces';
+import { Observable, forkJoin } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
   standalone: true,
   styleUrls: ['./calender.component.scss'],
-  imports: [IonGrid, IonCol, IonRow, IonCard, CommonModule],
+  imports: [IonGrid, IonCol, IonRow, IonCard, CommonModule, HttpClientModule],
+  providers: [ListingsService, UsersService],
 })
 export class CalenderComponent implements OnInit {
   Month!: string;
@@ -16,10 +23,27 @@ export class CalenderComponent implements OnInit {
   currentYear!: number;
   currentDate!: number;
   weeks: (number | null)[][] = [];
-  monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  events: { [key: number]: string[] } = {};
 
-  constructor() { }
+  constructor(
+    private usersService: UsersService,
+    private listingsService: ListingsService
+  ) {}
 
   ngOnInit() {
     const today = new Date();
@@ -28,7 +52,8 @@ export class CalenderComponent implements OnInit {
     this.currentDate = today.getDate();
     this.Month = this.monthNames[this.monthIndex];
     this.generateCalendar(this.monthIndex, this.currentYear);
-}
+    this.loadEvents();
+  }
 
   generateCalendar(monthIndex: number, year: number) {
     this.weeks = [];
@@ -52,7 +77,59 @@ export class CalenderComponent implements OnInit {
     }
   }
 
+  loadEvents() {
+    const userId = 21; // Replace with actual user ID
+    this.usersService
+      .getUserInteractions(userId)
+      .pipe(
+        switchMap((interactions: UserInteraction[]) => {
+          console.log('User Interactions:', interactions); // Debug log
+
+          if (!Array.isArray(interactions)) {
+            throw new Error('Expected an array of interactions');
+          }
+
+          const eventsByDate: { [key: number]: Observable<string>[] } = {};
+
+          interactions.forEach((interaction) => {
+            const eventDate = new Date(interaction.interaction_Date).getDate();
+            if (!eventsByDate[eventDate]) {
+              eventsByDate[eventDate] = [];
+            }
+
+            eventsByDate[eventDate].push(
+              this.listingsService
+                .listoneactivity(interaction.listing_ID)
+                .pipe(map((listing: Listing) => listing.name))
+            );
+          });
+
+          const eventObservables = Object.keys(eventsByDate).map((date) => {
+            return forkJoin(eventsByDate[+date]).pipe(
+              map((names: string[]) => ({ date: +date, names }))
+            );
+          });
+
+          return forkJoin(eventObservables);
+        })
+      )
+      .subscribe(
+        (events: { date: number; names: string[] }[]) => {
+          events.forEach((event) => {
+            this.events[event.date] = event.names;
+          });
+        },
+        (error) => {
+          console.error('Error loading events:', error); // Error handling
+        }
+      );
+  }
+
   isCurrentDay(day: number | null): boolean {
-    return day === this.currentDate && this.monthIndex === new Date().getMonth() && this.currentYear === new Date().getFullYear();
+    return (
+      day === this.currentDate &&
+      this.monthIndex === new Date().getMonth() &&
+      this.currentYear === new Date().getFullYear()
+    );
   }
 }

@@ -21,6 +21,7 @@ import { Listing } from 'src/app/interfaces/interfaces';
 export class IndividualCategoryComponent  implements OnInit {
   events: Event[] = [];
   categoryName : string = "Category Name"
+  color: string = "";
   @Input() bannerImage:string = ""
   constructor(private router: Router, private route: ActivatedRoute, private lservice: ListingsService) {
 
@@ -33,13 +34,30 @@ export class IndividualCategoryComponent  implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.categoryName = params['id'];
     });
-
-    this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
-      this.listings = data;
-    console.log("Events:",this.popevents(data));
-
-    });
-
+    switch (this.categoryName) {
+      case 'Adrenaline':
+        this.color = '#ff6e00';
+        break;
+      case 'Date Night':
+        this.color = '#cc00FF';
+        break;
+      case 'Outdoors':
+        this.color = ' #2B3628';
+        break;
+    }
+    if (this.categoryName === 'all') {
+        this.lservice.getalllistings().subscribe((alllistings) => {
+          this.listings = alllistings;
+          console.log('Events:', this.popevents(alllistings));
+        });
+    }
+    else
+    {
+      this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
+        this.listings = data;
+        console.log('Events:', this.popevents(data));
+      });
+    }
 
 
   }
@@ -54,11 +72,12 @@ popevents(currentListing : Listing[]) : Event[] {
   currentListing.forEach((listing) => {
     this.lservice.getlistingimages(listing.id).subscribe(
       (data) => {
+
           let newEvent: Event = {
             Id: listing.id,
             Name: listing.name,
-            Location: listing.location,
-            PriceRange: '9 - 5',
+            Location: listing.location.substring(0, 10)+ "...",
+            PriceRange: listing.avG_price.toString(),
             Times: listing.hours,
             Rating: '',
             SafetyRating: '',

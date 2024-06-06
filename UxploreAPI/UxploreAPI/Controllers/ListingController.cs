@@ -53,7 +53,7 @@ namespace UXplore.Controllers
             string normalizedTerm = term.ToLower().Replace(" ", "");
 
             var listings = await _context.Listings
-                .Where(l => EF.Functions.Like(l.Name.ToLower().Replace(" ", ""), $"%{normalizedTerm}%") || EF.Functions.Like(l.Description.ToLower().Replace(" ", ""), $"%{normalizedTerm}%"))
+                .Where(l => EF.Functions.Like(l.Name.ToLower().Replace(" ", ""), $"%{normalizedTerm}%") || EF.Functions.Like(l.Description.ToLower().Replace(" ", ""), $"%{normalizedTerm}%") || EF.Functions.Like(l.Location.ToLower().Replace(" ", ""), $"%{normalizedTerm}%"))
                 .ToListAsync();
 
             return Ok(listings);

@@ -170,4 +170,10 @@ export class OneActivityComponent implements OnInit {
       location
     )}`;
   }
+
+  makeCall(phone: string | undefined) {
+    if (phone) {
+      window.location.href = `tel:${phone}`;
+    }
+  }
 }

@@ -4,18 +4,25 @@ import { arrowForwardCircleOutline, searchOutline } from 'ionicons/icons';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { listingimages, Listing,  } from 'src/app/interfaces/interfaces';
+import { listingimages, Listing } from 'src/app/interfaces/interfaces';
 import { ListingsService } from 'src/app/services/listings.service';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Event } from 'src/Models/event-card';
 import { EventCardComponent } from 'src/app/event-card/event-card.component';
+import { FormsModule } from '@angular/forms'; // Add this line
 
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule, EventCardComponent],
+  imports: [
+    IonicModule,
+    CommonModule,
+    HttpClientModule,
+    EventCardComponent,
+    FormsModule,
+  ], // Add FormsModule
   providers: [ListingsService],
 })
 export class ExploreComponent implements OnInit {
@@ -23,6 +30,7 @@ export class ExploreComponent implements OnInit {
   llistings: Listing[] = [];
   events: Event[] = [];
   issearch: boolean = false;
+  suggestions: Listing[] = [];
 
   constructor(private router: Router, private lservice: ListingsService) {}
 
@@ -30,21 +38,27 @@ export class ExploreComponent implements OnInit {
     this.router.navigate([path], { queryParams: { id: name } });
   }
 
-  async serach(event: any) {
+  async search(event: any) {
     const query = event.target.value.toLowerCase();
-    console.log(query);
     this.issearch = query !== '' && query !== undefined && query !== null;
 
     if (this.issearch) {
       this.lservice.searchlistings(query).subscribe((data) => {
         this.llistings = data;
         this.popevents(this.llistings);
-        console.log(this.events); // Check if events are logged here
+        this.suggestions = this.llistings;
       });
     } else {
       this.llistings = [];
       this.events = [];
+      this.suggestions = [];
     }
+  }
+
+  selectSuggestion(suggestion: Listing) {
+    this.term = suggestion.name; // Update the search term
+    this.suggestions = [];
+    this.search({ target: { value: this.term } }); // Trigger search
   }
 
   ngOnInit() {

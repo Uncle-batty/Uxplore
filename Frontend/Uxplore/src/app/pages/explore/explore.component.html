@@ -1,9 +1,14 @@
 <div class="main-content">
 
     <div class="search-bar">
-      <ion-searchbar placeholder="What do you want to explore ?"
-     (ionInput)="serach($event)">
-    </ion-searchbar>
+      <ion-searchbar placeholder="What do you want to explore ?" [(ngModel)]="term"  (ionInput)="search($event)">
+      </ion-searchbar>
+      <ion-list *ngIf="suggestions.length > 0">
+        <ion-item *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)" button detail lines="full">
+          {{ suggestion.name }}
+        </ion-item>
+      </ion-list>
+
     <div class="cardContainer">
       <app-event-card *ngFor="let item of events" [event]="item" bgColor="#dab600" ></app-event-card>
     </div>

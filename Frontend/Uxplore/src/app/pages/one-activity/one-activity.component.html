@@ -1,5 +1,4 @@
 <div class="main-content">
-
   <ion-content>
     <div class="activity-details">
       <img [src]="images[currentImageIndex]?.image" alt="Restaurant Image" class="activity-image">
@@ -18,14 +17,13 @@
             <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price}}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-            <ion-icon name="call-outline" style="font-size: 1.5rem;"></ion-icon> Call: {{ activity?.phone}}
+            <ion-icon name="call-outline" style="font-size: 1.5rem;" (click)="makeCall(activity?.phone)"></ion-icon>
+            Call: {{ activity?.phone}}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
             <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours}}
           </p>
         </div>
-
-
       </div>
 
       <div style="margin-top: 2rem;">
@@ -33,7 +31,6 @@
           <!-- rating.component.html -->
           <ion-icon name="star" *ngFor="let star of ratingArray"></ion-icon>
           <ion-icon name="star-outline" *ngFor="let empty of emptyStarsArray"></ion-icon>
-
         </div>
         <div style="display: flex;align-items: center;">
           <h2 class="activity-title">{{ activity?.name }}</h2>
@@ -49,7 +46,6 @@
           </p>
           <button class="buttonprimary">Book Now!</button>
         </div>
-
       </div>
     </div>
 
@@ -65,10 +61,8 @@
         <ion-slide>
           <img style="width:80%" src="assets/Images/ad3.png" alt="Deal 3">
         </ion-slide>
-
       </ion-slides>
     </div>
-
 
     <div class="comments-section">
       <h3>Comments</h3>

@@ -1,11 +1,16 @@
+import { signInWithPopup } from 'firebase/auth';
+import { SocialAuthService } from './../../services/social-auth.service';
 import { UsersService } from './../../services/users.service';
 import { IonicModule } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { User, interests } from 'src/app/interfaces/interfaces';
+import { logoGoogle, logoFacebook ,logoTwitter } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+
 
 @Component({
   selector: 'app-landing',
@@ -21,6 +26,8 @@ export class LandingComponent implements OnInit {
   isModalOpen = false;
   isRegistrationModelOpen = false;
   isInterestsModelOpen = false;
+  userID : number = 0;
+
 
 selectedInterests: string[] = [];
 interests: selectedInterest[] = [
@@ -49,7 +56,10 @@ interestCategoryMapping: { [key: string]: number } = {
   Fullname: string = '';
   Confermpassword: string = '';
 
-  constructor(private router: Router, private service: UsersService) { }
+  constructor(private router: Router, private service: UsersService, private socialAuth: SocialAuthService) {
+    addIcons({logoGoogle, logoFacebook, logoTwitter})
+
+  }
 
   navpage(path: string) {
     this.router.navigate([path]);
@@ -170,7 +180,7 @@ interestCategoryMapping: { [key: string]: number } = {
       {
         if (this.validatePassword(this.password) && this.password === this.Confermpassword)
           {
-             this.user = {
+            this.user = {
                 fName : this.Fullname.split(' ')[0],
                 lName : this.Fullname.split(' ')[1],
                 email : this.email,
@@ -226,7 +236,171 @@ submituser() {
   );
 }
 
+signInWithGoogle(){
+  let user : User = {
+    fName: " no user",
+        lName: "no user",
+        email: " no email",
+        password: "google",
+        userType: 'user',
+  }
 
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.provider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "google",
+        userType: 'user',
+    };
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email).subscribe(
+            (response) => {
+                if (response) {
+                        localStorage.setItem('user', JSON.stringify(response));
+                        this.navpage('/user/home');
+                    }
+            },
+            (error) => {
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 400) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
+            }
+        );
+    }
+}).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
+});
+
+  }
+
+
+  // const user : User = this.socialAuth.signUserWithGoogle();
+
+
+
+signInWithFacebook(){
+
+  let user : User = {
+    fName: " no user",
+        lName: "no user",
+        email: " no email",
+        password: "google",
+        userType: 'user',
+  }
+
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.facebookProvider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "google",
+        userType: 'user',
+    };
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email).subscribe(
+            (response) => {
+                if (response) {
+                        localStorage.setItem('user', JSON.stringify(response));
+                        this.navpage('/user/home');
+                    }
+            },
+            (error) => {
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 400) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
+            }
+        );
+    }
+}).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
+});
+
+
+}
+
+signInWithTwitter(){
+let user : User = {
+    fName: " no user",
+        lName: "no user",
+        email: " no email",
+        password: "google",
+        userType: 'user',
+  }
+
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.twitterProvider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "google",
+        userType: 'user',
+    };
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email).subscribe(
+            (response) => {
+                if (response) {
+                        localStorage.setItem('user', JSON.stringify(response));
+                        this.navpage('/user/home');
+                    }
+            },
+            (error) => {
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 400) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
+            }
+        );
+    }
+}).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
+});
+
+}
 
 
 

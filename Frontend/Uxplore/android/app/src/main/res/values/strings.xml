@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Uxplore</string>
+    <string name="title_activity_main">Uxplore</string>
+    <string name="package_name">com.uxplore.UXPLORE</string>
+    <string name="custom_url_scheme">com.uxplore.UXPLORE</string>
+</resources>

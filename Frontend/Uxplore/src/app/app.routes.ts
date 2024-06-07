@@ -35,6 +35,7 @@ export const routes: Routes = [
   { path: 'main', children: mainRoutes },
   { path: 'business', children: businessComponent },
   { path: '', canActivate: [AuthGuard], children: [] }, // Use the guard for the root path
+  { path: '**', canActivate: [AuthGuard], children: [] },
 ];
 
 @NgModule({

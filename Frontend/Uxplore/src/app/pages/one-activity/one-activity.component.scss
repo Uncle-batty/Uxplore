@@ -10,7 +10,15 @@
   }
 }
 
-
+/* Style for the grayed-out input field */
+.grayed-out {
+  background-color: #f0f0f0;
+  /* Light gray background */
+  color: #a0a0a0;
+  /* Gray text */
+  cursor: not-allowed;
+  /* Change cursor to indicate the field is not editable */
+}
 
 .descrip{
   display: flex;
@@ -160,6 +168,10 @@ ion-slide p {
   margin-right: 4px;
 }
 
+.addrateing ion-icon {
+  font-size: 1rem;
+  align-self:flex-end;
+}
 @media (max-width: 767px) {
 
   .activity-description {
@@ -191,3 +203,157 @@ ion-slide p {
 
 
 }
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: relative;
+  height: 70vh;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sign-in-btn {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+}
+
+
+
+
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 37%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+
+@media (max-width: 950px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 20%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+
+@media (max-width:400px) {
+  .modal {
+    height: auto;
+  }
+}
+ion-content {
+  --ion-background-color: #ffffff00;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+.stars {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+
+  ion-icon {
+      font-size: 2rem;
+      color: gold;
+      margin-right: 0.5rem;
+    }
+}
+

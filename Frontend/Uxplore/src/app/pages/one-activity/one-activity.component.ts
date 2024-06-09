@@ -13,14 +13,21 @@ import {
   shareSocialOutline,
   globeOutline,
   personCircleOutline,
+  addOutline,
 } from 'ionicons/icons';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ListingsService } from 'src/app/services/listings.service';
 import { HttpClientModule } from '@angular/common/http';
-import { Listing, rateing, listingimages } from 'src/app/interfaces/interfaces';
+import {
+  Listing,
+  rateing,
+  listingimages,
+  Comment,
+} from 'src/app/interfaces/interfaces';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,7 +35,7 @@ import { Router } from '@angular/router';
   templateUrl: './one-activity.component.html',
   styleUrls: ['./one-activity.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule],
+  imports: [IonicModule, CommonModule, HttpClientModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ListingsService],
 })
@@ -43,10 +50,17 @@ export class OneActivityComponent implements OnInit {
   Actid: number | undefined;
   activity: Listing | undefined;
   rateings: rateing[] = [];
+  comments: Comment[] = [];
   safetyrateings: string = 'not sure';
   rateing: number = 0;
   images: listingimages[] = []; // Ensure images is initialized to an empty array
   currentImageIndex: number = 0; // Track the current image index
+  isModalOpen: boolean = false;
+  activityRating: number = 0;
+  safetyRating: number = 0;
+  activityStars: Array<number> = new Array(5).fill(0);
+  safetyStars: Array<number> = new Array(5).fill(0);
+  comment: string = '';
 
   constructor(
     private router: Router,
@@ -83,6 +97,9 @@ export class OneActivityComponent implements OnInit {
               console.log('Error fetching ratings:', error);
             }
           );
+          this.lservice.getactcomment(this.activity.id).subscribe((res) => {
+            this.comments = res;
+          });
         }
       },
       (error) => {
@@ -103,6 +120,7 @@ export class OneActivityComponent implements OnInit {
       'bookmark-outline': bookmarkOutline,
       'heart-outline': heartOutline,
       'person-circle-outline': personCircleOutline,
+      add: addOutline,
     });
   }
 
@@ -113,6 +131,14 @@ export class OneActivityComponent implements OnInit {
           (this.currentImageIndex + 1) % this.images.length;
       }
     }, 4000); // Change image every 4 seconds
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   getrateings() {
@@ -174,6 +200,116 @@ export class OneActivityComponent implements OnInit {
   makeCall(phone: string | undefined) {
     if (phone) {
       window.location.href = `tel:${phone}`;
+    }
+  }
+
+  rateActivity(rating: number) {
+    this.activityRating = rating;
+    console.log(`Activity rating set to: ${this.activityRating}`);
+  }
+
+  rateSafety(rating: number) {
+    this.safetyRating = rating;
+    console.log(`Safety rating set to: ${this.safetyRating}`);
+  }
+
+  lograteing() {
+    const userString = localStorage.getItem('user');
+    if (userString && this.Actid) {
+      // Ensure Actid is not undefined
+      const user = JSON.parse(userString);
+      const userId = user.id;
+
+      const normalRateing: rateing = {
+        id: 0,
+        event_ID: 0,
+        list_ID: this.Actid,
+        user_id: userId,
+        ratevalue: this.activityRating,
+        type: 'normal',
+      };
+
+      const safetyRateing: rateing = {
+        id: 0,
+        event_ID: 0,
+        list_ID: this.Actid,
+        user_id: userId,
+        ratevalue: this.safetyRating,
+        type: 'safety',
+      };
+
+      this.lservice.addrateings(normalRateing).subscribe(
+        (response) => {
+          console.log('Normal rating added successfully:', response);
+          this.refreshRatingsAndComments();
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error adding normal rating:', error);
+          this.refreshRatingsAndComments();
+          this.closeModal();
+        }
+      );
+
+      this.lservice.addrateings(safetyRateing).subscribe(
+        (response) => {
+          console.log('Safety rating added successfully:', response);
+          this.refreshRatingsAndComments();
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error adding safety rating:', error);
+          this.refreshRatingsAndComments();
+          this.closeModal();
+        }
+      );
+
+      if (this.comment.length > 0) {
+        const Comments: Comment = {
+          id: 0,
+          event_ID: 0,
+          listing_ID: this.Actid, // Correct the property name
+          comment: this.comment, // Ensure this.comment is correctly set
+        };
+        this.lservice.addcomments(Comments).subscribe(
+          (response) => {
+            console.log('Comment added successfully:', response);
+            this.refreshRatingsAndComments();
+          },
+          (error) => {
+            console.error('Error adding comment:', error);
+            this.refreshRatingsAndComments();
+          }
+        );
+      } else {
+        this.refreshRatingsAndComments();
+      }
+    } else {
+      console.error('User not found in localStorage or Actid is undefined');
+    }
+  }
+
+  refreshRatingsAndComments() {
+    if (this.activity) {
+      this.lservice.getactivityrateings(this.activity.id).subscribe(
+        (res) => {
+          console.log('Updated ratings:', res);
+          this.rateings = res;
+          this.getrateings();
+        },
+        (error) => {
+          console.log('Error fetching updated ratings:', error);
+        }
+      );
+      this.lservice.getactcomment(this.activity.id).subscribe(
+        (res) => {
+          console.log('Updated comments:', res);
+          this.comments = res;
+        },
+        (error) => {
+          console.log('Error fetching updated comments:', error);
+        }
+      );
     }
   }
 }

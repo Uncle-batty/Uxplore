@@ -1,18 +1,14 @@
 .main-content {
   overflow-y: scroll;
   margin-left: 17%;
-  /* Adjust margin-left to 15% */
   width: 83%;
-  /* Adjust width to 70% */
-
-  /* Float content to the right */
 }
 
 .cardContainer {
   display: grid;
   grid-template-columns: auto auto auto auto;
+  gap: 10px;
   height: auto;
-
 }
 
 .Heading {
@@ -23,33 +19,35 @@
   background-size: cover;
   width: 100%;
   height: 200px;
-
 }
 
 @media screen and (max-width: 960px) {
   .main-content {
-      margin-left: 0%;
-      /* Adjust margin-left to 15% */
-      width: 100%;
-      /* Adjust width to 70% */
+    margin-left: 0;
+    width: 100%;
+  }
 
-      /* Float content to the right */
-    }
+  .cardContainer {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 cards for tablets */
+  }
+}
 
-    .cardContainer {
-      display: grid;
-      grid-template-columns: auto auto auto ;
-      height: auto;
-
-    }
+@media screen and (max-width: 480px) {
+  .cardContainer {
+    grid-template-columns: 1fr;
+    /* 1 card for mobile devices */
+  }
 }
 
 .loader {
-  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  justify-self: center;
 }
+
 .glitch {
   position: relative;
   font-size: 25px;
@@ -63,7 +61,6 @@
 
 .glitch:before,
 .glitch:after {
-  display: block;
   content: attr(data-glitch);
   position: absolute;
   top: 0;
@@ -104,7 +101,7 @@
     transform: translate(3px, -3px);
   }
 
-  to {
+  100% {
     transform: translate(0);
   }
 }

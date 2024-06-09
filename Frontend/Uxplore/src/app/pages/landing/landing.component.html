@@ -4,16 +4,16 @@
   <div class="navBar">
     <img (click)="navpage('/main/landing')" id="img" src="../../assets/Logo.png">
     <nav class="nav-buttons">
-      <a (click)="navpage('/main/about')" class="nav-button" expand="block">About</a>
-      <a  class="nav-button" expand="block">Are you a Buisness</a>
-      <a  class="nav-button" (click)="openModal()" expand="block">Login</a>
+      <a (click)="navpage('/main/about')" class="nav-button">About</a>
+      <a class="nav-button">Are you a Business</a>
+      <a class="nav-button" (click)="openModal()">Login</a>
     </nav>
   </div>
 
   <div class="Contentbox">
     <h1>Discover and Experience <br>the hidden gems right <br>at your fingertips.</h1>
     <h6>"We find... U Explore!"</h6>
-    <button class="button" (click)="openRegModel()" id="open-modal" expand="block">SIGN UP</button>
+    <button class="button" (click)="openRegModel()" id="open-modal">SIGN UP</button>
   </div>
 </div>
 
@@ -21,28 +21,23 @@
 <div class="modal-overlay" [ngClass]="{'show': isRegistrationModelOpen}" (click)="closeRegModel()">
   <div class="modal" [ngClass]="{'show': isRegistrationModelOpen}" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <button class="close-btn" (click)="closeRegModel() ">X</button>
+      <button class="close-btn" (click)="closeRegModel()">X</button>
     </div>
     <div class="modal-content">
       <h2>Register</h2>
       <div class="inputscon">
         <input class="input" placeholder="Name" type="text" [(ngModel)]="Fullname" />
-        <ion-toast
-        [isOpen] = 'isEmailToast'
-          message = 'enter a valid email address'
-          duration = '5000'
-          (didDismiss) = 'setOpen(false)'>
+        <ion-toast [isOpen]='isEmailToast' message='Enter a valid email address' duration='5000'
+          (didDismiss)='setOpen(false)'>
         </ion-toast>
         <input class="input" placeholder="Email" type="email" [(ngModel)]="email" />
-        <ion-toast
-        [isOpen]="isPasswordToast"
-        message="Password must contain at least one upper case character and be over 8 characters"
-        duration="5000"
-        (didDismiss)="setOpen(false)"></ion-toast>
+        <ion-toast [isOpen]="isPasswordToast"
+          message="Password must contain at least one upper case character and be over 8 characters" duration="5000"
+          (didDismiss)="setOpen(false)"></ion-toast>
         <input class="input" placeholder="Password" type="password" [(ngModel)]="password" />
         <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Confermpassword" />
         <button class="sign-in-btn" (click)="logregdetails()">Confirm</button>
-        <a  style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
+        <a style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
       </div>
     </div>
   </div>
@@ -75,7 +70,6 @@
   </div>
 </div>
 
-
 <!-- Login Modal -->
 <div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
   <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
@@ -101,10 +95,8 @@
       <div style="display: flex; justify-content: space-evenly; margin-top: 10px">
         <ion-icon size="large" name="logo-google" (click)="signInWithGoogle()"></ion-icon>
         <ion-icon name="logo-facebook" size="large" (click)="signInWithFacebook()"></ion-icon>
- <ion-icon name="logo-twitter" size="large" (click)="signInWithTwitter()"></ion-icon>
+        <ion-icon name="logo-twitter" size="large" (click)="signInWithTwitter()"></ion-icon>
       </div>
     </div>
   </div>
 </div>
-
-

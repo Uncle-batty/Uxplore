@@ -2,53 +2,46 @@
   <ion-content>
     <div class="activity-details">
       <img [src]="images[currentImageIndex]?.image" alt="Restaurant Image" class="activity-image">
-
       <div class="activity-info">
         <div class="activity-meta">
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
             <ion-icon name="shield-checkmark-outline" style="font-size: 1.5rem;"></ion-icon> Safety Rating:
-            {{safetyrateings}}
+            {{ safetyrateings }}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
             <a [href]="getGoogleMapsUrl()" target="_blank"><ion-icon name="location-outline"
-                style="font-size: 1.5rem;"></ion-icon></a> Location: {{ activity?.location}}
+                style="font-size: 1.5rem;"></ion-icon></a> Location: {{ activity?.location }}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-            <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price}}
+            <ion-icon name="pricetag-outline" style="font-size: 1.5rem;"></ion-icon> Pricing: R{{ activity?.avG_price }}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
             <ion-icon name="call-outline" style="font-size: 1.5rem;" (click)="makeCall(activity?.phone)"></ion-icon>
-            Call: {{ activity?.phone}}
+            Call: {{ activity?.phone }}
           </p>
           <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-            <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours}}
+            <ion-icon name="time-outline" style="font-size: 1.5rem;"></ion-icon> Operating Hours: {{ activity?.hours }}
           </p>
         </div>
       </div>
-
       <div style="margin-top: 2rem;">
         <div class="activity-rating">
-          <!-- rating.component.html -->
           <ion-icon name="star" *ngFor="let star of ratingArray"></ion-icon>
           <ion-icon name="star-outline" *ngFor="let empty of emptyStarsArray"></ion-icon>
         </div>
-        <div style="display: flex;align-items: center;">
+        <div style="display: flex; align-items: center;">
           <h2 class="activity-title">{{ activity?.name }}</h2>
           <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
           <ion-icon style="font-size: 1.5rem;" name="bookmark-outline"></ion-icon>
           <ion-icon style="font-size: 1.5rem;" name="share-social-outline"></ion-icon>
-          <a href="{{ activity?.site}}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
+          <a href="{{ activity?.site }}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
         </div>
-
         <div class="descrip">
-          <p class="activity-description">
-            {{ activity?.description}}
-          </p>
+          <p class="activity-description">{{ activity?.description }}</p>
           <button class="buttonprimary">Book Now!</button>
         </div>
       </div>
     </div>
-
     <div class="deals-section">
       <h3>Our Deals!</h3>
       <ion-slides class="slides" [options]="slideOpts">
@@ -63,36 +56,56 @@
         </ion-slide>
       </ion-slides>
     </div>
-
     <div class="comments-section">
       <h3>Comments</h3>
-      <div class="comment">
+      <div class="addrateing" (click)="openModal()"><ion-icon name="add"></ion-icon></div>
+      <style>
+        .addrateing {
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          padding: 1rem;
+        }
+
+        .addrateing ion-icon {
+          font-size: 3rem;
+        }
+      </style>
+      <div class="comment" *ngFor="let comment of comments">
         <ion-icon name="person-circle-outline"></ion-icon>
-        <p>Service was really good...</p>
-        <div class="comment-rating">
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-        </div>
-      </div>
-      <div class="comment">
-        <ion-icon name="person-circle-outline"></ion-icon>
-        <p>Service was really good...</p>
-        <div class="comment-rating">
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-        </div>
-      </div>
-      <div class="comment">
-        <ion-icon name="person-circle-outline"></ion-icon>
-        <p>Service was really good...</p>
-        <div class="comment-rating">
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-        </div>
+        <p>{{ comment.comment }}</p>
+        <!-- <div class="comment-rating">
+          <ion-icon *ngFor="let star of [].constructor(5); let i = index"
+            [name]="i < rateings[comment.userid] ? 'star' : 'star-outline'"></ion-icon>
+        </div> -->
       </div>
     </div>
   </ion-content>
+</div>
+<!-- Rating modal -->
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Rate {{ activity?.name }}</h2>
+      <div class="inputscon">
+        <p>On a scale of 1 to 5 how would you rate this activity</p>
+        <div class="stars">
+          <ion-icon *ngFor="let star of activityStars; let i = index"
+            [name]="i < activityRating ? 'star' : 'star-outline'" (click)="rateActivity(i + 1)"></ion-icon>
+        </div>
+        <p>On a scale of 1 to 5 how safe is this activity</p>
+        <div class="stars">
+          <ion-icon *ngFor="let star of safetyStars; let i = index" [name]="i < safetyRating ? 'star' : 'star-outline'"
+            (click)="rateSafety(i + 1)"></ion-icon>
+        </div>
+        <p>Would you like to leave a comment?</p>
+        <input class="input" [(ngModel)]="comment" [disabled]="activityRating <= 1"
+          [ngClass]="{'grayed-out': activityRating <= 1}" />
+      </div>
+      <button class="sign-in-btn" (click)="lograteing()">Rate</button>
+    </div>
+  </div>
 </div>

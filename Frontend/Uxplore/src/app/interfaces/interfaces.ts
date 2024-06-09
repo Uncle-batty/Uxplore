@@ -31,7 +31,7 @@ export interface interests {
 export interface rateing {
   id: number;
   event_ID: number;
-  listing_id: number;
+  list_ID: number | undefined;
   user_id: number;
   ratevalue: number;
   type: string;
@@ -50,4 +50,11 @@ export interface UserInteraction {
   user_ID: number;
   interaction_Type: string;
   interaction_Date: string;
+}
+
+export interface Comment {
+  id: number;
+  event_ID: number;
+  listing_ID: number|undefined;
+  comment: string;
 }

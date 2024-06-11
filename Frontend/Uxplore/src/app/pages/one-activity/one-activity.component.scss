@@ -20,6 +20,23 @@
   /* Change cursor to indicate the field is not editable */
 }
 
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.social-icons ion-icon {
+  font-size: 2rem;
+  color: #cacaca;
+  cursor: pointer;
+}
+
+.social-icons ion-icon:hover {
+  color: #7332B4
+  /* Change color on hover */
+}
 .descrip{
   display: flex;
     align-items: center;

@@ -14,6 +14,12 @@ import {
   globeOutline,
   personCircleOutline,
   addOutline,
+  logoTwitter,
+  logoFacebook,
+  logoWhatsapp,
+  ellipsisHorizontal,
+  logoInstagram,
+  copyOutline,
 } from 'ionicons/icons';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -29,6 +35,7 @@ import {
   Comment,
 } from 'src/app/interfaces/interfaces';
 import { Router } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-one-activity',
@@ -65,7 +72,8 @@ export class OneActivityComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private lservice: ListingsService
+    private lservice: ListingsService,
+    private clipboard: Clipboard
   ) {}
 
   ngOnInit() {
@@ -120,7 +128,13 @@ export class OneActivityComponent implements OnInit {
       'bookmark-outline': bookmarkOutline,
       'heart-outline': heartOutline,
       'person-circle-outline': personCircleOutline,
-      add: addOutline,
+      'add-outline': addOutline,
+      'logo-twitter': logoTwitter,
+      'logo-facebook': logoFacebook,
+      'logo-whatsapp': logoWhatsapp,
+      'copy-outline': copyOutline,
+      'logo-instagram': logoInstagram,
+      'ellipsis-horizontal': ellipsisHorizontal,
     });
   }
 
@@ -311,5 +325,75 @@ export class OneActivityComponent implements OnInit {
         }
       );
     }
+  }
+
+  // Inside your OneActivityComponent class
+  isSocialShareModalOpen: boolean = false;
+
+  openSocialShareModal() {
+    this.isSocialShareModalOpen = true;
+  }
+
+  closeSocialShareModal() {
+    this.isSocialShareModalOpen = false;
+  }
+
+  shareOnFacebook() {
+    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      this.getShareUrl()
+    )}`;
+    window.open(shareUrl, '_blank');
+  }
+
+  shareOnTwitter() {
+    const description = this.activity?.description || ''; // Provide a default empty string if description is undefined
+    const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      this.getShareUrl()
+    )}&text=${encodeURIComponent(description)}`;
+    window.open(shareUrl, '_blank');
+  }
+
+  shareOnWhatsApp() {
+    const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      this.activity?.description || ''
+    )} ${encodeURIComponent(this.getShareUrl())}`;
+    window.open(shareUrl, '_blank');
+  }
+
+  copyLink() {
+    const shareUrl = this.getShareUrl();
+    this.clipboard.copy(shareUrl);
+    // You can provide user feedback here, like displaying a toast
+  }
+
+  shareOnInstagram() {
+    // Construct the Instagram sharing URL with your content
+    const shareUrl = 'https://www.instagram.com/';
+    window.open(shareUrl, '_blank');
+  }
+
+  async shareMore() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Share via',
+          text: 'Check out this cool activity!',
+          url: this.getShareUrl(),
+        });
+        console.log('Successful share');
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      // Fallback for browsers that don't support the Web Share API
+      // You can implement your custom sharing functionality here
+      console.log('Web Share API not supported');
+    }
+  }
+
+  // Add methods for sharing on other social media platforms as needed
+
+  getShareUrl(): string {
+    return window.location.href;
   }
 }

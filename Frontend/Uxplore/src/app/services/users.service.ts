@@ -11,6 +11,7 @@ import { UserInteraction } from '../interfaces/interfaces';
 })
 export class UsersService {
   constructor(private http: HttpClient) {}
+
   baseurl: string = 'https://localhost:7088/api/Users';
   intersteURL: string = 'https://localhost:7088/api/User_interests';
   loginuser(email: string): Observable<any> {

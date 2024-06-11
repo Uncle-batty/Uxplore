@@ -25,23 +25,23 @@
         </div>
       </div>
       <div style="margin-top: 2rem;">
-        <div class="activity-rating">
-          <ion-icon name="star" *ngFor="let star of ratingArray"></ion-icon>
-          <ion-icon name="star-outline" *ngFor="let empty of emptyStarsArray"></ion-icon>
-        </div>
-        <div style="display: flex; align-items: center;">
-          <h2 class="activity-title">{{ activity?.name }}</h2>
-          <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
-          <ion-icon style="font-size: 1.5rem;" name="bookmark-outline"></ion-icon>
-          <ion-icon style="font-size: 1.5rem;" name="share-social-outline"></ion-icon>
-          <a href="{{ activity?.site }}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
-        </div>
-        <div class="descrip">
-          <p class="activity-description">{{ activity?.description }}</p>
-          <button class="buttonprimary">Book Now!</button>
-        </div>
-      </div>
+    <div class="activity-rating">
+      <ion-icon name="star" *ngFor="let star of ratingArray"></ion-icon>
+      <ion-icon name="star-outline" *ngFor="let empty of emptyStarsArray"></ion-icon>
     </div>
+    <div style="display: flex; align-items: center;">
+      <h2 class="activity-title">{{ activity?.name }}</h2>
+      <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" name="bookmark-outline"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" name="share-social-outline" (click)="openSocialShareModal()"></ion-icon>
+      <a href="{{ activity?.site }}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
+    </div>
+    <div class="descrip">
+      <p class="activity-description">{{ activity?.description }}</p>
+      <button class="buttonprimary">Book Now!</button>
+    </div>
+  </div>
+      </div>
     <div class="deals-section">
       <h3>Our Deals!</h3>
       <ion-slides class="slides" [options]="slideOpts">
@@ -58,7 +58,7 @@
     </div>
     <div class="comments-section">
       <h3>Comments</h3>
-      <div class="addrateing" (click)="openModal()"><ion-icon name="add"></ion-icon></div>
+      <div class="addrateing" (click)="openModal()"><ion-icon name="add-outline"></ion-icon></div>
       <style>
         .addrateing {
           display: flex;
@@ -82,6 +82,28 @@
     </div>
   </ion-content>
 </div>
+
+<!-- Share modal -->
+<div class="modal-overlay" [ngClass]="{'show': isSocialShareModalOpen}" (click)="closeSocialShareModal() ">
+  <div class="modal" [ngClass]="{'show': isSocialShareModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)=" closeSocialShareModal() ">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Share</h2>
+      <div class="social-icons">
+        <ion-icon name="logo-twitter" (click)="shareOnTwitter()"></ion-icon>
+        <ion-icon name="logo-facebook" (click)="shareOnFacebook()"></ion-icon>
+        <ion-icon name="logo-whatsapp" (click)="shareOnWhatsApp()"></ion-icon>
+        <ion-icon name="copy-outline" (click)="copyLink()"></ion-icon> <!-- Copy Link -->
+        <ion-icon name="logo-instagram" (click)="shareOnInstagram()"></ion-icon> <!-- Instagram -->
+        <ion-icon name="ellipsis-horizontal" (click)="shareMore()"></ion-icon> <!-- More -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- Rating modal -->
 <div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
   <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">

@@ -38,7 +38,7 @@ export class SavedComponent implements OnInit {
         Id: index.toString(),
         Name: 'level 4 ',
         Location: 'Santon',
-        PriceRange: '180 - 340',
+        PriceRange: '220 - 340',
         Times: '9am - 21pm',
         Rating: '4.5',
         SafetyRating: 'Safe',

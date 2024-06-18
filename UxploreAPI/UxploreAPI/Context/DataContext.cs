@@ -25,6 +25,7 @@ namespace UXplore.Context
         public DbSet<User_interests> User_Interests { get; set; }
         public DbSet<User_Setting> User_Settings { get; set; }
         public DbSet<ListingImage> ListingImages { get; set; }
+        public DbSet<FeelingsListings> feelings { get; set; }
 
     }
 }

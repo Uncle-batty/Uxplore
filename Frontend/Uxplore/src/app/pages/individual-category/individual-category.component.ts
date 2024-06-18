@@ -3,19 +3,18 @@ import { Router } from '@angular/router';
 import { EventCardComponent } from 'src/app/event-card/event-card.component';
 import { Event } from 'src/Models/event-card';
 import { CommonModule } from '@angular/common';
-import { ThisReceiver } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
 import { ListingsService } from 'src/app/services/listings.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Listing } from 'src/app/interfaces/interfaces';
-
+import { IonGrid, IonRow } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-individual-category',
   standalone: true,
   templateUrl: './individual-category.component.html',
   styleUrls: ['./individual-category.component.scss'],
-  imports: [EventCardComponent, CommonModule, HttpClientModule],
+  imports: [IonRow, IonGrid, EventCardComponent, CommonModule, HttpClientModule],
   providers: [ListingsService],
 })
 export class IndividualCategoryComponent implements OnInit {
@@ -73,6 +72,7 @@ export class IndividualCategoryComponent implements OnInit {
   }
 
   navpage(path: string, eventid: number = 1) {
+    console.log(eventid)
     this.router.navigate([path], { queryParams: { id: eventid } });
   }
 

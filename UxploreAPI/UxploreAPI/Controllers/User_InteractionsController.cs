@@ -114,6 +114,16 @@ namespace UxploreAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("type")]
+        public async Task<ActionResult<IEnumerable<User_Interactions>>> GetSavedInteractions(string interactionType)
+        {
+            var savedInteractions = await _context.User_Interactions
+                .Where(ui => ui.Interaction_Type == interactionType)
+                .ToListAsync();
+
+            return Ok(savedInteractions);
+        }
+
         private bool User_InteractionsExists(int id)
         {
             return _context.User_Interactions.Any(e => e.ID == id);

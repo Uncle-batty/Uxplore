@@ -152,7 +152,7 @@ interestCategoryMapping: { [key: string]: number } = {
     this.showPasswordError = this.password.length < 6;
 
     if (!this.showEmailError && !this.showPasswordError) {
-      this.service.loginuser(this.email).subscribe(
+      this.service.loginuser(this.email,this.password).subscribe(
         (response) => {
           if (response) {
             if (this.password === response.password) {
@@ -182,7 +182,7 @@ interestCategoryMapping: { [key: string]: number } = {
           {
             this.user = {
                 fName : this.Fullname.split(' ')[0],
-                lName : this.Fullname.split(' ')[1],
+                lName : this.Fullname.split(' ')[1] ?? "",
                 email : this.email,
                 password : this.password,
                 userType : "user",
@@ -230,7 +230,7 @@ submituser() {
       this.navpage('/user/home');
     },
     (error) => {
-      console.error('Failed to register user', error);
+      console.error('Failed to register user', error,this.user);
       this.isFailedtoast = true;
     }
   );
@@ -251,13 +251,14 @@ signInWithGoogle(){
         fName: user.displayName?.split(' ')[0] ?? "User",
         lName: user.displayName?.split(' ')[1] ?? "",
         email: user.email ?? "email",
-        password: "google",
+        password: "UXploreSocialAuth",
         userType: 'user',
     };
+    this.password = "UXploreSocialAuth";
     console.log(userData, user);
 
     if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
@@ -266,7 +267,7 @@ signInWithGoogle(){
             },
             (error) => {
                 if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
+                    if (error.status === 404) {
                       this.user = userData;
                       this.openInterestsModel()
 
@@ -310,13 +311,14 @@ signInWithFacebook(){
         fName: user.displayName?.split(' ')[0] ?? "User",
         lName: user.displayName?.split(' ')[1] ?? "",
         email: user.email ?? "email",
-        password: "google",
+        password: "UXploreSocialAuth",
         userType: 'user',
     };
+    this.password = "UXploreSocialAuth";
     console.log(userData, user);
 
     if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
@@ -325,7 +327,7 @@ signInWithFacebook(){
             },
             (error) => {
                 if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
+                    if (error.status === 404) {
                       this.user = userData;
                       this.openInterestsModel()
 
@@ -364,13 +366,14 @@ let user : User = {
         fName: user.displayName?.split(' ')[0] ?? "User",
         lName: user.displayName?.split(' ')[1] ?? "",
         email: user.email ?? "email",
-        password: "google",
+        password: "UXploreSocialAuth",
         userType: 'user',
     };
+    this.password = "UXploreSocialAuth";
     console.log(userData, user);
 
     if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
@@ -379,7 +382,7 @@ let user : User = {
             },
             (error) => {
                 if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
+                    if (error.status === 404) {
                       this.user = userData;
                       this.openInterestsModel()
 
@@ -397,7 +400,7 @@ let user : User = {
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
+    console.error(`Error during sign-in with twitter: ${errorCode} - ${errorMessage}`);
 });
 
 }

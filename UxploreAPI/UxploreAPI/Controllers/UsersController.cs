@@ -5,6 +5,9 @@ using UXplore.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Security.Cryptography;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace UxploreAPI.Controllers
 {
@@ -42,24 +45,36 @@ namespace UxploreAPI.Controllers
 
         // GET: api/Users/email/someone@example.com
         [HttpGet("email/{email}")]
-        public async Task<ActionResult<User>> GetUserByEmail(string email)
+        public async Task<ActionResult<User>> GetUserByEmail(string email, string password ="no password")
         {
+            
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
             {
+
                 return NotFound();
+            }else
+            {
+                if( HashPassword(password) == user.Password)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
 
-            return Ok(user);
+           
         }
 
 
         // POST: api/Users
         [HttpPost]
-        [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            user.Password = HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -126,9 +141,31 @@ namespace UxploreAPI.Controllers
             return NoContent();
         }
 
+        
+
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                // ComputeHash - returns byte array
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Convert byte array to a string
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
+        }
+
+
     }
 }

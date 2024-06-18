@@ -47,6 +47,11 @@ export class ListingsService {
     return this.http.get<Listing[]>(`https://localhost:7088/api/Listing`);
   }
 
+  getOneListing(listingID : number):Observable<Listing> {
+    const url = `https://localhost:7088/api/Listing/${listingID}`
+    return this.http.get<Listing>(url)
+  }
+
   addrateings(Rateing: rateing): Observable<rateing> {
     return this.http.post<rateing>(this.rateingbaseurl, Rateing);
   }

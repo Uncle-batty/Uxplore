@@ -32,7 +32,7 @@
     <div style="display: flex; align-items: center;">
       <h2 class="activity-title">{{ activity?.name }}</h2>
       <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
-      <ion-icon style="font-size: 1.5rem;" name="bookmark-outline"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" name="bookmark-outline" (click)="addToSaved()"></ion-icon>
       <ion-icon style="font-size: 1.5rem;" name="share-social-outline" (click)="openSocialShareModal()"></ion-icon>
       <a href="{{ activity?.site }}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
     </div>

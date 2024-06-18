@@ -65,7 +65,7 @@ public static class ListingEndpoints
             var affected = await db.Listings
                 .Where(model => model.ID == id)
                 .ExecuteUpdateAsync(setters => setters
-                  .SetProperty(m => m.ID, listing.ID)
+                  
                   .SetProperty(m => m.Name, listing.Name)
                   .SetProperty(m => m.Description, listing.Description)
                   .SetProperty(m => m.Hours, listing.Hours)

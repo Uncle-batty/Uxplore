@@ -11,6 +11,7 @@ import { Listing } from 'src/app/interfaces/interfaces';
 import { Event } from 'src/Models/event-card';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -126,7 +127,7 @@ export class HomeComponent implements OnInit {
     const total = this.listingDetails.length;
 
     this.listingDetails.forEach(detail => {
-      this.listingService.getonelisting(detail.id).subscribe(onelisting => {
+      this.listingService.getOneListing(detail.id).subscribe(onelisting => {
         this.sortedListingDetails.push(onelisting);
         this.listingService.getlistingimages(onelisting.id).subscribe(item => {
           const event: Event = {

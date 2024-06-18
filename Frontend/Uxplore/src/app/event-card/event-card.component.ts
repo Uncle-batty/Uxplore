@@ -1,3 +1,4 @@
+import { UsersService } from 'src/app/services/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet, IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonRow, IonCol, IonGrid } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -5,18 +6,22 @@ import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { locationOutline,star, bookmark, shareSocial  } from 'ionicons/icons';
 import { Event } from 'src/Models/event-card';
+import { UserInteraction, User } from '../interfaces/interfaces';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-event-card',
   standalone: true,
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.scss'],
-  imports: [IonGrid, IonCol, IonRow, IonIcon, IonCard, IonCardHeader, IonApp, IonRouterOutlet,CommonModule, IonCardTitle, IonCardSubtitle, IonCardContent, FormsModule]
+  imports: [IonGrid, IonCol, IonRow, IonIcon, IonCard, IonCardHeader, IonApp, IonRouterOutlet,CommonModule, IonCardTitle, IonCardSubtitle, IonCardContent, FormsModule, HttpClientModule],
+  providers: [UsersService]
 })
 export class EventCardComponent  implements OnInit {
 
-  @Input() bgColor : string = "#23a425";
+  @Input() bgColor : string = "#00ff11";
   @Input() boxShadow : string = "";
+  @Input() shareVisible: boolean = true;
    @Input() event: Event = {
     Id: 0,
     Name: '',
@@ -30,7 +35,7 @@ export class EventCardComponent  implements OnInit {
 
 
 
-  constructor() {
+  constructor(private userService: UsersService) {
     addIcons({locationOutline, star, bookmark, shareSocial})
   }
 
@@ -43,6 +48,29 @@ export class EventCardComponent  implements OnInit {
 
   getStars(): number[] {
     return Array.from({ length: parseInt(this.event.Rating, 10) }, (_, index) => index + 1);
+  }
+
+   addToSaved(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+    let currentDate = new Date(Date.now()).toLocaleDateString()
+    currentDate = currentDate.replace("/","-" )
+    console.log("This user: ",user.id,)
+    const interaction: UserInteraction = {
+      event_ID: 0,
+      listing_ID: Number(this.event.Id),
+      user_ID: user.id,
+      interaction_Type: "Saved",
+      // interaction_Date: "2024-06-12"
+      interaction_Date: currentDate.replace("/","-" )
+    }
+    console.log("Interaction: ",interaction)
+
+    this.userService.setInteraction(interaction).subscribe(result =>
+      console.log(result)
+    ),((error: any) => {
+      console.log("error: ", error)
+    })
   }
 
   getDefaultImage() : string{

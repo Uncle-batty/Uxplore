@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/interfaces';
-import { interests } from '../interfaces/interfaces';
-import { UserInteraction } from '../interfaces/interfaces';
+import { User, interests, UserInteraction } from '../interfaces/interfaces';
+
 
 
 @Injectable({
@@ -14,8 +13,8 @@ export class UsersService {
 
   baseurl: string = 'https://localhost:7088/api/Users';
   intersteURL: string = 'https://localhost:7088/api/User_interests';
-  loginuser(email: string): Observable<any> {
-    return this.http.get<User>(this.baseurl + `/email/${email}`);
+  loginuser(email: string, password : string): Observable<any> {
+    return this.http.get<User>(this.baseurl + `/email/${email}?password=${password}`);
   }
 
   registeruser(user: User | undefined): Observable<any> {
@@ -30,5 +29,13 @@ export class UsersService {
     return this.http.get<UserInteraction[]>(
       `https://localhost:7088/api/User_Interactions/calender/${userId}`
     );
+  }
+
+  setInteraction(interaction : UserInteraction): Observable<UserInteraction>{
+    return this.http.post<UserInteraction>(`https://localhost:7088/api/User_Interactions`,interaction)
+  }
+
+  getInteractionsOfType(type: string): Observable<UserInteraction[]>{
+    return this.http.get<UserInteraction[]>(`https://localhost:7088/api/User_Interactions/type?interactionType=${type}`)
   }
 }

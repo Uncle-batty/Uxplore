@@ -23,7 +23,7 @@ import {
 } from 'ionicons/icons';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ListingsService } from 'src/app/services/listings.service';
@@ -33,9 +33,11 @@ import {
   rateing,
   listingimages,
   Comment,
+  UserInteraction,
 } from 'src/app/interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-one-activity',
@@ -44,7 +46,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
   standalone: true,
   imports: [IonicModule, CommonModule, HttpClientModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ListingsService],
+  providers: [ListingsService, UsersService],
 })
 export class OneActivityComponent implements OnInit {
   slideOpts = {
@@ -73,7 +75,8 @@ export class OneActivityComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private lservice: ListingsService,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
@@ -395,5 +398,28 @@ export class OneActivityComponent implements OnInit {
 
   getShareUrl(): string {
     return window.location.href;
+  }
+
+  addToSaved(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+    let currentDate = new Date(Date.now()).toLocaleDateString()
+    currentDate = currentDate.replace("/","-" )
+    console.log("This user: ",user.id,)
+    const interaction: UserInteraction = {
+      event_ID: 0,
+      listing_ID: Number(this.Actid),
+      user_ID: user.id,
+      interaction_Type: "Saved",
+      // interaction_Date: "2024-06-12"
+      interaction_Date: currentDate.replace("/","-" )
+    }
+    console.log("Interaction: ",interaction)
+
+    this.userService.setInteraction(interaction).subscribe(result =>
+      console.log(result)
+    ),((error: any) => {
+      console.log("error: ", error)
+    })
   }
 }

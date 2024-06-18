@@ -59,5 +59,20 @@ namespace UXplore.Controllers
             return Ok(listings);
         }
 
+        [HttpGet("OneListing")]
+        public async Task<ActionResult<IEnumerable<Listing>>> GetOneListing(int listingID)
+        {
+            var listing = await _context.Listings.FirstOrDefaultAsync(l => l.ID == listingID);
+
+            if (listing != null)
+            {
+                return Ok(listing);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
     }
 }

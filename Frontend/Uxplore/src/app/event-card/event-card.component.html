@@ -1,30 +1,31 @@
-
-
-  <ion-card class="card" [ngStyle]="{'border-color': bgColor, 'box-shadow': boxShadow}" >
-    <img class="image" alt="Silhouette of mountains" src="{{event.ImageData}}" />
+<ion-card class="card" [ngStyle]="{'border-color': bgColor, 'box-shadow': boxShadow}">
+  <div class="topSection">
+    <img class="image" alt="Silhouette of mountains" [src]="event.ImageData" />
     <ion-card-header>
       <ion-card-title class="title">{{event.Name}}</ion-card-title>
-      <div class="pillContainer">
-        <div class="pill"><ion-icon name="location-outline" color="black"></ion-icon>{{event.Location}} </div>
-        <div class="pill">R {{event.PriceRange}}</div>
-      </div>
     </ion-card-header>
+  </div>
 
+  <div class="middleSection">
+    <div class="pillContainer">
+      <div class="pill"><ion-icon name="location-outline" color="black"></ion-icon>{{event.Location}} </div>
+      <div class="pill">R {{event.PriceRange}}</div>
+    </div>
     <ion-card-content>
       Times: {{event.Times}}
       <br>
       Safety Rating: {{event.SafetyRating}}
     </ion-card-content>
+  </div>
 
-    <div class="cardFooter">
+   <div class="cardFooter">
       <ion-row >
         <div >{{event.Rating}}</div>
         <div style="margin-left: 5px;"> <ion-icon *ngFor="let star of getStars()" name="star"></ion-icon></div>
       </ion-row>
       <ion-row >
-        <ion-icon name="bookmark" ></ion-icon>
+        <ion-icon *ngIf="shareVisible" (click)="addToSaved()" name="bookmark" ></ion-icon>
         <ion-icon style="margin-left: 5px;" name="share-social"></ion-icon>
       </ion-row>
     </div>
-  </ion-card>
-
+</ion-card>

@@ -2,7 +2,6 @@
   padding-right: 20px;
   height: 100%;
   overflow-y: auto;
-  /* Allow vertical scrolling when needed */
 }
 
 @media (min-width: 960px) {
@@ -40,25 +39,25 @@
 
 .col {
   height: calc(100vh / 7);
-  /* Adjust height based on viewport */
   width: 100%;
 }
 
 .card-header {
-  font-size: 2vh;
-  align-items: flex-start;
+  font-size: 0.5rem;
+  /* Adjust the font size of the day number */
   padding-left: 10px;
   color: #fff;
 }
 
 .attendingcard {
   width: 85%;
-  height: 1.7vh;
-  font-size: 1.3vh;
+  font-size: 0.7rem;
+  /* Adjust the font size of events in calendar cards */
   border-radius: 5px;
   background-color: white;
   color: black;
-  padding: 2px;
+  margin-top: auto;
+  /* Adjust margin between day number and events */
 }
 
 .dot {
@@ -83,7 +82,42 @@
 
 .highlight {
   background-color: #3e004986;
-  /* Choose a color that suits your design */
   color: white;
   border: 2px solid #7332B4;
+}
+
+.weather-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.weather-card {
+  background-color: #2525256f;
+  border-radius: 10px;
+  border: 3px solid #ffffff44;
+  box-shadow: 0 0 5px #676767a0;
+  text-align: center;
+  color: white;
+}
+
+
+
+.modal-content {
+  margin-top: 10%;
+  padding: 20px;
+  text-align: center;
+
+}
+.eventholders {
+display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fullcard {
+ width: 80%;
+ height: 3vh;
+ text-align: center;
+
 }

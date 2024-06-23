@@ -63,4 +63,11 @@ export class ListingsService {
   getactcomment(id: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.commentApi}/listing/${id}`);
   }
+
+  getWether(long: number, lat: number): Observable<any> {
+    return this.http.get<any>(
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min`
+    );
+  }
+
 }

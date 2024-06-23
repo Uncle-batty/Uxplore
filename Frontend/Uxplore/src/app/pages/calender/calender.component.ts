@@ -1,19 +1,32 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonRow, IonCol, IonGrid } from '@ionic/angular/standalone';
+import {
+  IonCard,
+  IonRow,
+  IonCol,
+  IonGrid,
+  IonModal, IonContent } from '@ionic/angular/standalone';
 import { UsersService } from 'src/app/services/users.service';
 import { ListingsService } from 'src/app/services/listings.service';
 import { Listing, UserInteraction } from 'src/app/interfaces/interfaces';
 import { Observable, forkJoin } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
   standalone: true,
   styleUrls: ['./calender.component.scss'],
-  imports: [IonGrid, IonCol, IonRow, IonCard, CommonModule, HttpClientModule],
+  imports: [IonContent,
+    IonGrid,
+    IonCol,
+    IonRow,
+    IonCard,
+    IonModal,
+    CommonModule,
+    HttpClientModule,
+  ],
   providers: [ListingsService, UsersService],
 })
 export class CalenderComponent implements OnInit {
@@ -39,6 +52,12 @@ export class CalenderComponent implements OnInit {
   ];
   daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   events: { [key: number]: string[] } = {};
+  userLat: number = 0;
+  userLon: number = 0;
+  weatherData: any[] = [];
+
+  isModalOpen = false;
+  selectedDay: number | null = null;
 
   constructor(
     private usersService: UsersService,
@@ -53,6 +72,54 @@ export class CalenderComponent implements OnInit {
     this.Month = this.monthNames[this.monthIndex];
     this.generateCalendar(this.monthIndex, this.currentYear);
     this.loadEvents();
+    this.getUserLocation();
+  }
+
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userLat = position.coords.latitude;
+          this.userLon = position.coords.longitude;
+          console.log('User Location:', this.userLat, this.userLon);
+          this.loadWeatherData();
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }
+
+  loadWeatherData() {
+    this.listingsService.getWether(this.userLat, this.userLon).subscribe(
+      (data: any) => {
+        console.log('Weather data received:', data); // Log the data for debugging
+
+        if (
+          data.daily &&
+          data.daily.time &&
+          data.daily.temperature_2m_max &&
+          data.daily.temperature_2m_min
+        ) {
+          this.weatherData = data.daily.time.map(
+            (time: string, index: number) => ({
+              date: time,
+              maxTemperature: data.daily.temperature_2m_max[index],
+              minTemperature: data.daily.temperature_2m_min[index],
+            })
+          );
+        } else {
+          console.error('Incomplete weather data received:', data);
+          this.weatherData = []; // Set an empty array to avoid undefined issues in the template
+        }
+      },
+      (error) => {
+        console.error('Error fetching weather data:', error);
+      }
+    );
   }
 
   generateCalendar(monthIndex: number, year: number) {
@@ -82,20 +149,14 @@ export class CalenderComponent implements OnInit {
     if (userString) {
       const user = JSON.parse(userString);
       const userId = user.id;
-      // Now you can use userId
-
       this.usersService
         .getUserInteractions(userId)
         .pipe(
           switchMap((interactions: UserInteraction[]) => {
-            console.log('User Interactions:', interactions); // Debug log
-
             if (!Array.isArray(interactions)) {
               throw new Error('Expected an array of interactions');
             }
-
             const eventsByDate: { [key: number]: Observable<string>[] } = {};
-
             interactions.forEach((interaction) => {
               const eventDate = new Date(
                 interaction.interaction_Date
@@ -103,7 +164,6 @@ export class CalenderComponent implements OnInit {
               if (!eventsByDate[eventDate]) {
                 eventsByDate[eventDate] = [];
               }
-
               eventsByDate[eventDate].push(
                 this.listingsService
                   .listoneactivity(interaction.listing_ID)
@@ -127,12 +187,24 @@ export class CalenderComponent implements OnInit {
             });
           },
           (error) => {
-            console.error('Error loading events:', error); // Error handling
+            console.error('Error loading events:', error);
           }
         );
     } else {
       console.error('No user found in localStorage');
     }
+  }
+
+  openDayPopup(day: number | null) {
+    if (day && this.events[day]) {
+      this.selectedDay = day;
+      this.isModalOpen = true;
+    }
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedDay = null;
   }
 
   isCurrentDay(day: number | null): boolean {

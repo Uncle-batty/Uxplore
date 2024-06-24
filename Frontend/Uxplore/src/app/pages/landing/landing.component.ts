@@ -155,20 +155,28 @@ interestCategoryMapping: { [key: string]: number } = {
       this.service.loginuser(this.email,this.password).subscribe(
         (response) => {
           if (response) {
-            if (this.password === response.password) {
-              localStorage.setItem('user', JSON.stringify(response));
-              this.navpage('/user/home');
-            } else {
-              this.showPasswordError = true;
-            }
+
+          localStorage.setItem('user', JSON.stringify(response));
+          this.navpage('/user/home');
+
+          //
+
           } else {
             this.showEmailError = true;
           }
         },
         (error) => {
+          if (error instanceof HttpErrorResponse){
+            if (error.status == 400){
+              this.showPasswordError = true;
+            }
+            if(error.status == 404){
+              this.showEmailError = true;
+            }
+          }
           console.error('Login request failed', error);
-          this.showEmailError = true;
-          this.showPasswordError = true;
+          // this.showEmailError = true;
+          // this.showPasswordError = true;
         }
       );
     }

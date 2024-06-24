@@ -33,7 +33,7 @@ export class SavedComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,private UsersService : UsersService, private listingService : ListingsService) {}
 
   ngOnInit() {
-        this.createTestEvents();
+        this.createEvents();
         this.route.queryParams.subscribe((params) => {
           this.categoryName = params['id'];
         });
@@ -43,13 +43,17 @@ export class SavedComponent implements OnInit {
     this.router.navigate([path], { queryParams: { id: eventid } });
   }
 
-  createTestEvents() {
-    this.UsersService.getInteractionsOfType("Saved").subscribe((inters) => {
+  createEvents() {
+    const user = JSON.parse(localStorage.getItem('user') ?? "")
+    const userID = user.id
+    this.UsersService.getInteractionsOfType("Saved", userID).subscribe((inters) => {
       this.interactions = inters;
+      console.log("Loaded interactions: ", inters);
+
 
       inters.forEach((item) => {
         this.listingService.getOneListing(item.listing_ID ?? 0).subscribe((event) => {
-          this.listingService.getlistingimages(item.id ?? 0).subscribe((image) => {
+          this.listingService.getlistingimages(item.listing_ID ?? 0).subscribe((image) => {
             let newEvent : Event = {
             Id : event.id,
             Name : event.name,

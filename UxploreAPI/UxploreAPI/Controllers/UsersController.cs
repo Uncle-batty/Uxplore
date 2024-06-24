@@ -58,6 +58,7 @@ namespace UxploreAPI.Controllers
             {
                 if( HashPassword(password) == user.Password)
                 {
+                    //string pass = HashPassword(password);
                     return Ok(user);
                 }
                 else

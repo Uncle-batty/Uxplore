@@ -92,6 +92,7 @@ namespace UxploreAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User_Interactions>> PostUser_Interactions(User_Interactions user_Interactions)
         {
+            
             _context.User_Interactions.Add(user_Interactions);
             await _context.SaveChangesAsync();
 
@@ -115,14 +116,27 @@ namespace UxploreAPI.Controllers
         }
 
         [HttpGet("type")]
-        public async Task<ActionResult<IEnumerable<User_Interactions>>> GetSavedInteractions(string interactionType)
+        public async Task<ActionResult<IEnumerable<User_Interactions>>> GetSavedInteractions(string interactionType, int userID, int listingID = -1)
         {
-            var savedInteractions = await _context.User_Interactions
-                .Where(ui => ui.Interaction_Type == interactionType)
-                .ToListAsync();
+            var query = _context.User_Interactions.AsQueryable();
 
+            if (interactionType != "All")
+            {
+                query = query.Where(ui => ui.Interaction_Type == interactionType);
+            }
+
+            query = query.Where(ui => ui.User_ID == userID);
+
+            if (listingID != -1)
+            {
+                query = query.Where(ui => ui.Listing_ID == listingID);
+            }
+
+            var savedInteractions = await query.ToListAsync();
             return Ok(savedInteractions);
         }
+
+
 
         private bool User_InteractionsExists(int id)
         {

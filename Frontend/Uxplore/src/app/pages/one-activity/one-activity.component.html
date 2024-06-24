@@ -1,4 +1,6 @@
 <div class="main-content">
+  <ion-toast [isOpen]='isToastOpen' message={{toastMessage}} duration='2000' (didDismiss)="isToastOpen = false">
+  </ion-toast>
   <ion-content>
     <div class="activity-details">
       <img [src]="images[currentImageIndex]?.image" alt="Restaurant Image" class="activity-image">
@@ -31,9 +33,10 @@
     </div>
     <div style="display: flex; align-items: center;">
       <h2 class="activity-title">{{ activity?.name }}</h2>
-      <ion-icon style="font-size: 1.5rem;" name="heart-outline"></ion-icon>
-      <ion-icon style="font-size: 1.5rem;" name="bookmark-outline" (click)="addToSaved()"></ion-icon>
-      <ion-icon style="font-size: 1.5rem;" name="share-social-outline" (click)="openSocialShareModal()"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" class="clickable" name={{interactionIcons[0]}} (click)="addInteraction('Like', 'Liked', 'Un-Licked', 'heart', 0)" ></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" class="clickable" name={{interactionIcons[1]}} (click)="addInteraction('Saved', 'Saved', 'Unsaved', 'bookmark', 1)"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" class="clickable" name="share-social-outline" (click)="openSocialShareModal()"></ion-icon>
+      <ion-icon style="font-size: 1.5rem;" class="clickable" name={{interactionIcons[2]}} (click)="addInteraction('Calender', 'Added to calender', 'Removed from calender', 'notifications',2)" ></ion-icon>
       <a href="{{ activity?.site }}"><ion-icon style="font-size: 1.5rem;" name="globe-outline"></ion-icon></a>
     </div>
     <div class="descrip">

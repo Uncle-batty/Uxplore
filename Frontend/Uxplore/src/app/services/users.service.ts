@@ -35,7 +35,12 @@ export class UsersService {
     return this.http.post<UserInteraction>(`https://localhost:7088/api/User_Interactions`,interaction)
   }
 
-  getInteractionsOfType(type: string): Observable<UserInteraction[]>{
-    return this.http.get<UserInteraction[]>(`https://localhost:7088/api/User_Interactions/type?interactionType=${type}`)
+  getInteractionsOfType(type: string, userid : number, listingID : number = -1): Observable<UserInteraction[]>{
+    return this.http.get<UserInteraction[]>(`https://localhost:7088/api/User_Interactions/type?interactionType=${type}&UserID=${userid}&listingID=${listingID}`)
+  }
+
+  deleteUserInteraction(interactionID : number) : Observable<string> {
+    const url = `https://localhost:7088/api/User_Interactions/${interactionID}`
+    return this.http.delete<string>(url)
   }
 }

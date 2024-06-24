@@ -8,6 +8,7 @@ import { locationOutline,star, bookmark, shareSocial  } from 'ionicons/icons';
 import { Event } from 'src/Models/event-card';
 import { UserInteraction, User } from '../interfaces/interfaces';
 import { HttpClientModule } from '@angular/common/http';
+import { ListingsService } from '../services/listings.service';
 
 @Component({
   selector: 'app-event-card',
@@ -15,14 +16,14 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.scss'],
   imports: [IonGrid, IonCol, IonRow, IonIcon, IonCard, IonCardHeader, IonApp, IonRouterOutlet,CommonModule, IonCardTitle, IonCardSubtitle, IonCardContent, FormsModule, HttpClientModule],
-  providers: [UsersService]
+  providers: [UsersService, ListingsService]
 })
 export class EventCardComponent  implements OnInit {
 
   @Input() bgColor : string = "#00ff11";
   @Input() boxShadow : string = "";
   @Input() shareVisible: boolean = true;
-   @Input() event: Event = {
+  @Input() event: Event = {
     Id: 0,
     Name: '',
     Location: '',
@@ -32,10 +33,13 @@ export class EventCardComponent  implements OnInit {
     SafetyRating: '',
     ImageData: ''
   };
+  ratingAmount = 0;
+  savedImage = "bookmark-outline";
+  showNoRating = true;
 
 
 
-  constructor(private userService: UsersService) {
+  constructor(private userService: UsersService, private listingService:ListingsService) {
     addIcons({locationOutline, star, bookmark, shareSocial})
   }
 
@@ -44,6 +48,10 @@ export class EventCardComponent  implements OnInit {
     if (this.event.ImageData == ''){
       this.event.ImageData = this.getDefaultImage();
     }
+    this.loadSavedImage();
+    this.getListingRating();
+
+
   }
 
   getStars(): number[] {
@@ -61,7 +69,6 @@ export class EventCardComponent  implements OnInit {
       listing_ID: Number(this.event.Id),
       user_ID: user.id,
       interaction_Type: "Saved",
-      // interaction_Date: "2024-06-12"
       interaction_Date: currentDate.replace("/","-" )
     }
     console.log("Interaction: ",interaction)
@@ -71,6 +78,47 @@ export class EventCardComponent  implements OnInit {
     ),((error: any) => {
       console.log("error: ", error)
     })
+  }
+
+   loadSavedImage(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+
+    this.userService.getInteractionsOfType("Saved", user.id, this.event.Id).subscribe((Response) => {
+    if (!Response[0]){
+      this.savedImage = "bookmark-outline"
+    }else {
+      this.savedImage = "bookmark"
+    }
+    })
+  }
+
+  getListingRating() {
+    this.listingService.getactivityrateings(this.event.Id).subscribe(
+        (res) => {
+          let ratingCount = 0;
+          let ratingCurrentVAlue = 0;
+          res.forEach(item => {
+            if (item.type == "normal"){
+              ratingCount ++
+              ratingCurrentVAlue += item.ratevalue;
+            }
+          })
+          this.ratingAmount = ratingCurrentVAlue / ratingCount;
+          this.ratingAmount = Math.min(Math.max(Math.round(this.ratingAmount), 0), 5);
+          this.event.Rating = this.ratingAmount.toString();
+
+
+          if (this.ratingAmount == 0){
+            this.showNoRating = true;
+          }else{
+            this.showNoRating = false;
+          }
+
+        },
+        (error) => {
+          console.log('Error fetching updated ratings:', error);
+        })
   }
 
   getDefaultImage() : string{

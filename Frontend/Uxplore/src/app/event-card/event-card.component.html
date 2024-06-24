@@ -18,13 +18,20 @@
     </ion-card-content>
   </div>
 
-   <div class="cardFooter">
-      <ion-row >
+  <div class="cardFooter">
+      <ion-row *ngIf="!showNoRating">
         <div >{{event.Rating}}</div>
         <div style="margin-left: 5px;"> <ion-icon *ngFor="let star of getStars()" name="star"></ion-icon></div>
       </ion-row>
+
+      <ion-row *ngIf="showNoRating">
+        <div>No rating available</div>
+      </ion-row>
       <ion-row >
-        <ion-icon *ngIf="shareVisible" (click)="addToSaved()" name="bookmark" ></ion-icon>
+        <div>
+        <ion-icon name={{savedImage}}></ion-icon>
+
+        </div>
         <ion-icon style="margin-left: 5px;" name="share-social"></ion-icon>
       </ion-row>
     </div>

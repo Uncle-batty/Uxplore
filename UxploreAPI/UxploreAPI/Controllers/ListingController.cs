@@ -27,7 +27,7 @@ namespace UXplore.Controllers
             if (_gloveEmbeddings == null)
             {
                 string gloveFilePath = "../UxploreAPI/Models/glove.42B.300d.txt";
-                _gloveEmbeddings = LoadGloveEmbeddings(gloveFilePath);
+               // _gloveEmbeddings = LoadGloveEmbeddings(gloveFilePath);
             }
 
             // Initialize _feelingsListings if it's null

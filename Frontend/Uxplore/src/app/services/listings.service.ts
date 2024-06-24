@@ -12,14 +12,14 @@ import {
   providedIn: 'root',
 })
 export class ListingsService {
-  baseUrl: string = 'https://localhost:7088/api/Listing/';
-  rateingbaseurl: string = 'https://localhost:7088/api/Ratings/';
-  commentApi: string = 'https://localhost:7088/api/Comments';
+  baseUrl: string = 'https://uxploreapi.azurewebsites.net/api/Listing/';
+  rateingbaseurl: string = 'https://uxploreapi.azurewebsites.net/api/Ratings/';
+  commentApi: string = 'https://uxploreapi.azurewebsites.net/api/Comments';
   constructor(private http: HttpClient) {}
 
   listallbycategory(category: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `https://localhost:7088/api/Listings/byCategory/${category}`
+      `https://uxploreapi.azurewebsites.net/api/Listings/byCategory/${category}`
     );
   }
 
@@ -33,23 +33,25 @@ export class ListingsService {
 
   getlistingimages(id: number): Observable<listingimages[]> {
     return this.http.get<listingimages[]>(
-      `https://localhost:7088/api/ListingImages/onelisting/${id}`
+      `https://uxploreapi.azurewebsites.net/api/ListingImages/onelisting/${id}`
     );
   }
 
   searchlistings(term: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `https://localhost:7088/api/Listings/Search?term=${term}`
+      `https://uxploreapi.azurewebsites.net/api/Listings/Search?term=${term}`
     );
   }
 
   getalllistings(): Observable<Listing[]> {
-    return this.http.get<Listing[]>(`https://localhost:7088/api/Listing`);
+    return this.http.get<Listing[]>(
+      `https://uxploreapi.azurewebsites.net/api/Listing`
+    );
   }
 
-  getOneListing(listingID : number):Observable<Listing> {
-    const url = `https://localhost:7088/api/Listing/${listingID}`
-    return this.http.get<Listing>(url)
+  getOneListing(listingID: number): Observable<Listing> {
+    const url = `https://uxploreapi.azurewebsites.net/api/Listing/${listingID}`;
+    return this.http.get<Listing>(url);
   }
 
   addrateings(Rateing: rateing): Observable<rateing> {
@@ -58,7 +60,7 @@ export class ListingsService {
 
   addcomments(comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(this.commentApi, comment);
-  };
+  }
 
   getactcomment(id: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.commentApi}/listing/${id}`);
@@ -69,5 +71,4 @@ export class ListingsService {
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min`
     );
   }
-
 }

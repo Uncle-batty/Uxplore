@@ -175,8 +175,7 @@ interestCategoryMapping: { [key: string]: number } = {
             }
           }
           console.error('Login request failed', error);
-          // this.showEmailError = true;
-          // this.showPasswordError = true;
+
         }
       );
     }
@@ -360,10 +359,12 @@ signInWithFacebook(){
 }
 
 signInWithTwitter(){
+
+
 let user : User = {
-    fName: " no user",
+    fName: "no user",
         lName: "no user",
-        email: " no email",
+        email: "no email",
         password: "google",
         userType: 'user',
   }

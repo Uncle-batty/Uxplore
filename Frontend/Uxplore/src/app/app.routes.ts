@@ -11,6 +11,7 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { SavedComponent } from './pages/saved/saved.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { AuthGuard } from './services/auth.guard';// Import the guard
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,7 +21,8 @@ const userRoutes: Routes = [
   { path: 'activity', component: OneActivityComponent },
   { path: 'explore', component: ExploreComponent },
   { path: 'saved', component: SavedComponent },
-  { path: 'notifications', component: NotificationsComponent }
+  { path: 'notifications', component: NotificationsComponent },
+  {path:'profile',component:ProfileComponent}
 ];
 
 const mainRoutes: Routes = [

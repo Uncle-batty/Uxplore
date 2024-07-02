@@ -12,6 +12,10 @@ import { SavedComponent } from './pages/saved/saved.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { AuthGuard } from './services/auth.guard';// Import the guard
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileDetailsComponent } from './profile-details/profile-details.component';
+import { ProfileEmailNotificationsComponent } from './profile-email-notifications/profile-email-notifications.component';
+import { ProfilePushNofitcationsComponent } from './profile-push-nofitcations/profile-push-nofitcations.component';
+import { ProfileHelpCentreComponent } from './profile-help-centre/profile-help-centre.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },

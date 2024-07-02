@@ -1,38 +1,39 @@
 <div class="main-content">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
-  />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
   <ion-grid>
-    <ion-row justify-content-center align-items-center> 
-      <ion-col size="2" ></ion-col>
+    <ion-row justify-content-center align-items-center>
+      <ion-col size="2"></ion-col>
       <ion-col size="12" sizeSm="12" sizeMd="5" sizeXl="5">
+        <!-- Profile Card -->
         <div class="profile-card">
           <div class="profile-top">
             <div class="profile-image"></div>
             <div class="profile-details"></div>
           </div>
           <div class="profile-name">Rapudi Hlakudi</div>
-          <div class="edit-profile-button">Edit Profile</div>
+          <button class="edit-profile-button" (click)="loadComponent('ProfileDetails')">Edit Profile</button>
         </div>
-        <!--notifactions-->
+
+        <!-- Notifications -->
         <div style="margin-top: 20px">
           <div class="cardbody">
             <div class="cardTitle">
               <i class="bi bi-bell"></i>
               Notifications
             </div>
-
-            <div class="cardtext">
+            <div class="cardtext" (click)="loadComponent('PushNotificationsComponent')">
               <p>Push Notifications</p>
               <i class="bi bi-arrow-right"></i>
             </div>
-            <div class="cardtext">
+            <div class="cardtext" (click)="loadComponent('EmailNotificationsComponent')">
               <p>Email Notifications</p>
               <i class="bi bi-arrow-right"></i>
             </div>
           </div>
         </div>
+
+        <!-- Account Privacy -->
         <div style="margin-top: 180px">
           <div class="cardAccount">
             <div class="CardAccountTiltle">
@@ -42,57 +43,30 @@
             <div class="cardAccountText">
               <p>Private Account</p>
               <div class="toggle-background">
-                <span class="toggle"></span>
+                <span class="toggle" (click)="togglePrivateAccount()"></span>
               </div>
             </div>
           </div>
-
-          <script>
-            const toggle = document.querySelector(".toggle");
-            toggle.addEventListener("click", () => {
-              toggle.classList.toggle("toggled");
-            });
-          </script>
         </div>
+
+        <!-- Help Center -->
         <div style="margin-top: 300px">
           <div class="cardAccount">
             <div class="CardAccountTiltle">
               <i class="bi bi-life-preserver"></i>
-              Help Center 
+              Help Center
             </div>
-            <div class="cardtext">
-              <p>let us help you </p>
-                <i class="bi bi-arrow-right "></i>
+            <div class="cardtext" (click)="loadComponent('HelpCenterComponent')">
+              <p>Let us help you</p>
+              <i class="bi bi-arrow-right"></i>
             </div>
           </div>
         </div>
       </ion-col>
-      <ion-col size="12"  sizeSm="12" sizeMd="5" sizeXl="5">
-        <div class="rectangle-202">
-          <div>
-            <img
-              class="profile-picture"
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fget.pxhere.com%2Fphoto%2Fman-person-people-portrait-professional-profession-smiling-senior-citizen-elder-face-happy-980074.jpg&f=1&nofb=1&ipt=7ce16649217993d77337ba52e3beb815badfce264f3cbacb1ba58e1580187e88&ipo=images"
-              alt="Profile Picture"
-            />
-          </div>
-          <div class="cardformInputs">
-            <div class="form-group">
-              <p>User Name</p>
-              <input type="text" placeholder="Enter your name" />
-            </div>
-            <div class="form-group">
-              <p>Email</p>
-              <input type="text" placeholder="Enter your email" />
-            </div>
-            <div class="form-group">
-              <p>Gender</p>
-              <input type="text" placeholder="Enter your gender" />
-            </div>
-            <button>Update Profile</button>
-          </div>
-        </div>
-        
+
+      <!-- Dynamic Component Container -->
+      <ion-col size="12" sizeSm="12" sizeMd="5" sizeXl="5">
+        <ng-container #dynamicComponentContainer></ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>

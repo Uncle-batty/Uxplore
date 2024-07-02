@@ -26,7 +26,7 @@
   z-index: 1000;
 
   img {
-    width: 20vh;
+    width: 25vh;
     height: 10vh;
     cursor: pointer;
   }
@@ -239,8 +239,8 @@
 
 @media (max-width: 768px) {
   .navBar img {
-    width: 15vh;
-    height: 7vh;
+    width: 10vh;
+    height: 4vh;
   }
 
   .nav-button {

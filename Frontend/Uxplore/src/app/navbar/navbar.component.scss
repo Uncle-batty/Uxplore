@@ -79,6 +79,7 @@
   height: 70vh;
   transition: transform 0.3s ease-in-out;
   text-align: center;
+  overflow-y: auto;
 }
 
 .modal.show {
@@ -229,7 +230,7 @@
 }
 
 .notification-card {
-  background-color: gray;
+  background-color: #232222;
   display: flex;
   align-items: center;
   padding: 10px;

@@ -4,7 +4,7 @@ import { UsersService } from './../../services/users.service';
 import { IonicModule } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NumberFormatStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { User, interests } from 'src/app/interfaces/interfaces';
@@ -18,7 +18,7 @@ import { addIcons } from 'ionicons';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
-  providers: [UsersService]
+  providers: [UsersService],
 })
 export class LandingComponent implements OnInit {
   showEmailError = false;
@@ -26,39 +26,56 @@ export class LandingComponent implements OnInit {
   isModalOpen = false;
   isRegistrationModelOpen = false;
   isInterestsModelOpen = false;
-  userID : number = 0;
+  isBusinessModelOpen = false;
+  isBusinessRegOpen = false;
+  userID: number = 0;
 
+  selectedInterests: string[] = [];
+  interests: selectedInterest[] = [
+    { name: 'Adrenaline', selected: false },
+    { name: 'Outdoors', selected: false },
+    { name: 'Night Life', selected: false },
+    { name: 'family friendly', selected: false },
+    { name: 'Fitness', selected: false },
+    { name: 'Adventure', selected: false },
+  ];
 
-selectedInterests: string[] = [];
-interests: selectedInterest[] = [
-  { name: 'Adrenaline', selected: false },
-  { name: 'Outdoors', selected: false },
-  { name: 'Night Life', selected: false },
-  { name: 'family friendly', selected: false },
-  { name: 'Fitness', selected: false },
-  { name: 'Adventure', selected: false }
-];
-
-interestCategoryMapping: { [key: string]: number } = {
-  'Adrenaline': 1,
-  'Outdoors': 2,
-  'Night Life': 3,
-  'family friendly': 4,
-  'Fitness': 5,
-  'Adventure': 6
-};
-
-
-
+  interestCategoryMapping: { [key: string]: number } = {
+    Adrenaline: 1,
+    Outdoors: 2,
+    'Night Life': 3,
+    'family friendly': 4,
+    Fitness: 5,
+    Adventure: 6,
+  };
 
   email: string = '';
   password: string = '';
   Fullname: string = '';
   Confermpassword: string = '';
+  /* Business variables (containers) used in model for HTML page */
+  Ownername: string = '';
+  Businessname: string = '';
+  Businessemail: string = '';
+  Businesscell: string = '';
+  Businessdescription: string = '';
+  Location: string = '';
+  Operatinghours: string = '';
+  Reservation: string = '';
+  Averagespending: string = '';
+  Websitelink: string = '';
+  Businesspassword: string = '';
+  Businessconfirmpassword: string = '';
+ 
 
-  constructor(private router: Router, private service: UsersService, private socialAuth: SocialAuthService) {
-    addIcons({logoGoogle, logoFacebook, logoTwitter})
 
+
+;  constructor(
+    private router: Router,
+    private service: UsersService,
+    private socialAuth: SocialAuthService
+  ) {
+    addIcons({ logoGoogle, logoFacebook, logoTwitter });
   }
 
   navpage(path: string) {
@@ -67,6 +84,21 @@ interestCategoryMapping: { [key: string]: number } = {
 
   ngOnInit() {}
 
+  openBusinessModel(){
+    this.isBusinessModelOpen = true
+    this.closeBusinessRegModel();
+  }
+  closeBusinessModel(){
+    this.isBusinessModelOpen = false;
+  }
+  openBusinessregModel(){
+    this.isBusinessRegOpen = true;
+    this.closeBusinessModel();
+  }
+  closeBusinessRegModel(){
+    this.isBusinessRegOpen = false;
+  }
+ 
   openModal() {
     this.isModalOpen = true;
     this.closeRegModel();
@@ -102,19 +134,20 @@ interestCategoryMapping: { [key: string]: number } = {
     if (interest.selected) {
       this.selectedInterests.push(interest.name);
     } else {
-      this.selectedInterests = this.selectedInterests.filter(i => i !== interest.name);
+      this.selectedInterests = this.selectedInterests.filter(
+        (i) => i !== interest.name
+      );
     }
   }
 
+  isUppercase(str: string, index: number): boolean {
+    if (index < 0 || index >= str.length) {
+      throw new Error('Index out of bounds');
+    }
 
- isUppercase(str: string, index: number): boolean {
-  if (index < 0 || index >= str.length) {
-    throw new Error("Index out of bounds");
+    const char = str[index];
+    return char === char.toUpperCase() && char !== char.toLowerCase();
   }
-
-  const char = str[index];
-  return char === char.toUpperCase() && char !== char.toLowerCase();
-}
   validateEmail(email: string): boolean {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -125,22 +158,22 @@ interestCategoryMapping: { [key: string]: number } = {
     if (password.length < 8) {
       return false;
     }
-    for (let i = 0; i < password.length ; i++) {
-      if (this.isUppercase(password,i)) {
+    for (let i = 0; i < password.length; i++) {
+      if (this.isUppercase(password, i)) {
         capsCount++;
-        console.log("Caps found")
+        console.log('Caps found');
       }
     }
-   if (capsCount == 0) {
-    return false;
-   }
+    if (capsCount == 0) {
+      return false;
+    }
     return true;
   }
 
-    isEmailToast = false;
+  isEmailToast = false;
   isPasswordToast = false;
   isFailedtoast = false;
-  user: User|undefined;
+  user: User | undefined;
   setOpen(isOpen: boolean) {
     this.isEmailToast = isOpen;
     this.isPasswordToast = isOpen;
@@ -174,236 +207,236 @@ interestCategoryMapping: { [key: string]: number } = {
     }
   }
 
-
   logregdetails() {
-    if (this.validateEmail(this.email))
-      {
-        if (this.validatePassword(this.password) && this.password === this.Confermpassword)
-          {
-            this.user = {
-                fName : this.Fullname.split(' ')[0],
-                lName : this.Fullname.split(' ')[1],
-                email : this.email,
-                password : this.password,
-                userType : "user",
-              };
-              console.log(this.user);
-              this.openInterestsModel();
-          }
-          else {
-              this.isPasswordToast = true;
-          }
+    if (this.validateEmail(this.email)) {
+      if (
+        this.validatePassword(this.password) &&
+        this.password === this.Confermpassword
+      ) {
+        this.user = {
+          fName: this.Fullname.split(' ')[0],
+          lName: this.Fullname.split(' ')[1],
+          email: this.email,
+          password: this.password,
+          userType: 'user',
+        };
+        console.log(this.user);
+        this.openInterestsModel();
+      } else {
+        this.isPasswordToast = true;
       }
-      else
-      {
-          this.isEmailToast = true;
-      }
+    } else {
+      this.isEmailToast = true;
+    }
   }
 
+  
 
-submituser() {
-  this.service.registeruser(this.user).subscribe(
-    (response) => {
-      console.log(response);
-      this.selectedInterests.forEach(interestName => {
-        const categoryId = this.interestCategoryMapping[interestName];
-        if (categoryId) {
-          const interest: interests = {
-            User_id: response.id,
-            Category_id: categoryId  // Ensure correct spelling and casing
-          };
-          console.log(interest);
-          console.log(`Adding interest: ${interestName} with Category_ID: ${categoryId}`);
-          this.service.setuserinterests(interest).subscribe(
-            res => {
-              console.log(`Interest ${interestName} added successfully.`, res);
+  submituser() {
+    this.service.registeruser(this.user).subscribe(
+      (response) => {
+        console.log(response);
+        this.selectedInterests.forEach((interestName) => {
+          const categoryId = this.interestCategoryMapping[interestName];
+          if (categoryId) {
+            const interest: interests = {
+              User_id: response.id,
+              Category_id: categoryId, // Ensure correct spelling and casing
+            };
+            console.log(interest);
+            console.log(
+              `Adding interest: ${interestName} with Category_ID: ${categoryId}`
+            );
+            this.service.setuserinterests(interest).subscribe(
+              (res) => {
+                console.log(
+                  `Interest ${interestName} added successfully.`,
+                  res
+                );
+              },
+              (error) => {
+                console.error(`Failed to add interest ${interestName}.`, error);
+              }
+            );
+          } else {
+            console.error(
+              `No matching Category_ID found for interest: ${interestName}`
+            );
+          }
+        });
+        localStorage.setItem('user', JSON.stringify(response));
+        this.navpage('/user/home');
+      },
+      (error) => {
+        console.error('Failed to register user', error);
+        this.isFailedtoast = true;
+      }
+    );
+  }
+
+  signInWithGoogle() {
+    let user: User = {
+      fName: ' no user',
+      lName: 'no user',
+      email: ' no email',
+      password: 'google',
+      userType: 'user',
+    };
+
+    signInWithPopup(this.socialAuth.auth, this.socialAuth.provider)
+      .then((result) => {
+        const user = result.user;
+        const userData: User = {
+          fName: user.displayName?.split(' ')[0] ?? 'User',
+          lName: user.displayName?.split(' ')[1] ?? '',
+          email: user.email ?? 'email',
+          password: 'google',
+          userType: 'user',
+        };
+        console.log(userData, user);
+
+        if (userData.email != 'no email') {
+          this.service.loginuser(userData.email).subscribe(
+            (response) => {
+              if (response) {
+                localStorage.setItem('user', JSON.stringify(response));
+                this.navpage('/user/home');
+              }
             },
             (error) => {
-              console.error(`Failed to add interest ${interestName}.`, error);
+              if (error instanceof HttpErrorResponse) {
+                if (error.status === 400) {
+                  this.user = userData;
+                  this.openInterestsModel();
+                } else {
+                  console.error('Login request failed', error);
+                }
+              } else {
+                console.error('An unexpected error occurred', error);
+              }
             }
           );
-        } else {
-          console.error(`No matching Category_ID found for interest: ${interestName}`);
         }
-      });
-      localStorage.setItem('user', JSON.stringify(response));
-      this.navpage('/user/home');
-    },
-    (error) => {
-      console.error('Failed to register user', error);
-      this.isFailedtoast = true;
-    }
-  );
-}
-
-signInWithGoogle(){
-  let user : User = {
-    fName: " no user",
-        lName: "no user",
-        email: " no email",
-        password: "google",
-        userType: 'user',
-  }
-
-  signInWithPopup(this.socialAuth.auth, this.socialAuth.provider).then((result) => {
-    const user = result.user;
-    const userData: User = {
-        fName: user.displayName?.split(' ')[0] ?? "User",
-        lName: user.displayName?.split(' ')[1] ?? "",
-        email: user.email ?? "email",
-        password: "google",
-        userType: 'user',
-    };
-    console.log(userData, user);
-
-    if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
-            (response) => {
-                if (response) {
-                        localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
-                    }
-            },
-            (error) => {
-                if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
-                      this.user = userData;
-                      this.openInterestsModel()
-
-                    } else {
-                        console.error('Login request failed', error);
-
-                    }
-                } else {
-                    console.error('An unexpected error occurred', error);
-                }
-            }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(
+          `Error during sign-in with Google: ${errorCode} - ${errorMessage}`
         );
-    }
-}).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
-});
-
+      });
   }
-
 
   // const user : User = this.socialAuth.signUserWithGoogle();
 
-
-
-signInWithFacebook(){
-
-  let user : User = {
-    fName: " no user",
-        lName: "no user",
-        email: " no email",
-        password: "google",
-        userType: 'user',
-  }
-
-  signInWithPopup(this.socialAuth.auth, this.socialAuth.facebookProvider).then((result) => {
-    const user = result.user;
-    const userData: User = {
-        fName: user.displayName?.split(' ')[0] ?? "User",
-        lName: user.displayName?.split(' ')[1] ?? "",
-        email: user.email ?? "email",
-        password: "google",
-        userType: 'user',
+  signInWithFacebook() {
+    let user: User = {
+      fName: ' no user',
+      lName: 'no user',
+      email: ' no email',
+      password: 'google',
+      userType: 'user',
     };
-    console.log(userData, user);
 
-    if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
+    signInWithPopup(this.socialAuth.auth, this.socialAuth.facebookProvider)
+      .then((result) => {
+        const user = result.user;
+        const userData: User = {
+          fName: user.displayName?.split(' ')[0] ?? 'User',
+          lName: user.displayName?.split(' ')[1] ?? '',
+          email: user.email ?? 'email',
+          password: 'google',
+          userType: 'user',
+        };
+        console.log(userData, user);
+
+        if (userData.email != 'no email') {
+          this.service.loginuser(userData.email).subscribe(
             (response) => {
-                if (response) {
-                        localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
-                    }
+              if (response) {
+                localStorage.setItem('user', JSON.stringify(response));
+                this.navpage('/user/home');
+              }
             },
             (error) => {
-                if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
-                      this.user = userData;
-                      this.openInterestsModel()
-
-                    } else {
-                        console.error('Login request failed', error);
-
-                    }
+              if (error instanceof HttpErrorResponse) {
+                if (error.status === 400) {
+                  this.user = userData;
+                  this.openInterestsModel();
                 } else {
-                    console.error('An unexpected error occurred', error);
+                  console.error('Login request failed', error);
                 }
+              } else {
+                console.error('An unexpected error occurred', error);
+              }
             }
+          );
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(
+          `Error during sign-in with Google: ${errorCode} - ${errorMessage}`
         );
-    }
-}).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
-});
-
-
-}
-
-signInWithTwitter(){
-let user : User = {
-    fName: " no user",
-        lName: "no user",
-        email: " no email",
-        password: "google",
-        userType: 'user',
+      });
   }
 
-  signInWithPopup(this.socialAuth.auth, this.socialAuth.twitterProvider).then((result) => {
-    const user = result.user;
-    const userData: User = {
-        fName: user.displayName?.split(' ')[0] ?? "User",
-        lName: user.displayName?.split(' ')[1] ?? "",
-        email: user.email ?? "email",
-        password: "google",
-        userType: 'user',
+  signInWithTwitter() {
+    let user: User = {
+      fName: ' no user',
+      lName: 'no user',
+      email: ' no email',
+      password: 'google',
+      userType: 'user',
     };
-    console.log(userData, user);
 
-    if (userData.email != "no email") {
-        this.service.loginuser(userData.email).subscribe(
+    signInWithPopup(this.socialAuth.auth, this.socialAuth.twitterProvider)
+      .then((result) => {
+        const user = result.user;
+        const userData: User = {
+          fName: user.displayName?.split(' ')[0] ?? 'User',
+          lName: user.displayName?.split(' ')[1] ?? '',
+          email: user.email ?? 'email',
+          password: 'google',
+          userType: 'user',
+        };
+        console.log(userData, user);
+
+        if (userData.email != 'no email') {
+          this.service.loginuser(userData.email).subscribe(
             (response) => {
-                if (response) {
-                        localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
-                    }
+              if (response) {
+                localStorage.setItem('user', JSON.stringify(response));
+                this.navpage('/user/home');
+              }
             },
             (error) => {
-                if (error instanceof HttpErrorResponse) {
-                    if (error.status === 400) {
-                      this.user = userData;
-                      this.openInterestsModel()
-
-                    } else {
-                        console.error('Login request failed', error);
-
-                    }
+              if (error instanceof HttpErrorResponse) {
+                if (error.status === 400) {
+                  this.user = userData;
+                  this.openInterestsModel();
                 } else {
-                    console.error('An unexpected error occurred', error);
+                  console.error('Login request failed', error);
                 }
+              } else {
+                console.error('An unexpected error occurred', error);
+              }
             }
+          );
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(
+          `Error during sign-in with Google: ${errorCode} - ${errorMessage}`
         );
-    }
-}).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
-});
-
-}
-
-
-
+      });
+  }
 }
 
 export interface selectedInterest {

@@ -6,61 +6,108 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { SavedComponent } from '../pages/saved/saved.component';
+import { EventCardComponent } from '../event-card/event-card.component';
+import { Event } from 'src/Models/event-card';
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-   standalone: true,
-   imports: [IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle, IonLabel, IonTabButton, IonIcon, CommonModule],
+  standalone: true,
+  imports: [
+    IonCardTitle,
+    IonCardHeader,
+    IonCard,
+    IonCardSubtitle,
+    IonLabel,
+    IonTabButton,
+    IonIcon,
+    CommonModule,
+    SavedComponent,
+    EventCardComponent,
+  ],
 })
-export class NavbarComponent implements OnInit   {
+export class NavbarComponent implements OnInit {
+  isMobile$: Observable<boolean> = new Observable<boolean>();
+  isbuisness: boolean = true;
+  isGameModelOpen = false;
+  selectedFeeling: string = '';
+  events: Event[] = [];
+  categoryName: string = 'Item-Saved';
+  feelings: { name: string }[] = [
+    { name: 'Happy' },
+    { name: 'Sad' },
+    { name: 'Excited' },
+    { name: 'Angry' },
+    { name: 'Confused' },
+    { name: 'Content' },
+    { name: 'Grateful' },
+    { name: 'Hopeful' },
+    { name: 'Relaxed' },
+    { name: 'Stressed' },
+    { name: 'Surprised' },
+    { name: 'Proud' },
+    { name: 'Loved' },
+    { name: 'Lonely' },
+    { name: 'Disappointed' },
+    { name: 'Frustrated' },
+    { name: 'Optimistic' },
+    { name: 'Anxious' },
+    { name: 'Bored' },
+    { name: 'Energized' },
+    // Add more feelings as needed
+  ];
+  removeNotification(index: number) {
+    if (index >= 0 && index < this.notifications.length) {
+      this.notifications.splice(index, 1);
+      this.router.navigate(['/user/activity']);
+    }
+  }
+  isNotificationsModalOpen = false;
+  notifications = [
+    {
+      username: 'RocoMamas',
+      activity: 'increased the wing challenge prices',
+      timestamp: '5 min ago',
+    },
+    {
+      username: 'Wimpy',
+      activity: 'has only 3 days left for their burger special',
+      timestamp: '8 min ago',
+    },
+    {
+      username: 'Ama Zwing Zwing',
+      activity: 'has a buy-1-get-1-free ticket promo',
+      timestamp: '12 min ago',
+    },
+    // Add more notifications as needed
+  ];
 
-   isMobile$: Observable<boolean> = new Observable<boolean>();
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    addIcons({
+      bookmarkOutline,
+      searchOutline,
+      homeOutline,
+      gameControllerOutline,
+      calendarClearOutline,
+      notificationsOutline,
+      logOutOutline,
+    });
+  }
 
-    isGameModelOpen = false;
-    selectedFeeling: string = '';
-    feelings: { name: string; }[] = [
-  { name: 'Happy' },
-  { name: 'Sad' },
-  { name: 'Excited' },
-  { name: 'Angry' },
-  { name: 'Confused' },
-  { name: 'Content' },
-  { name: 'Grateful' },
-  { name: 'Hopeful' },
-  { name: 'Relaxed' },
-  { name: 'Stressed' },
-  { name: 'Surprised' },
-  { name: 'Proud' },
-  { name: 'Loved' },
-  { name: 'Lonely' },
-  { name: 'Disappointed' },
-  { name: 'Frustrated' },
-  { name: 'Optimistic' },
-  { name: 'Anxious' },
-  { name: 'Bored' },
-  { name: 'Energized' }
-  // Add more feelings as needed
-];
-
-isNotificationsModalOpen = false;
-notifications = [
-  { username: 'John', activity: 'liked your post', timestamp: '5 min ago' },
-  { username: 'Rocky', activity: 'commented on your photo', timestamp:'8 min ago' },
-  { username: 'Kanye', activity: 'liked your comment', timestamp:'12 min ago'}
-  // Add more notifications as needed
-];
-
-  constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
-    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline,logOutOutline  });
-   }
-
-   navpage(path : string) {
-
-  this.router.navigate([path]);
-}
-openModal() {
+  navpage(path: string) {
+    this.router.navigate([path]);
+  }
+  openModal() {
     this.isGameModelOpen = true;
   }
 
@@ -76,7 +123,7 @@ openModal() {
     this.isNotificationsModalOpen = false;
   }
 
-   toggleFeeling(feeling: { name: string; }) {
+  toggleFeeling(feeling: { name: string }) {
     this.selectedFeeling = feeling.name;
   }
 
@@ -88,12 +135,14 @@ openModal() {
     localStorage.removeItem('user');
     this.navpage('/main/landing');
   }
-   ngOnInit(): void {
-    this.isMobile$ = this.breakpointObserver.observe([
-      Breakpoints.XSmall,
-      Breakpoints.Small
-    ]).pipe(
-      map(result => result.matches)
-    );
+  ngOnInit(): void {
+    this.isMobile$ = this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .pipe(map((result) => result.matches));
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.isbuisness = !this.router.url.includes('business');
+      });
   }
 }

@@ -185,29 +185,37 @@ export class LandingComponent implements OnInit {
     this.showPasswordError = this.password.length < 6;
 
     if (!this.showEmailError && !this.showPasswordError) {
-      this.service.loginuser(this.email).subscribe(
+      this.service.loginuser(this.email,this.password).subscribe(
         (response) => {
           if (response) {
-            if (this.password === response.password) {
-              localStorage.setItem('user', JSON.stringify(response));
-              this.navpage('/user/home');
-            } else {
-              this.showPasswordError = true;
-            }
+
+          localStorage.setItem('user', JSON.stringify(response));
+          this.navpage('/user/home');
+
+          //
+
           } else {
             this.showEmailError = true;
           }
         },
         (error) => {
+          if (error instanceof HttpErrorResponse){
+            if (error.status == 400){
+              this.showPasswordError = true;
+            }
+            if(error.status == 404){
+              this.showEmailError = true;
+            }
+          }
           console.error('Login request failed', error);
-          this.showEmailError = true;
-          this.showPasswordError = true;
+
         }
       );
     }
   }
 
   logregdetails() {
+
     if (this.validateEmail(this.email)) {
       if (
         this.validatePassword(this.password) &&
@@ -227,6 +235,64 @@ export class LandingComponent implements OnInit {
       }
     } else {
       this.isEmailToast = true;
+
+    if (this.validateEmail(this.email))
+      {
+        if (this.validatePassword(this.password) && this.password === this.Confermpassword)
+          {
+            this.user = {
+                fName : this.Fullname.split(' ')[0],
+                lName : this.Fullname.split(' ')[1] ?? "",
+                email : this.email,
+                password : this.password,
+                userType : "user",
+              };
+              console.log(this.user);
+              this.openInterestsModel();
+          }
+          else {
+              this.isPasswordToast = true;
+          }
+      }
+      else
+      {
+          this.isEmailToast = true;
+      }
+  }
+
+
+submituser() {
+  this.service.registeruser(this.user).subscribe(
+    (response) => {
+      console.log(response);
+      this.selectedInterests.forEach(interestName => {
+        const categoryId = this.interestCategoryMapping[interestName];
+        if (categoryId) {
+          const interest: interests = {
+            User_id: response.id,
+            Category_id: categoryId  // Ensure correct spelling and casing
+          };
+          console.log(interest);
+          console.log(`Adding interest: ${interestName} with Category_ID: ${categoryId}`);
+          this.service.setuserinterests(interest).subscribe(
+            res => {
+              console.log(`Interest ${interestName} added successfully.`, res);
+            },
+            (error) => {
+              console.error(`Failed to add interest ${interestName}.`, error);
+            }
+          );
+        } else {
+          console.error(`No matching Category_ID found for interest: ${interestName}`);
+        }
+      });
+      localStorage.setItem('user', JSON.stringify(response));
+      this.navpage('/user/home');
+    },
+    (error) => {
+      console.error('Failed to register user', error,this.user);
+      this.isFailedtoast = true;
+
     }
   }
 
@@ -274,6 +340,7 @@ export class LandingComponent implements OnInit {
     );
   }
 
+
   signInWithGoogle() {
     let user: User = {
       fName: ' no user',
@@ -297,6 +364,22 @@ export class LandingComponent implements OnInit {
 
         if (userData.email != 'no email') {
           this.service.loginuser(userData.email).subscribe(
+
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.provider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "UXploreSocialAuth",
+        userType: 'user',
+    };
+    this.password = "UXploreSocialAuth";
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
+
             (response) => {
               if (response) {
                 localStorage.setItem('user', JSON.stringify(response));
@@ -304,10 +387,22 @@ export class LandingComponent implements OnInit {
               }
             },
             (error) => {
+
               if (error instanceof HttpErrorResponse) {
                 if (error.status === 400) {
                   this.user = userData;
                   this.openInterestsModel();
+
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 404) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+
                 } else {
                   console.error('Login request failed', error);
                 }
@@ -329,6 +424,7 @@ export class LandingComponent implements OnInit {
   }
 
   // const user : User = this.socialAuth.signUserWithGoogle();
+
 
   signInWithFacebook() {
     let user: User = {
@@ -353,6 +449,34 @@ export class LandingComponent implements OnInit {
 
         if (userData.email != 'no email') {
           this.service.loginuser(userData.email).subscribe(
+
+
+
+signInWithFacebook(){
+
+  let user : User = {
+    fName: " no user",
+        lName: "no user",
+        email: " no email",
+        password: "google",
+        userType: 'user',
+  }
+
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.facebookProvider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "UXploreSocialAuth",
+        userType: 'user',
+    };
+    this.password = "UXploreSocialAuth";
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
+
             (response) => {
               if (response) {
                 localStorage.setItem('user', JSON.stringify(response));
@@ -360,10 +484,22 @@ export class LandingComponent implements OnInit {
               }
             },
             (error) => {
+
               if (error instanceof HttpErrorResponse) {
                 if (error.status === 400) {
                   this.user = userData;
                   this.openInterestsModel();
+
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 404) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+
                 } else {
                   console.error('Login request failed', error);
                 }
@@ -381,6 +517,7 @@ export class LandingComponent implements OnInit {
         console.error(
           `Error during sign-in with Google: ${errorCode} - ${errorMessage}`
         );
+
       });
   }
 
@@ -407,6 +544,44 @@ export class LandingComponent implements OnInit {
 
         if (userData.email != 'no email') {
           this.service.loginuser(userData.email).subscribe(
+
+    }
+}).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error during sign-in with Google: ${errorCode} - ${errorMessage}`);
+});
+
+
+}
+
+signInWithTwitter(){
+
+
+let user : User = {
+    fName: "no user",
+        lName: "no user",
+        email: "no email",
+        password: "google",
+        userType: 'user',
+  }
+
+  signInWithPopup(this.socialAuth.auth, this.socialAuth.twitterProvider).then((result) => {
+    const user = result.user;
+    const userData: User = {
+        fName: user.displayName?.split(' ')[0] ?? "User",
+        lName: user.displayName?.split(' ')[1] ?? "",
+        email: user.email ?? "email",
+        password: "UXploreSocialAuth",
+        userType: 'user',
+    };
+    this.password = "UXploreSocialAuth";
+    console.log(userData, user);
+
+    if (userData.email != "no email") {
+        this.service.loginuser(userData.email, "UXploreSocialAuth").subscribe(
+
             (response) => {
               if (response) {
                 localStorage.setItem('user', JSON.stringify(response));
@@ -414,10 +589,22 @@ export class LandingComponent implements OnInit {
               }
             },
             (error) => {
+
               if (error instanceof HttpErrorResponse) {
                 if (error.status === 400) {
                   this.user = userData;
                   this.openInterestsModel();
+
+                if (error instanceof HttpErrorResponse) {
+                    if (error.status === 404) {
+                      this.user = userData;
+                      this.openInterestsModel()
+
+                    } else {
+                        console.error('Login request failed', error);
+
+                    }
+
                 } else {
                   console.error('Login request failed', error);
                 }
@@ -435,8 +622,23 @@ export class LandingComponent implements OnInit {
         console.error(
           `Error during sign-in with Google: ${errorCode} - ${errorMessage}`
         );
+
       });
   }
+
+    }
+}).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error during sign-in with twitter: ${errorCode} - ${errorMessage}`);
+});
+
+}
+
+
+
+
 }
 
 export interface selectedInterest {

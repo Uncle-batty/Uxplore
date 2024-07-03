@@ -1,8 +1,10 @@
-<ion-content>
+<ion-content *ngIf="!isLoading">
   <ion-grid class="main-content">
+
+
     <ion-row>
       <ion-col class="ad-container">
-        <img src="assets/Images/rocomammas-1.jpg" alt="Ad Image" />
+        <img src="assets/Images/sterkinikor.jpg" alt="Ad Image" />
       </ion-col>
       <ion-col size="12" size-md="6" class="ad-container">
         <img src="assets/Images/rocomammas-1.jpg" alt="Ad Image" />
@@ -57,22 +59,29 @@
 
   <ion-grid class="cardalign">
     <ion-row>
-      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
-      <app-event-card></app-event-card>
+      <app-event-card *ngFor="let item of events" [event]="item" bgColor="{{color}}"
+        (click)="navpage('/user/activity', item.Id)"></app-event-card>
+      <!-- </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12"> -->
 
-      </ion-col>
-      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
-      <app-event-card></app-event-card>
-
-      </ion-col>
-      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
-      <app-event-card></app-event-card>
-
-      </ion-col>
-      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
-      <app-event-card></app-event-card>
-
-      </ion-col>
     </ion-row>
+
+
   </ion-grid>
+
 </ion-content>
+<div *ngIf="isLoading" style="margin-left: 6%; display: flex; justify-content: center;align-items: center; width:100%; height: 100%;">
+    <div class="loader" >
+<svg viewBox="0 0 240 240" height="240" width="240" class="loader">
+  <circle stroke-linecap="round" stroke-dashoffset="-330" stroke-dasharray="0 660" stroke-width="20" stroke="#000"
+    fill="none" r="105" cy="120" cx="120" class="loader-ring loader-ring-a"></circle>
+  <circle stroke-linecap="round" stroke-dashoffset="-110" stroke-dasharray="0 220" stroke-width="20" stroke="#000"
+    fill="none" r="35" cy="120" cx="120" class="loader-ring loader-ring-b"></circle>
+  <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120"
+    cx="85" class="loader-ring loader-ring-c"></circle>
+  <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120"
+    cx="155" class="loader-ring loader-ring-d"></circle>
+</svg>
+  </div>
+</div>
+

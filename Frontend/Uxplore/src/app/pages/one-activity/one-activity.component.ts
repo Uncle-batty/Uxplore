@@ -20,22 +20,28 @@ import {
   ellipsisHorizontal,
   logoInstagram,
   copyOutline,
+  bookmark,
+  heart,
+  notifications,
+  notificationsOutline
 } from 'ionicons/icons';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ListingsService } from 'src/app/services/listings.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import {
   Listing,
   rateing,
   listingimages,
   Comment,
+  UserInteraction,
 } from 'src/app/interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-one-activity',
@@ -44,7 +50,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
   standalone: true,
   imports: [IonicModule, CommonModule, HttpClientModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ListingsService],
+  providers: [ListingsService, UsersService],
 })
 export class OneActivityComponent implements OnInit {
   slideOpts = {
@@ -68,12 +74,19 @@ export class OneActivityComponent implements OnInit {
   activityStars: Array<number> = new Array(5).fill(0);
   safetyStars: Array<number> = new Array(5).fill(0);
   comment: string = '';
+  isToastOpen = false;
+  toastMessage = ""
+  // savedIcon = "bookmark-outline"
+  // likedIcon = "heart-outline"
+  // notificationIcon = "notifications-outline"
+  interactionIcons = ["heart-outline", "bookmark-outline", "notifications-outline"]
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private lservice: ListingsService,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
@@ -81,9 +94,12 @@ export class OneActivityComponent implements OnInit {
       this.Actid = params['id'];
     });
 
+    this.loadSavedImage();
+
     this.lservice.listoneactivity(this.Actid).subscribe(
       (Response) => {
         this.activity = Response;
+
         if (this.activity) {
           this.lservice.getlistingimages(this.activity.id).subscribe(
             (data) => {
@@ -135,6 +151,10 @@ export class OneActivityComponent implements OnInit {
       'copy-outline': copyOutline,
       'logo-instagram': logoInstagram,
       'ellipsis-horizontal': ellipsisHorizontal,
+      bookmark,
+      heart,
+      notifications,
+      notificationsOutline
     });
   }
 
@@ -332,6 +352,27 @@ export class OneActivityComponent implements OnInit {
 
   openSocialShareModal() {
     this.isSocialShareModalOpen = true;
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+    this.userService.getInteractionsOfType("Share", user.id, this.Actid).subscribe((result) => {
+      if (result[0] == null) {
+        let currentDate = new Date(Date.now()).toLocaleDateString();
+        currentDate = currentDate.replace("/","-" );
+         const interaction: UserInteraction = {
+          event_ID: 0,
+          listing_ID: Number(this.Actid),
+          user_ID: user.id,
+          interaction_Type: "Share",
+          interaction_Date: currentDate.replace("/","-" )
+        };
+
+        this.userService.setInteraction(interaction).subscribe(res => {
+          //console.log("Shared: ", res)
+        });
+      }else {
+        //console.log("Shared exists")
+      }
+    })
   }
 
   closeSocialShareModal() {
@@ -395,5 +436,64 @@ export class OneActivityComponent implements OnInit {
 
   getShareUrl(): string {
     return window.location.href;
+  }
+
+
+  addInteraction(interactionType : string, addToastMessage: string, removeToastMessage:string, iconName: string, iconIndex:number){
+     const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+    this.userService.getInteractionsOfType(interactionType, user.id, this.Actid).subscribe((result) => {
+      if (result[0] != null) {
+        this.userService.deleteUserInteraction(result[0].id ?? 0).subscribe((response) => {
+          this.toastMessage = removeToastMessage;
+          this.isToastOpen = true;
+          this.interactionIcons[iconIndex] = `${iconName}-outline`
+        }, (error) => {
+          console.log("Cant unLike and delete: ", error)
+        })
+      }else {
+
+        let currentDate = new Date(Date.now()).toLocaleDateString()
+        currentDate = currentDate.replace("/","-" )
+        const interaction: UserInteraction = {
+          event_ID: 0,
+          listing_ID: Number(this.Actid),
+          user_ID: user.id,
+          interaction_Type: interactionType,
+          interaction_Date: currentDate.replace("/","-" )
+        }
+        console.log("Interaction: ",interaction)
+
+        this.userService.setInteraction(interaction).subscribe(result => {
+          this.interactionIcons[iconIndex] = iconName
+          this.toastMessage = addToastMessage;
+          this.isToastOpen = true;
+        }
+        ),((error: any) => {
+          console.log("error: ", error)
+        })
+      }
+    }, (error) => {
+      if (error instanceof HttpErrorResponse) {
+          console.log("This is the error: ",error)
+      }
+    })
+  }
+
+  loadSavedImage(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+
+    this.userService.getInteractionsOfType("All", user.id, this.Actid).subscribe((Response) => {
+     Response.forEach(interaction => {
+      if (interaction.interaction_Type == "Like"){
+        this.interactionIcons[0] = "heart"
+      }else if (interaction.interaction_Type == "Saved"){
+        this.interactionIcons[1] = "bookmark"
+      }else {
+        this.interactionIcons[2] = "notifications"
+      }
+     })
+    })
   }
 }

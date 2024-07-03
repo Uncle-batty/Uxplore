@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
 //Add dbContext, here you can we are using In-memory database.
 builder.Services.AddDbContext<UXplore.Context.DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -24,11 +25,11 @@ app.UseCors(builder =>
            .AllowAnyHeader();
 });
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+app.UseSwagger();
+
+    
     app.UseSwaggerUI();
-}
+
 
 app.UseHttpsRedirection();
 

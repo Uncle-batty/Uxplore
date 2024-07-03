@@ -11,7 +11,7 @@ namespace UXplore.Models
         [Required]
         public string FName { get; set; }
 
-        [Required]
+       
         public string LName { get; set; }
 
         [Required]

@@ -147,6 +147,27 @@ namespace UxploreAPI.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("UXplore.Models.FeelingsListings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Feeling")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ListingIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("feelings");
+                });
+
             modelBuilder.Entity("UXplore.Models.Listing", b =>
                 {
                     b.Property<int>("ID")

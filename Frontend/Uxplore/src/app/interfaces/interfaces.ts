@@ -2,7 +2,7 @@
 export interface User {
   id?: number;
   fName: string;
-  lName: string;
+  lName?: string;
   email: string;
   password: string;
   userType: string;
@@ -44,9 +44,9 @@ export interface listingimages {
 }
 
 export interface UserInteraction {
-  id: number;
-  event_ID: number;
-  listing_ID: number;
+  id?: number;
+  event_ID?: number;
+  listing_ID?: number;
   user_ID: number;
   interaction_Type: string;
   interaction_Date: string;

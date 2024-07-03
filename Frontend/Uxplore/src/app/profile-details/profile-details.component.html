@@ -1,0 +1,20 @@
+<div class="rectangle-202">
+  <div>
+    <img class="profile-picture" src="profile-picture-url" alt="Profile Picture" />
+  </div>
+  <div class="cardformInputs">
+    <div class="form-group">
+      <p>User Name</p>
+      <input type="text" placeholder="Enter your name" [(ngModel)]="username" name="username" />
+    </div>
+    <div class="form-group">
+      <p>Email</p>
+      <input type="text" placeholder="Enter your email" [(ngModel)]="email" name="email" />
+    </div>
+    <div class="form-group">
+      <p>Gender</p>
+      <input type="text" placeholder="Enter your gender" [(ngModel)]="gender" name="gender" />
+    </div>
+    <button (click)="updateProfile()">Update Profile</button>
+  </div>
+</div>

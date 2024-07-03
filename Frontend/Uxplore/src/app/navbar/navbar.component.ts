@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonLabel, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline} from 'ionicons/icons';
+import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline, logOutOutline } from 'ionicons/icons';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 import { SavedComponent } from '../pages/saved/saved.component';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { Event } from 'src/Models/event-card';
-
 
 @Component({
   selector: 'app-navbar',
@@ -62,6 +61,7 @@ export class NavbarComponent implements OnInit {
     { name: 'Energized' },
     // Add more feelings as needed
   ];
+
   removeNotification(index: number) {
     if (index >= 0 && index < this.notifications.length) {
       this.notifications.splice(index, 1);
@@ -142,7 +142,7 @@ export class NavbarComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.isbuisness = !this.router.url.includes('business');
+        this.isbuisness = this.router.url.includes('business');
       });
   }
 }

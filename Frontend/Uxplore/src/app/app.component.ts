@@ -28,6 +28,13 @@ export class AppComponent implements OnInit {
     } else {
       this.router.navigate(['/main/landing']);
     }
+/* Don't know if this side of the code is right */
+    const business = localStorage.getItem('business')
+    if (business) {
+      this.router.navigate(['/business/business-dashboard'])
+    }else{
+      this.router.navigate(['/main/landing'])
+    }
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))

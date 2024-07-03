@@ -11,11 +11,19 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { SavedComponent } from './pages/saved/saved.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { AuthGuard } from './services/auth.guard';// Import the guard
+
+import { BusinessDashboardComponent } from './pages/business-dashboard/business-dashboard.component';
+import { BusinessCalendarComponent } from './pages/business-calendar/business-calendar.component';
+import { BusinessNotificationsComponent } from './pages/business-notifications/business-notifications.component';
+import { BusinessProfileComponent } from './pages/business-profile/business-profile.component';
+import { BusinessAdvertComponent } from './pages/business-advert/business-advert.component';
+
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { ProfileEmailNotificationsComponent } from './profile-email-notifications/profile-email-notifications.component';
 import { ProfilePushNofitcationsComponent } from './profile-push-nofitcations/profile-push-nofitcations.component';
 import { ProfileHelpCentreComponent } from './profile-help-centre/profile-help-centre.component';
+ 
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,12 +37,20 @@ const userRoutes: Routes = [
   {path:'profile',component:ProfileComponent}
 ];
 
+
+
 const mainRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'landing', component: LandingComponent },
 ];
 
-const businessComponent: Routes = [];
+const businessComponent: Routes = [
+  { path: 'business-dashboard', component: BusinessDashboardComponent },
+  { path: 'business-calendar', component: BusinessCalendarComponent },
+  { path: 'business-notifications', component: BusinessNotificationsComponent },
+  { path: 'business-profile', component: BusinessProfileComponent },
+  { path: 'business-advert', component: BusinessAdvertComponent }
+];
 
 export const routes: Routes = [
   { path: 'user', children: userRoutes },

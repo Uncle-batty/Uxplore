@@ -9,12 +9,13 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfilePushNofitcationsComponent } from './profile-push-nofitcations/profile-push-nofitcations.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { ProfileHelpCentreComponent } from './profile-help-centre/profile-help-centre.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [CommonModule, IonicModule, NavbarComponent, TabsComponent],
+  imports: [CommonModule, IonicModule, NavbarComponent, TabsComponent,HttpClientModule],
 })
 export class AppComponent implements OnInit {
   showNavbarAndTabs = true;

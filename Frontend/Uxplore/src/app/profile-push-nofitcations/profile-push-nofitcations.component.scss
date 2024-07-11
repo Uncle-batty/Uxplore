@@ -1,4 +1,3 @@
-
 .rectangle-202 {
     position: relative;
     width: 471px;
@@ -17,7 +16,6 @@
     width: 100%;
     height: 29px;
     text-align: left;
-    /* Align text to the left */
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
@@ -45,15 +43,14 @@
 }
 
 .circle:checked {
-    background: rgba(103, 103, 103, 0.75);
-    /* Change color when selected */
+    background: #FFFFFF;
+    /* Change color to white when selected */
 }
 
 .status {
     font-size: 24px;
     line-height: 29px;
     text-align: left;
-    /* Align text to the left */
     color: #FFFFFF;
     cursor: pointer;
 }

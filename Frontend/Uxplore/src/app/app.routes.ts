@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CalenderComponent } from './pages/calender/calender.component';
@@ -40,12 +41,14 @@ export const routes: Routes = [
   { path: 'user', children: userRoutes },
   { path: 'main', children: mainRoutes },
   { path: 'business', children: businessComponent },
+    { path: 'profile', component: ProfileComponent },
   { path: '', canActivate: [AuthGuard], children: [] }, // Use the guard for the root path
   { path: '**', canActivate: [AuthGuard], children: [] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), HttpClientModule],
+  
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -10,6 +10,8 @@ export class ProfileEmailNotificationsComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("LOG ON ONIT ")
+  }
 
 }

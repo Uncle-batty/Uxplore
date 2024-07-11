@@ -12,8 +12,20 @@
       <input type="text" placeholder="Enter your email" [(ngModel)]="email" name="email" />
     </div>
     <div class="form-group">
-      <p>Gender</p>
-      <input type="text" placeholder="Enter your gender" [(ngModel)]="gender" name="gender" />
+      <p>New Password</p>
+      <div class="password-wrapper">
+        <input type="password" placeholder="Enter new password" [(ngModel)]="newPassword" name="newPassword"
+          id="newPassword" />
+        <i class="eye-icon" (click)="togglePasswordVisibility('newPassword')"></i>
+      </div>
+    </div>
+    <div class="form-group">
+      <p>Confirm New Password</p>
+      <div class="password-wrapper">
+        <input type="password" placeholder="Confirm new password" [(ngModel)]="confirmNewPassword"
+          name="confirmNewPassword" id="confirmNewPassword" />
+        <i class="eye-icon" (click)="togglePasswordVisibility('confirmNewPassword')"></i>
+      </div>
     </div>
     <button (click)="updateProfile()">Update Profile</button>
   </div>

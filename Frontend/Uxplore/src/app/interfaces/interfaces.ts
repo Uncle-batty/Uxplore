@@ -1,11 +1,11 @@
 
 export interface User {
   id?: number;
-  fName: string;
+  fName?: string;
   lName?: string;
   email: string;
-  password: string;
-  userType: string;
+  password ?: string;
+  userType?: string;
 }
 
 export interface Listing {

@@ -4,10 +4,8 @@ using UXplore.Context;
 using UXplore.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace UxploreAPI.Controllers
 {
@@ -45,31 +43,24 @@ namespace UxploreAPI.Controllers
 
         // GET: api/Users/email/someone@example.com
         [HttpGet("email/{email}")]
-        public async Task<ActionResult<User>> GetUserByEmail(string email, string password ="no password")
+        public async Task<ActionResult<User>> GetUserByEmail(string email, string password = "no password")
         {
-            
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
             {
-
                 return NotFound();
-            }else
-            {
-                if( HashPassword(password) == user.Password)
-                {
-                    //string pass = HashPassword(password);
-                    return Ok(user);
-                }
-                else
-                {
-                    return BadRequest();
-                }
             }
 
-           
+            if (HashPassword(password) == user.Password)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-
 
         // POST: api/Users
         [HttpPost]
@@ -94,18 +85,32 @@ namespace UxploreAPI.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-
-
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.Id)
             {
-                return BadRequest();
+                return BadRequest(new { message = "User ID mismatch" });
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            var existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            // Update only the fields that are not null or empty
+            existingUser.FName = user.FName ?? existingUser.FName;
+            existingUser.LName = user.LName ?? existingUser.LName;
+            existingUser.Email = user.Email ?? existingUser.Email;
+            if (!string.IsNullOrEmpty(user.Password))
+            {
+                existingUser.Password = HashPassword(user.Password);
+            }
+            existingUser.UserType = user.UserType ?? existingUser.UserType;
+
+            _context.Entry(existingUser).State = EntityState.Modified;
 
             try
             {
@@ -115,7 +120,7 @@ namespace UxploreAPI.Controllers
             {
                 if (!UserExists(id))
                 {
-                    return NotFound();
+                    return NotFound(new { message = "User not found during update" });
                 }
                 else
                 {
@@ -125,6 +130,7 @@ namespace UxploreAPI.Controllers
 
             return NoContent();
         }
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
@@ -142,8 +148,6 @@ namespace UxploreAPI.Controllers
             return NoContent();
         }
 
-        
-
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
@@ -153,20 +157,14 @@ namespace UxploreAPI.Controllers
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                // ComputeHash - returns byte array
                 byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                // Convert byte array to a string
                 StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
+                foreach (byte b in bytes)
                 {
-                    builder.Append(bytes[i].ToString("x2"));
+                    builder.Append(b.ToString("x2"));
                 }
-
                 return builder.ToString();
             }
         }
-
-
     }
 }

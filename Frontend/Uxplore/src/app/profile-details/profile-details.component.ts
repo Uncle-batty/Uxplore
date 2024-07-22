@@ -1,4 +1,4 @@
-import { HttpClientModule,HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ export class ProfileDetailsComponent implements OnInit {
 
   loadUserData(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.username = user.username || '';
+    this.username = user.fName || '';
     this.email = user.email || '';
     console.log("User data loaded");
   }
@@ -52,23 +52,35 @@ export class ProfileDetailsComponent implements OnInit {
 
   updateProfile(): void {
     if (this.validateForm()) {
-      const user: User = {
-        fName: this.username,
-        email: this.email,
-        password: this.newPassword ? this.newPassword : undefined
-      };
+        const userFromStorage = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        // Create the user object with updated details
+        const user: User = {
+            id:userFromStorage.id,
+            fName: this.username,
+            lName: userFromStorage.lName || '',  // Use the existing field from local storage
+            email: this.email,
+            userType: userFromStorage.userType || '',  // Use the existing field from local storage
+            password: this.newPassword ? this.newPassword : undefined  // Only include if a new password is provided
+        };
 
-      const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
-      this.userDetailsService.updateUserDetails(userId, user).subscribe(
-        (response: User) => {
-          localStorage.setItem('user', JSON.stringify(response));
-          alert('Profile updated successfully.');
-        },
-        (error: any) => {
-          console.error('Error updating profile:', error);
-          alert('Failed to update profile.');
-        }
-      );
+        const userId = userFromStorage.id;  // Ensure this ID exists in local storage
+        console.log('Updating user with ID:', userId, 'and data:', user);
+
+        // Call the service to update user details
+        this.userDetailsService.updateUserDetails(userId, user).subscribe(
+            (response: User) => {
+                localStorage.setItem('user', JSON.stringify(response));
+                alert('Profile updated successfully.');
+            },
+            (error: any) => {
+                console.error('Error updating profile:', error);
+                if (error.status === 400 && error.error && error.error.errors) {
+                    console.log('Validation errors:', error.error.errors);
+                }
+                alert('Failed to update profile.');
+            }
+        );
     }
-  }
+}
 }

@@ -245,7 +245,7 @@ submituser() {
 
 signInWithGoogle(){
   let user : User = {
-    fName: " no user",
+        fName: " no user",
         lName: "no user",
         email: " no email",
         password: "google",

@@ -27,7 +27,6 @@ namespace UxploreAPI.Controllers
         {
             return await _context.User_Settings.ToListAsync();
         }
-
         // GET: api/User_Setting/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User_Setting>> GetUser_Setting(int id)
@@ -43,7 +42,6 @@ namespace UxploreAPI.Controllers
         }
 
         // PUT: api/User_Setting/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser_Setting(int id, User_Setting user_Setting)
         {
@@ -74,7 +72,6 @@ namespace UxploreAPI.Controllers
         }
 
         // POST: api/User_Setting
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<User_Setting>> PostUser_Setting(User_Setting user_Setting)
         {
@@ -106,3 +103,4 @@ namespace UxploreAPI.Controllers
         }
     }
 }
+

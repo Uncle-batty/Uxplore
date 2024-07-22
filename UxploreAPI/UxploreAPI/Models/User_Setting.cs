@@ -11,9 +11,14 @@ namespace UXplore.Models
         [ForeignKey("User")]
         public int User_ID { get; set; }
 
-        // Navigation property
-        public User user { get; set; }
+ 
+
         public int Push_Notices { get; set; }
         public int hide_account { get; set; }
+
+        public int Account_suggestions { get; set; }
+        public int Trending_places { get; set; }
+        public int Reminders { get; set; }
     }
 }
+ 

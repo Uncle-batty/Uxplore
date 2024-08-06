@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from 'src/APIBaseURL';
 import {
   Listing,
   rateing,
@@ -12,14 +13,15 @@ import {
   providedIn: 'root',
 })
 export class ListingsService {
-  baseUrl: string = 'https://uxploreapi.azurewebsites.net/api/Listing/';
-  rateingbaseurl: string = 'https://uxploreapi.azurewebsites.net/api/Ratings/';
-  commentApi: string = 'https://uxploreapi.azurewebsites.net/api/Comments';
+  API_BASE_URL = ''
+  baseUrl: string = `${API_BASE_URL}/api/Listing/`;
+  rateingbaseurl: string = `${API_BASE_URL}/api/Ratings/`;
+  commentApi: string = `${API_BASE_URL}/api/Comments`;
   constructor(private http: HttpClient) {}
 
   listallbycategory(category: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `https://uxploreapi.azurewebsites.net/api/Listings/byCategory/${category}`
+      `${API_BASE_URL}/api/Listings/byCategory/${category}`
     );
   }
 
@@ -33,24 +35,24 @@ export class ListingsService {
 
   getlistingimages(id: number): Observable<listingimages[]> {
     return this.http.get<listingimages[]>(
-      `https://uxploreapi.azurewebsites.net/api/ListingImages/onelisting/${id}`
+      `${API_BASE_URL}/api/ListingImages/onelisting/${id}`
     );
   }
 
   searchlistings(term: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `https://uxploreapi.azurewebsites.net/api/Listings/Search?term=${term}`
+      `${API_BASE_URL}/api/Listings/Search?term=${term}`
     );
   }
 
   getalllistings(): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `https://uxploreapi.azurewebsites.net/api/Listing`
+      `${API_BASE_URL}/api/Listing`
     );
   }
 
   getOneListing(listingID: number): Observable<Listing> {
-    const url = `https://uxploreapi.azurewebsites.net/api/Listing/${listingID}`;
+    const url = `${API_BASE_URL}/api/Listing/${listingID}`;
     return this.http.get<Listing>(url);
   }
 

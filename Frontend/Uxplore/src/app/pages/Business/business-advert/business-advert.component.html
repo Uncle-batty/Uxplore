@@ -1,0 +1,59 @@
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Upload File</title>
+  <link rel="stylesheet" href="business-advert.component.scss">
+</head>
+<div class="main-content">
+  <h1>Create an Advert</h1>
+  <ion-grid>
+    <!-- Upload Image -->
+    <ion-row>
+      <ion-col size="6">
+        <div class="wrapper">
+          <div class="box">
+            <div class="input-bx">
+              <h2 class="upload-area-title">Upload File</h2>
+              <form action="">
+                <input type="file" id="upload" accept=".jpeg, .jpg, .png, .gif" hidden>
+                <label for="upload" class="uploadlabel">
+                  <span><i class="fa fa-cloud-upload" style="font-size:36px"></i></span>
+                  <p>Click to upload</p>
+                </label>
+              </form>
+            </div>
+            <div id="filewrapper">
+              <h3 class="uploaded">Items Uploaded</h3>
+            </div>
+          </div>
+        </div>
+
+      </ion-col>
+
+      <!-- Description Textbox -->
+<!--       <ion-col>
+ -->        <ion-row>
+          <div class="description-container">
+            <textarea class="description-textarea" placeholder="Write a description for your advert..."></textarea>
+          </div>
+        </ion-row>
+        <ion-row>
+
+          <!-- AI Generator -->
+          <div class="ai-ideas-container">
+            <h2 class="ai-title">Use AI for ideas</h2>
+            <div class="input-container">
+              <input type="text" [(ngModel)]="aiInput" id="ai-ideas-input" placeholder="Write a description of what you want..." />
+              <button id="open-loading" (click)="generateContent()">&#x27A4;</button> <!-- Unicode for paper plane icon -->             
+              <ion-loading trigger="open-loading" message="Loading..." [duration]="5000" spinner="circles"></ion-loading>
+            </div>
+            <textarea id="ai-ideas-textarea" [(ngModel)]="aiOutput" readonly><ion-loading trigger="open-loading" message="Dismissing after 3 seconds..." duration="3000"></ion-loading></textarea>
+          </div>
+          <button id="btn-upload-ad" class="btn-upload-ad">Upload Advert</button>
+        </ion-row> 
+<!--       </ion-col>
+ -->    </ion-row>
+  </ion-grid>
+</div>

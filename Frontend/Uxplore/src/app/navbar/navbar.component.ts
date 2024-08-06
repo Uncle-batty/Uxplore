@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonLabel, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline} from 'ionicons/icons';
+import {megaphoneOutline, barChartOutline,  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline} from 'ionicons/icons';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { User } from '../interfaces/interfaces';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-   standalone: true,
-   imports: [IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle, IonLabel, IonTabButton, IonIcon, CommonModule],
+  standalone: true,
+  imports: [IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle, IonLabel, IonTabButton, IonIcon, CommonModule],
 })
 export class NavbarComponent implements OnInit   {
-
-   isMobile$: Observable<boolean> = new Observable<boolean>();
+  isBusinessUser: boolean = false;
+  isMobile$: Observable<boolean> = new Observable<boolean>();
 
     isGameModelOpen = false;
     selectedFeeling: string = '';
@@ -44,6 +45,18 @@ export class NavbarComponent implements OnInit   {
   // Add more feelings as needed
 ];
 
+//giving different nav bars for either business or user
+setUserNav(){
+  const userString = localStorage.getItem("user") ?? "";
+  const user: User = JSON.parse(userString);
+
+  if (user.userType == "business"){
+    this.isBusinessUser = true;
+  }else {
+    this.isBusinessUser = false;
+  }
+}
+
 isNotificationsModalOpen = false;
 notifications = [
   { username: 'John', activity: 'liked your post', timestamp: '5 min ago' },
@@ -53,7 +66,7 @@ notifications = [
 ];
 
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
-    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline,logOutOutline  });
+    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline,logOutOutline, megaphoneOutline, barChartOutline  });
    }
 
    navpage(path : string) {
@@ -95,5 +108,8 @@ openModal() {
     ]).pipe(
       map(result => result.matches)
     );
+
+    //Shows different Nav bars for different user types
+    this.setUserNav();
   }
 }

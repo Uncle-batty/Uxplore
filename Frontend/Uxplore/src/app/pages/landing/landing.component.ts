@@ -67,6 +67,16 @@ interestCategoryMapping: { [key: string]: number } = {
 
   ngOnInit() {}
 
+  navigateUser (user: User){
+    if (user.userType == 'business'){
+      this.router.navigate(['/business/businessDashboard']);
+
+    }else {
+      this.router.navigate(['/users/home'])
+    }
+
+  }
+
   openModal() {
     this.isModalOpen = true;
     this.closeRegModel();
@@ -157,7 +167,8 @@ interestCategoryMapping: { [key: string]: number } = {
           if (response) {
 
           localStorage.setItem('user', JSON.stringify(response));
-          this.navpage('/user/home');
+
+          this.navigateUser(response);
 
           //
 
@@ -234,7 +245,7 @@ submituser() {
         }
       });
       localStorage.setItem('user', JSON.stringify(response));
-      this.navpage('/user/home');
+      this.navigateUser(response)
     },
     (error) => {
       console.error('Failed to register user', error,this.user);
@@ -269,7 +280,7 @@ signInWithGoogle(){
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
+                        this.navigateUser(response);
                     }
             },
             (error) => {
@@ -329,7 +340,7 @@ signInWithFacebook(){
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
+                        this.navigateUser(response);
                     }
             },
             (error) => {
@@ -386,7 +397,7 @@ let user : User = {
             (response) => {
                 if (response) {
                         localStorage.setItem('user', JSON.stringify(response));
-                        this.navpage('/user/home');
+                        this.navigateUser(response);
                     }
             },
             (error) => {

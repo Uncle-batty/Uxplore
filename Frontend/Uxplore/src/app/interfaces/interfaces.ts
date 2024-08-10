@@ -1,3 +1,4 @@
+import { IntegrationNotFoundException } from "@ionic/cli/lib/errors";
 
 export interface User {
   id?: number;
@@ -57,4 +58,13 @@ export interface Comment {
   event_ID: number;
   listing_ID: number|undefined;
   comment: string;
+}
+
+export interface BusinessAdvert {
+  id: number;
+  business_ID : number;
+  image_File: string;
+  description: string;
+  event_ID : number
+
 }

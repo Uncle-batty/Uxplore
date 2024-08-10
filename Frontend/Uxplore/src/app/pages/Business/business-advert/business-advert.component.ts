@@ -13,6 +13,11 @@ import {
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BusinessAdvert } from 'src/app/interfaces/interfaces';
+import { BusinessAdvertsService } from 'src/app/services/business-adverts.service';
+import { CommonModule } from '@angular/common';
+
+
 @Component({
   selector: 'app-business-advert',
   templateUrl: './business-advert.component.html',
@@ -30,15 +35,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     IonLoading,
-  ],
+  CommonModule  ],
   standalone: true,
+  providers: [BusinessAdvertsService]
 })
 export class BusinessAdvertComponent implements OnInit {
   aiInput: string = '';
   aiOutput: string = '';
   loading: boolean = false;
 
-  constructor() {}
+  adImage: string= "";
+  croppedImage: any = '';
+  imageChangedEvent: any = '';
+  adDescription : string = "";
+  adBusinessID : number= 0;
+
+
+  constructor(private adsService: BusinessAdvertsService) {}
 
   ngOnInit() {
     const input = document.getElementById('upload') as HTMLInputElement;
@@ -51,6 +64,47 @@ export class BusinessAdvertComponent implements OnInit {
       this.fileshow(fileName, filetype, filewrapper);
     });
   }
+
+  createAdvert (){
+    console.log("Button clicked");
+    if (this.adImage == null){
+      return;
+    }
+
+    const advert : BusinessAdvert = {
+      id : 0,
+      business_ID: 0,
+      image_File: this.adImage,
+      description : this.aiOutput ?? this.adDescription ?? "",
+      event_ID: 0
+    }
+
+    this.adsService.postAd(advert).subscribe((advert) => {
+
+    }, (error) => {
+      console.log("Error while uploading advert: ", error)
+    })
+
+
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.adImage = e.target.result; // You can use this to display the image or upload it
+        console.log(this.adImage); // This is a base64 string representation of the image
+      };
+
+      reader.readAsDataURL(file); // Converts the file to a base64 string
+    }
+  }
+
+
 
   async generateContent() {
     this.loading = true; // Start loading
@@ -143,4 +197,6 @@ export class BusinessAdvertComponent implements OnInit {
       filewrapper.removeChild(showfileboxElem);
     });
   }
+
+
 }

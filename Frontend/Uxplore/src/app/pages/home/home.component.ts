@@ -12,13 +12,14 @@ import { Event } from 'src/Models/event-card';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
+import { AdsHeaderComponent } from './components/ads-header/ads-header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [IonicModule, CommonModule, EventCardComponent, HttpClientModule],
+  imports: [IonicModule, CommonModule, EventCardComponent, HttpClientModule, AdsHeaderComponent],
   providers: [ListingsService],
 })
 export class HomeComponent implements OnInit {

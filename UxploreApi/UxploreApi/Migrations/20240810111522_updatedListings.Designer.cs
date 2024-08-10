@@ -12,8 +12,8 @@ using UXplore.Context;
 namespace UxploreAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240805210406_adverts")]
-    partial class adverts
+    [Migration("20240810111522_updatedListings")]
+    partial class updatedListings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,6 +216,9 @@ namespace UxploreAPI.Migrations
                     b.Property<string>("Site")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -437,6 +440,33 @@ namespace UxploreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User_Interests");
+                });
+
+            modelBuilder.Entity("UxploreAPI.Models.Business_Advert", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Business_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Event_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image_File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("business_Adverts");
                 });
 
             modelBuilder.Entity("UxploreAPI.Models.ListingImage", b =>

@@ -1,0 +1,34 @@
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    width: 100%;
+      padding: 10px 0;
+}
+
+.carousel-slide {
+    width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+  width: 50%;
+  /* Each image takes up 50% of the container width */
+  object-fit: cover;
+  width: auto;
+    height: auto;
+    max-width: 600px;
+    /* Adjust as needed */
+    max-height: 250px;
+}
+
+.clickable {
+  cursor: pointer;
+}

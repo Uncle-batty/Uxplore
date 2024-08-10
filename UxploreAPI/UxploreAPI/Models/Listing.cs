@@ -33,6 +33,8 @@ namespace UXplore.Models
         [Required]
         public float AVG_price { get; set; }
 
+        public int UserID { get; set; }
+
     }
 
 

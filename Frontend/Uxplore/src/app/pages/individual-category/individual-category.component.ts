@@ -37,7 +37,7 @@ export class IndividualCategoryComponent implements OnInit {
     });
     switch (this.categoryName) {
       case 'Adrenaline':
-        this.color = '#ff6e00';
+        this.color = '#ff6e00 ';
         break;
       case 'Date Night':
         this.color = '#cc00FF';

@@ -14,6 +14,8 @@
   </div>
   <div *ngIf="isBusinessUser" class="links">
     <button (click)="navpage('/business/businessDashboard')"><ion-icon size="large" name="bar-chart-outline"></ion-icon> Dashboard</button>
+    <button (click)="navpage('/business/AddEvent')"><ion-icon size="large" name="map-outline"></ion-icon>
+      Add Event</button>
     <button (click)="navpage('/business/businessAdvert')"><ion-icon size="large" name="megaphone-outline"></ion-icon> Adverts</button>
     <button (click)="navpage('/business/businessCalender')"><ion-icon size="large" name="calendar-clear-outline"></ion-icon>Calender</button>
     <button (click)="openNotificationsModal() "><ion-icon size="large" name="notifications-outline"></ion-icon>Notifications</button>

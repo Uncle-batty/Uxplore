@@ -22,6 +22,7 @@ import { BusinessCalendarComponent } from './pages/Business/business-calendar/bu
 import { BusinessDashboardComponent } from './pages/Business/business-dashboard/business-dashboard.component';
 import { BusinessNotificationsComponent } from './pages/Business/business-notifications/business-notifications.component';
 import { BusinessProfileComponent } from './pages/Business/business-profile/business-profile.component';
+import { AddEventComponent } from './pages/Business/add-event/add-event.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -42,6 +43,7 @@ const mainRoutes: Routes = [
 
 const businessComponent: Routes = [
    {path: 'businessAdvert', component: BusinessAdvertComponent},
+  {path: 'AddEvent', component: AddEventComponent},
   {path: 'businessProfile', component: BusinessProfileComponent},
   {path: 'businessCalender', component: BusinessCalendarComponent} ,
   {path: 'businessDashboard', component: BusinessDashboardComponent}

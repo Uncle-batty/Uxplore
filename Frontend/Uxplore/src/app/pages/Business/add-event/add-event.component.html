@@ -1,0 +1,84 @@
+<div class="main-content">
+  <h1>Create an Event.</h1>
+  <div class="wrapper">
+    <div class="card-container">
+      <div class="box left-box">
+        <form>
+          <div class="input-container">
+            <label for="eventName">Event Name*</label>
+            <input type="text" id="eventName" placeholder="Top Events e.g">
+          </div>
+
+          <div class="input-container">
+            <label for="date">Date*</label>
+            <input type="date" id="date">
+          </div>
+
+          <div class="input-container">
+            <label for="location">Locations</label>
+            <input type="text" id="location" placeholder="---Select Location---">
+          </div>
+
+          <div class="input-container">
+            <label for="description">Event Description</label>
+            <textarea id="description" class="description-textarea"
+              placeholder="Provide a short description"></textarea>
+          </div>
+
+          <div class="input-container">
+            <label for="bookingRequired">Booking Required?</label>
+            <label class="switch">
+              <input type="checkbox" id="bookingRequired">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="box right-box">
+        <form>
+          <div class="input-container">
+            <label for="minPrice">Min Price*</label>
+            <input type="number" id="minPrice" placeholder="200">
+          </div>
+
+          <div class="input-container">
+            <label for="maxPrice">Max Price*</label>
+            <input type="number" id="maxPrice" placeholder="400">
+          </div>
+
+          <div class="input-container">
+            <label for="publicCell">Public Cell*</label>
+            <div class="input-with-icon">
+              <span class="icon">
+
+                <img  src = "assets/south-africa.png" alt="flag icon" />
+              </span>
+              <input type="tel" id="publicCell" placeholder="011 056 0667">
+            </div>
+          </div>
+
+
+          <div class="input-container">
+            <label for="publicEmail">Public Email</label>
+            <input type="email" id="publicEmail" placeholder="info@jodoe.co.za">
+          </div>
+
+          <div class="input-container">
+            <label for="link">Link</label>
+            <input type="url" id="link" placeholder="website Link">
+          </div>
+
+          <div class="upload-btn-container">
+                <label for="uploadPhotos">Upload Photos</label>
+                <input style = "margin-left: 2rem;" type="file" id="uploadPhotos" multiple>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-upload-ad">
+    <button type="submit">Confirm</button>
+  </div>
+</div>

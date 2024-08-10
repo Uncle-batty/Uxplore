@@ -12,6 +12,8 @@ import { Listing, UserInteraction } from 'src/app/interfaces/interfaces';
 import { Observable, forkJoin } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { HttpClientModule } from '@angular/common/http';
+import { Geolocation } from '@capacitor/geolocation';
+
 
 @Component({
   selector: 'app-calender',
@@ -75,23 +77,40 @@ export class CalenderComponent implements OnInit {
     this.getUserLocation();
   }
 
-  getUserLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.userLat = position.coords.latitude;
-          this.userLon = position.coords.longitude;
-          console.log('User Location:', this.userLat, this.userLon);
-          this.loadWeatherData();
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
+
+    async getUserLocation() {
+    try {
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000, // optional, in milliseconds
+        maximumAge: 0 // optional, disable cache
+      });
+      this.userLat = position.coords.latitude;
+      this.userLon = position.coords.longitude;
+      console.log('User Location:', this.userLat, this.userLon);
+      this.loadWeatherData();
+    } catch (error) {
+      this.handleGeolocationError(error);
     }
   }
+
+    handleGeolocationError(error: any) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        console.error('User denied the request for Geolocation.');
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.error('Location information is unavailable.');
+        break;
+      case error.TIMEOUT:
+        console.error('The request to get user location timed out.');
+        break;
+      default:
+        console.error('An unknown error occurred:', error.message);
+        break;
+    }
+  }
+
 
   loadWeatherData() {
     this.listingsService.getWether(this.userLat, this.userLon).subscribe(

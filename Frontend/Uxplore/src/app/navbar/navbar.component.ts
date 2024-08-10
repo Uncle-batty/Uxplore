@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonLabel, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {megaphoneOutline, barChartOutline,  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline} from 'ionicons/icons';
+import {megaphoneOutline, barChartOutline,  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline,notificationsOutline, logOutOutline, mapOutline} from 'ionicons/icons';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -66,7 +66,7 @@ notifications = [
 ];
 
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {
-    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, notificationsOutline,logOutOutline, megaphoneOutline, barChartOutline  });
+    addIcons({  bookmarkOutline, searchOutline, homeOutline, gameControllerOutline, calendarClearOutline, mapOutline, notificationsOutline,logOutOutline, megaphoneOutline, barChartOutline  });
    }
 
    navpage(path : string) {

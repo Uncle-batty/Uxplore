@@ -1,10 +1,10 @@
 <ion-content *ngIf="!isLoading">
   <ion-grid class="main-content">
 
-
     <ion-row >
       <app-ads-header style="width: 100%;"></app-ads-header>
     </ion-row>
+
 
     <h1>Upcoming Events</h1>
 
@@ -12,7 +12,7 @@
   </ion-grid>
   <ion-grid class="cardalign">
     <ion-row>
-      <ion-col size="4">
+      <ion-col size="12" size-sm="4">
         <ion-card class="explore-card">
           <img src="assets/Images/CottonFest.png" />
           <div class="gradient-overlay"></div>
@@ -22,7 +22,7 @@
           </div>
         </ion-card>
       </ion-col>
-      <ion-col size="4">
+      <ion-col size="12" size-sm="4">
         <ion-card class="explore-card">
           <img src="assets/Images/addrenaline.jpg" />
           <div class="gradient-overlay"></div>
@@ -32,7 +32,7 @@
           </div>
         </ion-card>
       </ion-col>
-      <ion-col size="4">
+      <ion-col size="12" size-sm="4">
         <ion-card class="explore-card">
           <img src="assets/Images/Chess.jpeg" />
           <div class="gradient-overlay"></div>
@@ -44,9 +44,9 @@
       </ion-col>
     </ion-row>
 
-        <h1>Places you may like</h1>
-
+    <h1>Places you may like</h1>
   </ion-grid>
+
 
 
 
@@ -54,7 +54,7 @@
 
   <ion-grid class="cardalign">
     <ion-row>
-      <app-event-card *ngFor="let item of events" [event]="item" bgColor="{{color}}"
+      <app-event-card style="margin-left: 6%;" *ngFor="let item of events" [event]="item" bgColor="{{color}}"
         (click)="navpage('/user/activity', item.Id)"></app-event-card>
       <!-- </ion-col>
       <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12"> -->

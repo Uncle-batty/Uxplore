@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit {
   events: Event[] = [];
   color: string = "white";
 
+
+
   constructor(private platform: Platform, private http: HttpClient, private listingService: ListingsService, private router: Router) { }
 
   ngOnInit() {

@@ -1,0 +1,103 @@
+.rectangle-202 {
+    position: absolute;
+    width: 511px;
+    height: 700px;
+    /* left: 884px;*/
+    /* top: 83px;*/
+    background: #222020;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.profile-picture {
+    position: absolute;
+    width: 128px;
+    height: 122px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    border-radius: 100px;
+}
+
+.cardformInputs {
+    position: absolute;
+    width: 100%;
+    top: 150px;
+    text-align: left;
+    padding: 0;
+}
+
+.cardformInputs .form-group {
+    margin-bottom: 20px;
+}
+
+.cardformInputs p {
+    font-family: 'League Spartan', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 10px;
+}
+
+.cardformInputs input {
+    width: 450px;
+    height: 60px;
+    background: #000000;
+    border-radius: 20px;
+    border: none;
+    color: rgba(255, 255, 255, 0.95);
+    font-family: 'League Spartan', sans-serif;
+    font-size: 20px;
+    padding: 0 15px;
+    margin-bottom: 1px;
+}
+
+
+.cardformInputs button {
+    box-sizing: border-box;
+    width: 145px;
+    /* Adjusted width from 183.08px to 145px */
+    height: 40px;
+    /* Adjusted height from 57.78px to 40px */
+    background: linear-gradient(180deg, #7332B4 0%, #32164E 100%);
+    border: 5px solid #7332B4;
+    /* Added border */
+    box-shadow: inset 0px 4px 4px rgba(217, 120, 220, 0.76);
+    /* Adjusted shadow */
+    border-radius: 10px;
+    /* Adjusted border-radius from 20px to 10px */
+    display: flex;
+    /* Added flex display */
+    justify-content: center;
+    /* Centering the content horizontally */
+    align-items: center;
+    /* Centering the content vertically */
+    color: #FFFFFF;
+    font-weight: 700;
+    /* Adjusted font-weight to 700 */
+    font-size: 16px;
+    /* Adjusted font-size from 20px to 16px */
+    cursor: pointer;
+    text-align: center;
+    /* Centering text */
+    position: absolute;
+
+    filter: drop-shadow(0px 4px 4px rgba(187, 14, 217, 0.25));
+    /* Preserved filter */
+    transform: rotate(0.17deg);
+    /* Preserved transform */
+    margin-top: 20px;
+    /* Preserved margin-top */
+}
+
+.cardformInputs .form-group {
+    margin-bottom: 20px;
+}
+
+@media (max-width:600px) {
+    .rectangle-202 {
+        margin-top: 120px;
+    }
+}

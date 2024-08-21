@@ -1,3 +1,4 @@
+import { UsersService } from 'src/app/services/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet, IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonRow, IonCol, IonGrid } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
@@ -5,20 +6,25 @@ import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { locationOutline,star, bookmark, shareSocial  } from 'ionicons/icons';
 import { Event } from 'src/Models/event-card';
+import { UserInteraction, User } from '../interfaces/interfaces';
+import { HttpClientModule } from '@angular/common/http';
+import { ListingsService } from '../services/listings.service';
 
 @Component({
   selector: 'app-event-card',
   standalone: true,
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.scss'],
-  imports: [IonGrid, IonCol, IonRow, IonIcon, IonCard, IonCardHeader, IonApp, IonRouterOutlet,CommonModule, IonCardTitle, IonCardSubtitle, IonCardContent, FormsModule]
+  imports: [IonGrid, IonCol, IonRow, IonIcon, IonCard, IonCardHeader, IonApp, IonRouterOutlet,CommonModule, IonCardTitle, IonCardSubtitle, IonCardContent, FormsModule, HttpClientModule],
+  providers: [UsersService, ListingsService]
 })
 export class EventCardComponent  implements OnInit {
 
-  @Input() bgColor : string = "#23a425";
+  @Input() bgColor : string = "#00ff11";
   @Input() boxShadow : string = "";
-   @Input() event: Event = {
-    Id: '',
+  @Input() shareVisible: boolean = true;
+  @Input() event: Event = {
+    Id: 0,
     Name: '',
     Location: '',
     PriceRange: '',
@@ -27,10 +33,13 @@ export class EventCardComponent  implements OnInit {
     SafetyRating: '',
     ImageData: ''
   };
+  ratingAmount = 0;
+  savedImage = "bookmark-outline";
+  showNoRating = true;
 
 
 
-  constructor() {
+  constructor(private userService: UsersService, private listingService:ListingsService) {
     addIcons({locationOutline, star, bookmark, shareSocial})
   }
 
@@ -39,10 +48,77 @@ export class EventCardComponent  implements OnInit {
     if (this.event.ImageData == ''){
       this.event.ImageData = this.getDefaultImage();
     }
+    this.loadSavedImage();
+    this.getListingRating();
+
+
   }
 
   getStars(): number[] {
     return Array.from({ length: parseInt(this.event.Rating, 10) }, (_, index) => index + 1);
+  }
+
+   addToSaved(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+    let currentDate = new Date(Date.now()).toLocaleDateString()
+    currentDate = currentDate.replace("/","-" )
+    console.log("This user: ",user.id,)
+    const interaction: UserInteraction = {
+      event_ID: 0,
+      listing_ID: Number(this.event.Id),
+      user_ID: user.id,
+      interaction_Type: "Saved",
+      interaction_Date: currentDate.replace("/","-" )
+    }
+    console.log("Interaction: ",interaction)
+
+    this.userService.setInteraction(interaction).subscribe(result =>
+      console.log(result)
+    ),((error: any) => {
+      console.log("error: ", error)
+    })
+  }
+
+   loadSavedImage(){
+    const userString = localStorage.getItem('user') ?? "";
+    const user = JSON.parse(userString)
+
+    this.userService.getInteractionsOfType("Saved", user.id, this.event.Id).subscribe((Response) => {
+    if (!Response[0]){
+      this.savedImage = "bookmark-outline"
+    }else {
+      this.savedImage = "bookmark"
+    }
+    })
+  }
+
+  getListingRating() {
+    this.listingService.getactivityrateings(this.event.Id).subscribe(
+        (res) => {
+          let ratingCount = 0;
+          let ratingCurrentVAlue = 0;
+          res.forEach(item => {
+            if (item.type == "normal"){
+              ratingCount ++
+              ratingCurrentVAlue += item.ratevalue;
+            }
+          })
+          this.ratingAmount = ratingCurrentVAlue / ratingCount;
+          this.ratingAmount = Math.min(Math.max(Math.round(this.ratingAmount), 0), 5);
+          this.event.Rating = this.ratingAmount.toString();
+
+
+          if (this.ratingAmount == 0){
+            this.showNoRating = true;
+          }else{
+            this.showNoRating = false;
+          }
+
+        },
+        (error) => {
+          console.log('Error fetching updated ratings:', error);
+        })
   }
 
   getDefaultImage() : string{

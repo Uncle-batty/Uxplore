@@ -4,16 +4,16 @@
   <div class="navBar">
     <img (click)="navpage('/main/landing')" id="img" src="../../assets/Logo.png">
     <nav class="nav-buttons">
-      <a (click)="navpage('/main/about')" class="nav-button" expand="block">About</a>
-      <a  class="nav-button" expand="block">Are you a Buisness</a>
-      <a  class="nav-button" (click)="openModal()" expand="block">Login</a>
+      <a (click)="navpage('/main/about')" class="nav-button">About</a>
+      <a class="nav-button">Are you a Business</a>
+      <a class="nav-button" (click)="openModal()">Login</a>
     </nav>
   </div>
 
   <div class="Contentbox">
     <h1>Discover and Experience <br>the hidden gems right <br>at your fingertips.</h1>
     <h6>"We find... U Explore!"</h6>
-    <button class="button" (click)="openRegModel()" id="open-modal" expand="block">SIGN UP</button>
+    <button class="button" (click)="openRegModel()" id="open-modal">SIGN UP</button>
   </div>
 </div>
 
@@ -21,17 +21,23 @@
 <div class="modal-overlay" [ngClass]="{'show': isRegistrationModelOpen}" (click)="closeRegModel()">
   <div class="modal" [ngClass]="{'show': isRegistrationModelOpen}" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <button class="close-btn" (click)="closeRegModel() ">X</button>
+      <button class="close-btn" (click)="closeRegModel()">X</button>
     </div>
     <div class="modal-content">
       <h2>Register</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Username" type="text" />
-        <input class="input" placeholder="Email" type="email" />
-        <input class="input" placeholder="Password" type="password" />
-        <input class="input" placeholder="Confirm Password" type="password" />
-        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
-        <a  style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
+        <input class="input" placeholder="Name" type="text" [(ngModel)]="Fullname" />
+        <ion-toast [isOpen]='isEmailToast' message='Enter a valid email address' duration='5000'
+          (didDismiss)='setOpen(false)'>
+        </ion-toast>
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" />
+        <ion-toast [isOpen]="isPasswordToast"
+          message="Password must contain at least one upper case character and be over 8 characters" duration="5000"
+          (didDismiss)="setOpen(false)"></ion-toast>
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" />
+        <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Confermpassword" />
+        <button class="sign-in-btn" (click)="logregdetails()">Confirm</button>
+        <a style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
       </div>
     </div>
   </div>
@@ -41,30 +47,28 @@
 <div class="modal-overlay" [ngClass]="{'show': isInterestsModelOpen}" (click)="closeInterestsModel()">
   <div class="modal" [ngClass]="{'show': isInterestsModelOpen}" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <button class="close-btn" (click)="closeInterestsModel() ">X</button>
+      <button class="close-btn" (click)="closeInterestsModel()">X</button>
     </div>
     <div class="modal-content">
       <h2>What are your Interests</h2>
       <div class="checkboxes">
         <div class="checkItem" *ngFor="let interest of interests; let i = index">
           <label class="container">
-
-            <input class="checkmark" type="checkbox" [checked]="toggleInterest(interest)"
-              (change)="toggleInterest(interest)">
+            <input class="checkmark" type="checkbox" [checked]="interest.selected" (change)="toggleInterest(interest)">
             <span class="checkmark"></span>
             {{ interest.name }}
           </label>
         </div>
       </div>
+      <ion-toast [isOpen]="isFailedtoast"
+        message="Failed to create user. Please make sure this email isn't used with another account." duration="5000"
+        (didDismiss)="setOpen(false)"></ion-toast>
       <div class="inputscon">
-        <button class="sign-in-btn" (click)="openInterestsModel()">Confirm</button>
+        <button class="sign-in-btn" (click)="submituser()">Confirm</button>
       </div>
-
-
     </div>
   </div>
 </div>
-
 
 <!-- Login Modal -->
 <div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
@@ -75,16 +79,24 @@
     <div class="modal-content">
       <h2>Login</h2>
       <div class="inputscon">
-        <input class="input" placeholder="Email" type="email" />
-        <input class="input" placeholder="Password" type="password" />
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" required />
+        <p class="error" [hidden]="!showEmailError">Please enter a valid email address</p>
+
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" required />
+        <p class="error" [hidden]="!showPasswordError">Please enter a valid password</p>
+
         <a class="forgot-password">Forgot Password?</a>
-        <button class="sign-in-btn" (click)="navpage('/user/home')">Sign In</button>
-        <a  (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
+        <button class="sign-in-btn" (click)="login()">Sign In</button>
+        <a (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
       <div class="separator">
         <span>--------------------------------- OR ---------------------------------</span>
       </div>
+      <div style="display: flex; justify-content: space-evenly; margin-top: 10px">
+        <ion-icon size="large" name="logo-google" (click)="signInWithGoogle()"></ion-icon>
+        <!-- <ion-icon name="logo-facebook" size="large" (click)="signInWithFacebook()"></ion-icon> -->
+        <ion-icon name="logo-twitter" size="large" (click)="signInWithTwitter()"></ion-icon>
+      </div>
     </div>
   </div>
 </div>
-

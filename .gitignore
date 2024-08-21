@@ -142,3 +142,4 @@ public/
 # Ignore TypeScript compiled files for Ionic projects
 www/build/
 
+UxploreAPI/UxploreAPI/Models/glove.42B.300d.txt

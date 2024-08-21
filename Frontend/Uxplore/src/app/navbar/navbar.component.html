@@ -2,15 +2,27 @@
   <div class="logo">
     <img id="img" src="../../assets/Logo.png">
   </div>
-  <div class="links">
+  <div *ngIf="!isBusinessUser" class="links">
     <button (click)="navpage('/user/home')" ><ion-icon size="large" name="home-outline"></ion-icon>       Home</button>
     <button (click)="navpage('/user/explore')" ><ion-icon size="large" name="search-outline"></ion-icon>     Explore</button>
     <button (click)="navpage('/user/saved')" ><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
     <button (click)="navpage('/user/calender')" ><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
     <button (click)="openModal()"  ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
     <button (click)="openNotificationsModal() " ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
-    <button (click)="navpage('/user/home')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
+    <button (click)="navpage('/user/profile')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
+    <button (click)="logout()"><ion-icon size="large" name="log-out-outline"></ion-icon> Log-out</button>
   </div>
+  <div *ngIf="isBusinessUser" class="links">
+    <button (click)="navpage('/business/businessDashboard')"><ion-icon size="large" name="bar-chart-outline"></ion-icon> Dashboard</button>
+    <button (click)="navpage('/business/AddEvent')"><ion-icon size="large" name="map-outline"></ion-icon>
+      Add Event</button>
+    <button (click)="navpage('/business/businessAdvert')"><ion-icon size="large" name="megaphone-outline"></ion-icon> Adverts</button>
+    <button (click)="navpage('/business/businessCalender')"><ion-icon size="large" name="calendar-clear-outline"></ion-icon>Calender</button>
+    <button (click)="openNotificationsModal() "><ion-icon size="large" name="notifications-outline"></ion-icon>Notifications</button>
+    <button (click)="navpage('/business/businessProfile')"><ion-icon size="large" name="search"></ion-icon> Profile</button>
+    <button (click)="logout()"><ion-icon size="large" name="log-out-outline"></ion-icon> Log-out</button>
+  </div>
+
 </div>
 
 <!-- Game Model -->

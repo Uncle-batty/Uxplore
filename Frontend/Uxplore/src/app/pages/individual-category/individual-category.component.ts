@@ -3,53 +3,99 @@ import { Router } from '@angular/router';
 import { EventCardComponent } from 'src/app/event-card/event-card.component';
 import { Event } from 'src/Models/event-card';
 import { CommonModule } from '@angular/common';
-import { ThisReceiver } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
+import { ListingsService } from 'src/app/services/listings.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Listing } from 'src/app/interfaces/interfaces';
+import { IonGrid, IonRow } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-individual-category',
   standalone: true,
   templateUrl: './individual-category.component.html',
   styleUrls: ['./individual-category.component.scss'],
-  imports: [EventCardComponent,CommonModule]
+  imports: [IonRow, IonGrid, EventCardComponent, CommonModule, HttpClientModule],
+  providers: [ListingsService],
 })
-export class IndividualCategoryComponent  implements OnInit {
+export class IndividualCategoryComponent implements OnInit {
   events: Event[] = [];
-  categoryName : string = "Category Name"
-  @Input() bannerImage:string = ""
-  constructor(private router: Router, private route: ActivatedRoute) {
+  categoryName: string = 'Category Name';
+  color: string = '';
+  @Input() bannerImage: string = '';
+  isLoading: boolean = true;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private lservice: ListingsService
+  ) {}
 
-  }
-
+  listings: Listing[] = [];
   ngOnInit() {
-    this.createTestEvents();
-    this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`
-    this.route.queryParams.subscribe(params => {
+    this.bannerImage = `url("../../../assets/dateNightBGIMG.jpg") no-repeat center center fixed`;
+    this.route.queryParams.subscribe((params) => {
       this.categoryName = params['id'];
     });
-  }
-
-  navpage(path : string, eventid: string = "1") {
-
-  this.router.navigate([path], { queryParams: {id: eventid} });
-}
-
-createTestEvents() {
-    for (let index = 0; index < 100; index++) {
-      let event1: Event = {
-        Id: index.toString(),
-        Name: "level 4 ",
-        Location: "Santon",
-        PriceRange: "180 - 340",
-        Times: "9am - 21pm",
-        Rating: "4.5",
-        SafetyRating: "Safe",
-        ImageData: ''
-      };
-      this.events.push(event1);
+    switch (this.categoryName) {
+      case 'Adrenaline':
+        this.color = '#ff6e00 ';
+        break;
+      case 'Date Night':
+        this.color = '#cc00FF';
+        break;
+      case 'Outdoors':
+        this.color = ' #2B3628';
+        break;
+      case 'Family Friendly':
+        this.color = ' #008080';
+        break;
+      case 'Sight Seeing':
+        this.color = ' #8d99ae';
+        break;
+      case 'Adventure':
+        this.color = ' #8ecae6';
+        break;
+      case 'All':
+        this.color = ' #dab600';
+        break;
+    }
+    if (this.categoryName === 'All') {
+      this.lservice.getalllistings().subscribe((alllistings) => {
+        this.listings = alllistings;
+        console.log('Events:', this.popevents(alllistings));
+      });
+    } else {
+      this.lservice.listallbycategory(this.categoryName).subscribe((data) => {
+        this.listings = data;
+        console.log('Events:', this.popevents(data));
+      });
     }
   }
 
+  navpage(path: string, eventid: number = 1) {
+    console.log(eventid)
+    this.router.navigate([path], { queryParams: { id: eventid } });
+  }
 
-
+  popevents(currentListing: Listing[]): Event[] {
+    currentListing.forEach((listing) => {
+      this.lservice.getlistingimages(listing.id).subscribe(
+        (data) => {
+          let newEvent: Event = {
+            Id: listing.id,
+            Name: listing.name,
+            Location: listing.location.substring(0, 10) + '...',
+            PriceRange: listing.avG_price.toString(),
+            Times: listing.hours,
+            Rating: '',
+            SafetyRating: '',
+            ImageData: data[0].image,
+          };
+          this.events.push(newEvent);
+        },
+        (error) => {}
+      );
+    });
+    this.isLoading = false;
+    return this.events;
+  }
 }

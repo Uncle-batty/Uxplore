@@ -1,0 +1,27 @@
+<div class="main-content container">
+  <div class="Heading">
+    <h2>{{ Month }}</h2>
+  </div>
+
+  <ion-grid class="grid">
+    <ion-row class="header ion-align-items-center row">
+      <ion-col *ngFor="let header of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" size="1.7"
+        class="ion-align-items-center">
+        <ion-card class="card headercard">
+          <p>{{ header }}</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let week of weeks" class="ion-align-items-center row">
+      <ion-col *ngFor="let day of week" size="1.7" class="ion-align-items-center col">
+        <ion-card class="card" [ngClass]="{'highlight': isCurrentDay(day)}">
+          <h6 class="card-header">{{ day || '&nbsp;' }}</h6>
+          <div *ngIf="day && events[day]">
+            <ion-card class="attendingcard" *ngFor="let event of events[day]">{{ event }}</ion-card>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

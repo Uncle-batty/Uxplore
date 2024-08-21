@@ -1,7 +1,17 @@
 <div class="main-content">
-  <ion-content>
+
     <div class="search-bar">
-      <ion-searchbar placeholder="What do you want to explore ?"></ion-searchbar>
+      <ion-searchbar placeholder="What do you want to explore ?" [(ngModel)]="term"  (ionInput)="search($event)">
+      </ion-searchbar>
+      <ion-list *ngIf="suggestions.length > 0">
+        <ion-item *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)" button detail lines="full">
+          {{ suggestion.name }}
+        </ion-item>
+      </ion-list>
+
+    <div class="cardContainer">
+      <app-event-card *ngFor="let item of events" [event]="item" bgColor="#dab600" ></app-event-card>
+    </div>
     </div>
 
     <ion-grid>
@@ -17,7 +27,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory', 'Night life')">
             <img src="assets/Images/nightlife.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -27,7 +37,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory','Outdoors')">
             <img src="assets/Images/outdoors.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -39,7 +49,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory','Sight Seeing')">
             <img src="assets/Images/sightseeing.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -49,7 +59,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory','All')">
             <img src="assets/Images/all.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -59,7 +69,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory','Date Night')">
             <img src="assets/Images/date.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -71,7 +81,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory', 'Adventure')">
             <img src="assets/Images/adventure.jpeg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -81,7 +91,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="6" size-lg="4" >
-          <ion-card class="explore-card" (click)="navpage('/user/individualCategory')">
+          <ion-card class="explore-card" (click)="navpage('/user/individualCategory', 'Family Friendly')">
             <img src="assets/Images/family.jpg" />
             <div class="gradient-overlay"></div>
             <div class="card-title">
@@ -90,7 +100,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="12" size-md="6" size-lg="4" (click)="navpage('/user/individualCategory')">
+        <ion-col size="12" size-md="6" size-lg="4" (click)="navpage('/user/individualCategory', 'Fitness')">
           <ion-card class="explore-card">
             <img src="assets/Images/fitness.png" />
             <div class="gradient-overlay"></div>
@@ -102,5 +112,12 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-content>
-</div>
+
+
+
+
+
+
+  </div>
+
+

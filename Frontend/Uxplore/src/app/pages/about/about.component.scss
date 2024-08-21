@@ -17,15 +17,17 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 15vh;
+  height: 10vh;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   border: 2px solid rgba(255, 255, 255, 0.19);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 
   img {
-    width: 30vh;
+    width: 25vh;
     height: 10vh;
+    cursor: pointer;
   }
 
   .nav-buttons {
@@ -38,8 +40,8 @@
 .nav-button {
   color: #fff;
   padding-inline: 20px;
-  font-size: 20px;
-  cursor: default;
+  font-size: 2.5vh;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
@@ -222,6 +224,29 @@ align-self: center;
 
 }
 
+@media (max-width: 768px) {
+  .navBar img {
+    width: 10vh;
+    height: 4vh;
+  }
+
+  .nav-button {
+    font-size: 2vh;
+    padding-inline: 10px;
+  }
+
+  .button,
+  .sign-in-btn {
+    width: 18vh;
+    height: 6vh;
+    font-size: 2vh;
+  }
+
+  .modal {
+    width: 95%;
+    height: 60vh;
+  }
+}
 .form-container {
   display: flex;
   justify-content: center;

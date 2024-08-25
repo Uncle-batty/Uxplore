@@ -10,18 +10,25 @@ export interface User {
 }
 
 export interface Listing {
-    id: number;
-    name: string;
-    description: string;
-    hours: string;
-    location: string;
-    phone: string;
-    email: string;
-    order: string;
-    reserve: number;
-    site?: string;
-    avG_price: number;
+  id: number;
+  name: string;
+  description: string;
+  hours: string;
+  location: string;
+  phone: string;
+  email: string;
+  order?: string;
+  reserve: number;
+  start_date: string;
+  end_date?: string;
+  site: string;
+  min_price: number;
+  max_price: number;
+  user_id: number;
+  avG_price: number;
 }
+
+
 
 export interface interests {
   id?: number;

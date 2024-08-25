@@ -13,7 +13,6 @@ import {
   providedIn: 'root',
 })
 export class ListingsService {
-  API_BASE_URL = ''
   baseUrl: string = `${API_BASE_URL}/api/Listing/`;
   rateingbaseurl: string = `${API_BASE_URL}/api/Ratings/`;
   commentApi: string = `${API_BASE_URL}/api/Comments`;
@@ -23,6 +22,14 @@ export class ListingsService {
     return this.http.get<Listing[]>(
       `${API_BASE_URL}/api/Listings/byCategory/${category}`
     );
+  }
+
+    addListing(listing: Listing): Observable<Listing> {
+    return this.http.post<Listing>(this.baseUrl, listing);
+  }
+
+  addlistingimage(listingimages: listingimages): Observable<listingimages> {
+    return(this.http.post<listingimages>(`${API_BASE_URL}/api/ListingImages/`, listingimages));
   }
 
   listoneactivity(activity: number | undefined): Observable<Listing> {

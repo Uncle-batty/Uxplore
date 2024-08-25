@@ -10,6 +10,7 @@ import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { User, interests } from 'src/app/interfaces/interfaces';
 import { logoGoogle, logoFacebook ,logoTwitter } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { UserSetting } from 'src/app/interfaces/interfaces';
 
 
 @Component({
@@ -211,37 +212,76 @@ interestCategoryMapping: { [key: string]: number } = {
 submituser() {
   this.service.registeruser(this.user).subscribe(
     (response) => {
-      console.log(response);
-      this.selectedInterests.forEach(interestName => {
-        const categoryId = this.interestCategoryMapping[interestName];
-        if (categoryId) {
-          const interest: interests = {
-            User_id: response.id,
-            Category_id: categoryId  // Ensure correct spelling and casing
-          };
-          console.log(interest);
-          console.log(`Adding interest: ${interestName} with Category_ID: ${categoryId}`);
-          this.service.setuserinterests(interest).subscribe(
-            res => {
-              console.log(`Interest ${interestName} added successfully.`, res);
-            },
-            (error) => {
-              console.error(`Failed to add interest ${interestName}.`, error);
+      console.log('User registration successful:', response);
+
+      if (response && response.id) {
+        const userId = response.id;
+
+        // Log the user ID to confirm it's correctly received
+        console.log('Received userId from registration:', userId);
+
+        // Create default user settings
+        const defaultSettings: UserSetting = {
+          userId: userId,  // Ensure correct case for `userId`
+          push_Notices: 0,
+          hide_Account: 0,
+          account_Suggestions: 0,
+          trending_Places: 0,
+          reminders: 0
+        };
+
+        // Attempt to save default settings
+        this.service.setUserSettings(defaultSettings).subscribe(
+          (res) => {
+            console.log('Default settings saved successfully:', res);
+          },
+          (error) => {
+            console.error('Failed to save default settings:', error);
+            if (error.status === 400) {
+              console.error('Invalid UserId provided:', userId);
             }
-          );
-        } else {
-          console.error(`No matching Category_ID found for interest: ${interestName}`);
-        }
-      });
-      localStorage.setItem('user', JSON.stringify(response));
-      this.navpage('/user/home');
+          }
+        );
+
+        // Save user's selected interests
+        this.selectedInterests.forEach(interestName => {
+          const categoryId = this.interestCategoryMapping[interestName];
+          if (categoryId) {
+            const interest: interests = {
+              User_id: userId,
+              Category_id: categoryId
+            };
+            console.log(`Adding interest: ${interestName} with Category_ID: ${categoryId}`);
+            this.service.setuserinterests(interest).subscribe(
+              res => {
+                console.log(`Interest ${interestName} added successfully:`, res);
+              },
+              (error) => {
+                console.error(`Failed to add interest ${interestName}:`, error);
+              }
+            );
+          } else {
+            console.error(`No matching Category_ID found for interest: ${interestName}`);
+          }
+        });
+
+        // Navigate to home page after successful registration
+        localStorage.setItem('user', JSON.stringify(response));
+        this.navpage('/user/home');
+      } else {
+        console.error('User registration response does not contain a valid ID:', response);
+        this.isFailedtoast = true;
+      }
     },
     (error) => {
-      console.error('Failed to register user', error,this.user);
+      console.error('Failed to register user:', error, this.user);
       this.isFailedtoast = true;
     }
   );
 }
+
+
+
 
 signInWithGoogle(){
   let user : User = {

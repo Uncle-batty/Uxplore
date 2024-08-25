@@ -412,12 +412,9 @@ namespace UxploreAPI.Migrations
                     b.Property<int>("hide_account")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("User_ID");
 
                     b.ToTable("User_Settings");
                 });
@@ -463,13 +460,13 @@ namespace UxploreAPI.Migrations
 
             modelBuilder.Entity("UXplore.Models.User_Setting", b =>
                 {
-                    b.HasOne("UXplore.Models.User", "user")
+                    b.HasOne("UXplore.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId")
+                        .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

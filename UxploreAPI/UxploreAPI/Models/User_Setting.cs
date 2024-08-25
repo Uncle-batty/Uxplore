@@ -7,18 +7,24 @@ namespace UXplore.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
-        [ForeignKey("User")]
-        public int User_ID { get; set; }
+        [Column("userId")]
+        public int UserId { get; set; }  // Use UserId to match the database column name
 
- 
-
+        [Required]
         public int Push_Notices { get; set; }
-        public int hide_account { get; set; }
 
-        public int Account_suggestions { get; set; }
-        public int Trending_places { get; set; }
+        [Required]
+        public int Hide_Account { get; set; }  // Renamed to match Pascal casing
+
+        [Required]
+        public int Account_Suggestions { get; set; }  // Renamed to match Pascal casing
+
+        [Required]
+        public int Trending_Places { get; set; }  // Renamed to match Pascal casing
+
+        [Required]
         public int Reminders { get; set; }
     }
 }
- 

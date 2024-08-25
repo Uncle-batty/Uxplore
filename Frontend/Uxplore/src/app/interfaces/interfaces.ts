@@ -1,4 +1,5 @@
 
+
 export interface User {
   id?: number;
   fName?: string;
@@ -7,7 +8,15 @@ export interface User {
   password ?: string;
   userType?: string;
 }
-
+export interface UserSetting {
+  id?: number;
+  userId: number;
+  push_Notices: number;
+  hide_Account: number;
+  account_Suggestions: number;
+  trending_Places: number;
+  reminders: number;
+}
 export interface Listing {
     id: number;
     name: string;
@@ -57,4 +66,8 @@ export interface Comment {
   event_ID: number;
   listing_ID: number|undefined;
   comment: string;
+}
+export interface userSettings{
+  id:number;
+  user_ID:number;
 }

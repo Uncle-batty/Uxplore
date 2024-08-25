@@ -7,11 +7,14 @@ import { User } from '../interfaces/interfaces';
   providedIn: 'root'
 })
 export class UserDetailsService {
-  private baseurl: string = 'https://uxploreapi.azurewebsites.net/api/Users';
+  private baseurl: string = 'https://localhost:44315/api/Users';
 
   constructor(private http: HttpClient) {}
 
-  updateUserDetails(userId: number, user: User): Observable<User> {
+updateUserDetails(userId: number, user: User): Observable<User> {
+  
     return this.http.put<User>(`${this.baseurl}/${userId}`, user);
-  }
 }
+
+}
+ 

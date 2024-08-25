@@ -7,5 +7,9 @@
   "appService.zipIgnorePattern": [
     "node_modules{,/**}",
     ".vscode{,/**}"
+  ],
+  "cSpell.words": [
+    "filewrapper",
+    "Yoco"
   ]
 }

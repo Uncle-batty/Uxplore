@@ -1,3 +1,4 @@
+import { addIcons } from 'ionicons';
 import {
   IonGrid,
   IonCol,
@@ -13,9 +14,10 @@ import {
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BusinessAdvert } from 'src/app/interfaces/interfaces';
+import { BusinessAdvert, User } from 'src/app/interfaces/interfaces';
 import { BusinessAdvertsService } from 'src/app/services/business-adverts.service';
 import { CommonModule } from '@angular/common';
+
 
 
 @Component({
@@ -35,6 +37,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     IonLoading,
+
   CommonModule  ],
   standalone: true,
   providers: [BusinessAdvertsService]
@@ -48,12 +51,21 @@ export class BusinessAdvertComponent implements OnInit {
   croppedImage: any = '';
   imageChangedEvent: any = '';
   adDescription : string = "";
-  adBusinessID : number= 0;
+  eventId : number = 0;
+  businessID : number = 0;
+
+  isModalOpen = false;
+  isCreditsModalOpen = false;
+  editingAdvert = false;
+  allBusinessAdverts : BusinessAdvert[] =[];
+  currentAdvert! : BusinessAdvert;
+  credits: number = 0;
 
 
   constructor(private adsService: BusinessAdvertsService) {}
 
   ngOnInit() {
+    this.getUser();
     const input = document.getElementById('upload') as HTMLInputElement;
     const filewrapper = document.getElementById('filewrapper') as HTMLElement;
 
@@ -65,6 +77,42 @@ export class BusinessAdvertComponent implements OnInit {
     });
   }
 
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  closeCreditsModal(){
+    this.isCreditsModalOpen = false;
+  }
+
+  openModal(){
+    this.isModalOpen = true;
+    this.getBusinessAdverts()
+
+  }
+
+  openCreditsModal(){
+    this.isCreditsModalOpen = true;
+  }
+
+  createCheckout(){
+
+  }
+
+  getUser () {
+    const userString = localStorage.getItem('user') ?? "";
+    const user : User = JSON.parse(userString) ?? '';
+    this.businessID = user.id ?? 0
+  }
+
+
+
+
+
+  onSelectEvent(){
+
+  }
+
   createAdvert (){
     console.log("Button clicked");
     if (this.adImage == null){
@@ -73,13 +121,21 @@ export class BusinessAdvertComponent implements OnInit {
 
     const advert : BusinessAdvert = {
       id : 0,
-      business_ID: 0,
+      business_ID: this.businessID,
       image_File: this.adImage,
       description : this.aiOutput ?? this.adDescription ?? "",
-      event_ID: 0
+      event_ID: this.eventId
     }
 
     this.adsService.postAd(advert).subscribe((advert) => {
+      console.log( "Advert response: ", advert)
+
+      // this.adsService.createPayment(100).subscribe((Response) => {
+      //   console.log("Payment response: ", Response)
+      //   //window.location.href = Response.PaymentUrl;
+      // } , (error) => {
+      //   console.log("Cant create payment: ", error)
+      // })
 
     }, (error) => {
       console.log("Error while uploading advert: ", error)
@@ -87,6 +143,40 @@ export class BusinessAdvertComponent implements OnInit {
 
 
   }
+
+  creditsCheckout() {
+  if (this.credits === 0) {
+    return;
+  }
+
+  // Save credits to localStorage
+  localStorage.setItem('credits', this.credits.toString());
+
+  this.adsService.getGUID().subscribe((guidResponse: any) => {
+    localStorage.setItem("YocoGUID", guidResponse);
+    this.adsService.createCheckoutWithGUID(this.credits, guidResponse).subscribe((paymentResponse: any) => {
+      console.log("Yoco redirect Url: ", paymentResponse.redirectUrl)
+      window.location.href = paymentResponse.redirectUrl;
+    });
+  });
+}
+
+  getBusinessAdverts(){
+    const BusinessAdvert = this.businessID;
+
+    this.adsService.getAllAdverts(BusinessAdvert).subscribe((businessAds) => {
+      this.allBusinessAdverts = businessAds;
+    })
+  }
+
+  onAdvertClick(advert: BusinessAdvert){
+    this.currentAdvert =advert;
+    this.adDescription = advert.description;
+    this.adImage = advert.image_File;
+    this.closeModal();
+  }
+
+
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

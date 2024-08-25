@@ -12,8 +12,8 @@ using UXplore.Context;
 namespace UxploreAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240728203050_YourMigrationName")]
-    partial class YourMigrationName
+    [Migration("20240825210935_updated_credits")]
+    partial class updated_credits
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,9 +179,6 @@ namespace UxploreAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<float>("AVG_price")
-                        .HasColumnType("real");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -190,6 +187,9 @@ namespace UxploreAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("End_Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Hours")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -197,6 +197,12 @@ namespace UxploreAPI.Migrations
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Max_Price")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Min_Price")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -216,6 +222,12 @@ namespace UxploreAPI.Migrations
                     b.Property<string>("Site")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -397,7 +409,10 @@ namespace UxploreAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Account_suggestions")
+                    b.Property<int>("Account_Suggestions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hide_Account")
                         .HasColumnType("int");
 
                     b.Property<int>("Push_Notices")
@@ -406,18 +421,14 @@ namespace UxploreAPI.Migrations
                     b.Property<int>("Reminders")
                         .HasColumnType("int");
 
-                    b.Property<int>("Trending_places")
+                    b.Property<int>("Trending_Places")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("hide_account")
-                        .HasColumnType("int");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("User_ID");
 
                     b.ToTable("User_Settings");
                 });
@@ -441,6 +452,33 @@ namespace UxploreAPI.Migrations
                     b.ToTable("User_Interests");
                 });
 
+            modelBuilder.Entity("UxploreAPI.Models.Business_Advert", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Business_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Event_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image_File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("business_Adverts");
+                });
+
             modelBuilder.Entity("UxploreAPI.Models.ListingImage", b =>
                 {
                     b.Property<int>("Id")
@@ -459,17 +497,6 @@ namespace UxploreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ListingImages");
-                });
-
-            modelBuilder.Entity("UXplore.Models.User_Setting", b =>
-                {
-                    b.HasOne("UXplore.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("User_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

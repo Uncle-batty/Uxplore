@@ -23,6 +23,10 @@ import { BusinessDashboardComponent } from './pages/Business/business-dashboard/
 import { BusinessNotificationsComponent } from './pages/Business/business-notifications/business-notifications.component';
 import { BusinessProfileComponent } from './pages/Business/business-profile/business-profile.component';
 import { AddEventComponent } from './pages/Business/add-event/add-event.component';
+import { SuccessComponent } from './pages/Business/business-advert/payments/success/success.component';
+import { CancelComponent } from './pages/Business/business-advert/payments/cancel/cancel.component';
+import { NotifyComponent } from './pages/Business/business-advert/payments/notify/notify.component';
+
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -46,7 +50,10 @@ const businessComponent: Routes = [
   {path: 'AddEvent', component: AddEventComponent},
   {path: 'businessProfile', component: BusinessProfileComponent},
   {path: 'businessCalender', component: BusinessCalendarComponent} ,
-  {path: 'businessDashboard', component: BusinessDashboardComponent}
+  {path: 'businessDashboard', component: BusinessDashboardComponent},
+  {path: 'success', component: SuccessComponent},
+  {path: 'cancel', component: CancelComponent},
+  {path: 'notify', component: NotifyComponent}
 ];
 
 export const routes: Routes = [

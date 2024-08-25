@@ -406,7 +406,10 @@ namespace UxploreAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Account_suggestions")
+                    b.Property<int>("Account_Suggestions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hide_Account")
                         .HasColumnType("int");
 
                     b.Property<int>("Push_Notices")
@@ -415,18 +418,14 @@ namespace UxploreAPI.Migrations
                     b.Property<int>("Reminders")
                         .HasColumnType("int");
 
-                    b.Property<int>("Trending_places")
+                    b.Property<int>("Trending_Places")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("hide_account")
-                        .HasColumnType("int");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("User_ID");
 
                     b.ToTable("User_Settings");
                 });
@@ -495,17 +494,6 @@ namespace UxploreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ListingImages");
-                });
-
-            modelBuilder.Entity("UXplore.Models.User_Setting", b =>
-                {
-                    b.HasOne("UXplore.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("User_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

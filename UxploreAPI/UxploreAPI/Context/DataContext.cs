@@ -28,5 +28,7 @@ namespace UXplore.Context
         public DbSet<FeelingsListings> feelings { get; set; }
         public DbSet<Business_Advert> business_Adverts { get; set; }
 
+        public DbSet<Business_Credits> business_Credits { get; set; }
+
     }
 }

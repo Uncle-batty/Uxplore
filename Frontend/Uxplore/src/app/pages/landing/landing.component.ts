@@ -27,7 +27,30 @@ export class LandingComponent implements OnInit {
   isModalOpen = false;
   isRegistrationModelOpen = false;
   isInterestsModelOpen = false;
+  isBusinessModelOpen = false;
+  isBusinessRegOpen = false;
   userID : number = 0;
+
+    email: string = '';
+  password: string = '';
+  Fullname: string = '';
+  Confermpassword: string = '';
+
+
+  /* Business variables (containers) used in model for HTML page */
+  Ownername: string = '';
+  Businessname: string = '';
+  Businessemail: string = '';
+  Businesscell: string = '';
+  Businessdescription: string = '';
+  Location: string = '';
+  Operatinghours: string = '';
+  Reservation: string = '';
+  Averagespending: string = '';
+  Websitelink: string = '';
+  Businesspassword: string = '';
+  Businessconfirmpassword: string = '';
+
 
 
 selectedInterests: string[] = [];
@@ -52,10 +75,6 @@ interestCategoryMapping: { [key: string]: number } = {
 
 
 
-  email: string = '';
-  password: string = '';
-  Fullname: string = '';
-  Confermpassword: string = '';
 
   constructor(private router: Router, private service: UsersService, private socialAuth: SocialAuthService) {
     addIcons({logoGoogle, logoFacebook, logoTwitter})
@@ -107,6 +126,22 @@ interestCategoryMapping: { [key: string]: number } = {
   closeInterestsModel() {
     this.isInterestsModelOpen = false;
   }
+
+  openBusinessModel(){
+    this.isBusinessModelOpen = true
+    this.closeBusinessRegModel();
+  }
+  closeBusinessModel(){
+    this.isBusinessModelOpen = false;
+  }
+  openBusinessregModel(){
+    this.isBusinessRegOpen = true;
+    this.closeBusinessModel();
+  }
+  closeBusinessRegModel(){
+    this.isBusinessRegOpen = false;
+  }
+
 
   toggleInterest(interest: selectedInterest) {
     interest.selected = !interest.selected;

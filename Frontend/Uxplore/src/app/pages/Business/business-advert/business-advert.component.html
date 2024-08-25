@@ -7,15 +7,17 @@
   <link rel="stylesheet" href="business-advert.component.scss">
 </head>
 <div class="main-content">
-  <h1>Create an Advert</h1>
+  <h1 *ngIf="!editingAdvert">Create an Advert</h1>
+  <h1 *ngIf="editingAdvert">Edit/Remove Advert</h1>
   <ion-grid>
     <!-- Upload Image -->
-    <ion-row>
+    <ion-row >
       <ion-col size="6">
         <div class="wrapper">
           <div class="box">
             <div class="input-bx">
-              <h2 class="upload-area-title">Upload File</h2>
+              <h2 **ngIf="!editingAdvert" class="upload-area-title">Upload File</h2>
+              <h2 **ngIf="editingAdvert" class="upload-area-title">Chang File</h2>
               <form action="">
               <input type="file" id="upload" (change)="onFileSelected($event)" accept=".jpeg, .jpg, .png, .gif" hidden>
                 <label for="upload" class="uploadlabel">
@@ -30,41 +32,98 @@
           </div>
 
         </div>
-        <div class="event-select-container">
-                  <button class="event-select">
-                    For an event?
-                  </button>
-        </div>
+
 
       </ion-col>
+      <ion-col>
+        <div style="display: flex; justify-content:center; align-items: center;" class="description-textarea">
+          <img class="ad-Image" src={{adImage}} alt="">
+        </div>
+      </ion-col>
+      </ion-row>
 
-      <!-- Description Textbox -->
-<!--       <ion-col>
- -->        <ion-row>
-
-
-    <div >
-      <textarea class="description-textarea" placeholder="Write a description for your advert..." [(ngModel)]="adDescription"></textarea>
-
-    </div>
-
-
-        </ion-row>
         <ion-row>
+          <ion-grid>
+            <ion-row style="margin-right: 4rem">
+              <!-- Description Textarea Column -->
+              <ion-col size="6">
+                <div>
+                  <h2 class="ai-title">Create a description</h2>
+                  <textarea class="description-textarea" placeholder="Write a description for your advert..."
+                    [(ngModel)]="adDescription"></textarea>
+                </div>
+              </ion-col>
 
-          <!-- AI Generator -->
-          <div class="ai-ideas-container">
-            <h2 class="ai-title">Use AI for ideas</h2>
-            <div class="input-container">
-              <input type="text" [(ngModel)]="aiInput" id="ai-ideas-input" placeholder="Write a description of what you want..." />
-              <button id="open-loading" (click)="generateContent()">&#x27A4;</button> <!-- Unicode for paper plane icon -->
-              <ion-loading trigger="open-loading" message="Loading..." [duration]="5000" spinner="circles"></ion-loading>
-            </div>
-            <textarea id="ai-ideas-textarea" [(ngModel)]="aiOutput" readonly><ion-loading trigger="open-loading" message="Dismissing after 3 seconds..." duration="3000"></ion-loading></textarea>
-          </div>
-          <button id="btn-upload-ad" (click)="createAdvert()" class="btn-upload-ad">Upload Advert</button>
+              <!-- AI Generator Column -->
+              <ion-col size="5">
+                <div>
+                  <h2 class="ai-title">....or...  Use AI for ideas</h2>
+                  <div class="input-container">
+                    <input type="text" [(ngModel)]="aiInput" id="ai-ideas-input"
+                      placeholder="Write a description of what you want..." />
+                    <button id="open-loading" (click)="generateContent()">&#x27A4;</button>
+                    <ion-loading trigger="open-loading" message="Loading..." [duration]="5000" spinner="circles"></ion-loading>
+                  </div>
+                  <textarea style="margin-right: 4rem;" lass="description-textarea" [(ngModel)]="aiOutput"
+                    readonly>
+                    <ion-loading trigger="open-loading" message="Dismissing after 3 seconds..." duration="3000"></ion-loading></textarea>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+
+          <ion-row style="width: 100%; justify-self:start">
+            <ion-col style="width: 100%">
+              <button style="width: 80%; height: 60px;" id="Create Advert" (click)="createAdvert()" class="btn-upload-ad">Upload Advert</button>
+            </ion-col >
+            <ion-col style="width: 100%">
+              <button style="width: 80%; height: 60px;" id="Load Credits" (click)="openCreditsModal()" class="btn-upload-ad">Load Credits</button>
+            </ion-col>
+            <ion-col style="width: 100%">
+              <button style="width: 80%; height: 60px;" id="Edit Ads" (click)="openModal()" class="btn-upload-ad">Edit/Remove Ads</button>
+            </ion-col>
+          </ion-row>
+
         </ion-row>
 <!--       </ion-col>
- -->    </ion-row>
+ -->
   </ion-grid>
 </div>
+
+
+<!-- All ads model -->
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content ad-Popup-Image-Container">
+      <img class="ad-Popup-Image" (click)="onAdvertClick(ad)" *ngFor="let ad of allBusinessAdverts" src={{ad.image_File}} alt="" >
+
+
+    </div>
+  </div>
+</div>
+
+<!-- All ads model -->
+<div class="modal-overlay" [ngClass]="{'show': isCreditsModalOpen}" (click)="closeCreditsModal()">
+  <div class="modal" [ngClass]="{'show': isCreditsModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeCreditsModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Load Credits</h2>
+      <div class="inputscon">
+        <input id="myRange" class="slider" [(ngModel)]="credits" max="200" min="0" type="range"  >
+        <p>Credits: {{credits}}</p>
+        <h4>1 Credit : R 1 </h4>
+        <p>Ads on Home Screen: R 2 per day</p>
+        <p>Ads on event page: R 1 per day</p>
+      </div>
+
+      <button id="Upload credits" style="width: 80%; height: 60px;" (click)="creditsCheckout()" class="btn-upload-ad">Confirm credits</button>
+    </div>
+  </div>
+</div>
+

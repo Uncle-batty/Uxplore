@@ -2,8 +2,9 @@
   margin-left: 17%;
   /* Adjust margin-left to 15% */
   width: 83%;
+
   /* Adjust width to 70% */
-  float: right;
+
   /* Float content to the right */
 
   overflow-y: scroll;
@@ -25,6 +26,7 @@ h1{
   padding:15px;
   width: 100%;
   min-height: 20vh;
+  height: 370px;
 }
 .filewrapper{
   border: 1px solid #ffffff;
@@ -137,7 +139,7 @@ h1{
   height: 360px;
   font-size: 16px;
   font-family: inherit;
-  width: 600px;
+  width: 500px;
   background-color: #121212;
   border-radius:10px;
 }
@@ -175,7 +177,6 @@ label {
 
 .input-container {
   display: flex;
-  width: 100%;
   margin-bottom: 10px;
 
 }
@@ -221,24 +222,23 @@ textarea {
   height: 300px;
   font-size: 16px;
   font-family: inherit;
-  width: 1280px;
+  width: 500px;
   background-color: #121212;
   border-radius:10px;
 }
 
 .btn-upload-ad{
-  justify-content: end;
   //background-color: #555;
   background: linear-gradient(to right, #7332b4, #32164e);
   border: 4px solid #7332B4;
   color: white;
   //color: #fff;
   //border: #999 solid 2px;
-  border-radius: 5%;
+  border-radius: 15px;
   padding: 10px 15px;
   margin-top: 20px;
   margin-bottom: 20px;
-  margin-left: 86%;
+  margin-right: 20px;
   cursor: pointer;
   outline: none;
   height: 8%;
@@ -259,4 +259,195 @@ textarea {
   background: linear-gradient(to right, #7332b4, #32164e);
   border: 4px solid #7332B4;
   border-radius: 5%;
+}
+
+.button {
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  font-size: 2.5vh;
+  cursor: pointer;
+}
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -100%;
+  margin-right: 5%;
+  height: 70vh;
+  transition: right 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  right: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .Contentbox {
+    width: 90%;
+    padding: 10px;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 5vh;
+    }
+
+    h6 {
+      font-size: 3vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 950px) {
+  .Contentbox {
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 4.5vh;
+    }
+
+    h6 {
+      font-size: 2.5vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+
+/* From Uiverse.io by PriyanshuGupta28 */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #7332b4;
+  background-image: linear-gradient(90deg, #7332b4 , #967fac);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+
+.ad-Popup-Image-Container {
+  overflow: hidden;
+}
+
+.ad-Popup-Image {
+  object-fit: cover;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.ad-Image  {
+  object-fit: cover;
+  max-height: 400px;
+  max-width: 300px;
 }

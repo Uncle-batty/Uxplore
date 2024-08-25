@@ -267,10 +267,19 @@ namespace UXplore.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Listing>>> GetListings()
+        public async Task<ActionResult<IEnumerable<Listing>>> GetListings(int business_User_Id = 0)
         {
-            return await _context.Listings.ToListAsync();
+            if (business_User_Id == 0)
+            {
+                return await _context.Listings.ToListAsync();
+            }else
+            {
+                return await _context.Listings.Where(x => x.UserID == business_User_Id).ToListAsync();
+            }
+            
         }
+
+
 
 
 

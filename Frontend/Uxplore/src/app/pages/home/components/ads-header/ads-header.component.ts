@@ -18,17 +18,12 @@ export class AdsHeaderComponent  implements OnInit {
 
   images: BusinessAdvert[] = [
   ];
-
   visibleImages: BusinessAdvert[] = [];
   currentIndex: number = 0;
   intervalTime: number = 3000; // Time in ms (3 seconds)
 
   ngOnInit() {
     this.getAdverts()
-
-  }
-
-  goToListing(listingId : string) {
 
   }
 
@@ -56,4 +51,5 @@ export class AdsHeaderComponent  implements OnInit {
       this.router.navigate([path], { queryParams: { id: eventId } });
     }
   }
+
 }

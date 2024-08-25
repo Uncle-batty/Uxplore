@@ -1,0 +1,56 @@
+<div class="main-content">
+<h1>How is My Business Doing?</h1>
+<ion-grid>
+  <ion-row>
+    <!-- Column Chart -->
+    <ion-col size="8">
+      <div id="chart-column">
+      <p style="text-align: center;">User Engagement Per Age Group</p>
+        <apx-chart [series]="columnChartOptions.series!" [chart]="columnChartOptions.chart!"
+          [dataLabels]="columnChartOptions.dataLabels!" [plotOptions]="columnChartOptions.plotOptions!"
+          [yaxis]="columnChartOptions.yaxis!" [legend]="columnChartOptions.legend!" [fill]="columnChartOptions.fill!"
+          [stroke]="columnChartOptions.stroke!" [tooltip]="columnChartOptions.tooltip!"
+          [xaxis]="columnChartOptions.xaxis!" [colors]="columnChartOptions.colors!">
+        </apx-chart>
+      </div>
+      <!-- Pie Chart -->
+    </ion-col>
+    <ion-col size="4">
+<div id="chart-pie">
+  <p style="text-align: start;">My Star Rating</p>
+    <br>
+    <br>
+  <apx-chart [series]="pieChartOptions.seriesNonAxis!" [chart]="pieChartOptions.chart!" [labels]="pieChartOptions.labels!"
+    [responsive]="pieChartOptions.responsive!" [colors]="pieChartOptions.colors!" [legend]="pieChartOptions.legend!"></apx-chart>
+    <br>
+    <br>
+</div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+        <!-- Area Chart -->
+        <ion-col size="8">
+          <div id="chart-area">
+          <p style="text-align: center;">Advert Impressions</p>
+            <apx-chart [series]="areaChartOptions.series!" [chart]="areaChartOptions.chart!" [xaxis]="areaChartOptions.xaxis!"
+              [yaxis]="areaChartOptions.yaxis!" [dataLabels]="areaChartOptions.dataLabels!" [colors]="areaChartOptions.colors!"
+              [legend]="areaChartOptions.legend!" [fill]="areaChartOptions.fill!" [tooltip]="areaChartOptions.tooltip!">
+            </apx-chart>
+          </div>
+        </ion-col>
+        <!-- Pie Chart -->
+            <ion-col size="4">
+              <div id="chart-pie">
+              <p style="text-align: start;">My Saftey Rating</p>
+                <br>
+                <br>
+                <apx-chart [series]="pieChartOptions.seriesNonAxis!" [chart]="pieChartOptions.chart!"
+                  [labels]="pieChartOptions.labels!" [responsive]="pieChartOptions.responsive!" 
+                  [colors]="pieChartOptions.colors!" [legend]="pieChartOptions.legend!"></apx-chart>
+                  <br>
+                  <br>
+              </div>
+            </ion-col>
+  </ion-row>
+</ion-grid>

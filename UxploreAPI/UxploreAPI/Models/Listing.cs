@@ -29,78 +29,90 @@ namespace UXplore.Models
         [Required]
         public int Reserve { get; set; }
 
+        public DateTime Start_Date { get; set; }
+        public DateTime End_Date { get; set; }
+
         public string Site { get; set; }
         [Required]
-        public float AVG_price { get; set; }
+        public float Min_Price { get; set; }
+
+        public float Max_Price { get; set; }
+
+        public int UserID { get; set; }
 
     }
 
 
-public static class ListingEndpoints
-{
-	public static void MapListingEndpoints (this IEndpointRouteBuilder routes)
+
+    public static class ListingEndpoints
     {
-        var group = routes.MapGroup("/api/Listing").WithTags(nameof(Listing));
-
-        group.MapGet("/", async (DataContext db) =>
+        public static void MapListingEndpoints(this IEndpointRouteBuilder routes)
         {
-            return await db.Listings.ToListAsync();
-        })
-        .WithName("GetAllListings")
-        .WithOpenApi();
+            var group = routes.MapGroup("/api/Listing").WithTags(nameof(Listing));
 
-        group.MapGet("/{id}", async Task<Results<Ok<Listing>, NotFound>> (int id, DataContext db) =>
-        {
-            return await db.Listings.AsNoTracking()
-                .FirstOrDefaultAsync(model => model.ID == id)
-                is Listing model
-                    ? TypedResults.Ok(model)
-                    : TypedResults.NotFound();
-        })
-        .WithName("GetListingById")
-        .WithOpenApi();
+            group.MapGet("/", async (DataContext db) =>
+            {
+                return await db.Listings.ToListAsync();
+            })
+            .WithName("GetAllListings")
+            .WithOpenApi();
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Listing listing, DataContext db) =>
-        {
-            var affected = await db.Listings
-                .Where(model => model.ID == id)
-                .ExecuteUpdateAsync(setters => setters
-                  
-                  .SetProperty(m => m.Name, listing.Name)
-                  .SetProperty(m => m.Description, listing.Description)
-                  .SetProperty(m => m.Hours, listing.Hours)
-                  .SetProperty(m => m.Location, listing.Location)
-                  .SetProperty(m => m.Phone, listing.Phone)
-                  .SetProperty(m => m.Email, listing.Email)
-                  .SetProperty(m => m.Order, listing.Order)
-                  .SetProperty(m => m.Reserve, listing.Reserve)
-                  .SetProperty(m => m.Site, listing.Site)
-                  .SetProperty(m => m.AVG_price, listing.AVG_price)
-                  );
-            return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
-        })
-        .WithName("UpdateListing")
-        .WithOpenApi();
+            group.MapGet("/{id}", async Task<Results<Ok<Listing>, NotFound>> (int id, DataContext db) =>
+            {
+                return await db.Listings.AsNoTracking()
+                    .FirstOrDefaultAsync(model => model.ID == id)
+                    is Listing model
+                        ? TypedResults.Ok(model)
+                        : TypedResults.NotFound();
+            })
+            .WithName("GetListingById")
+            .WithOpenApi();
 
-        group.MapPost("/", async (Listing listing, DataContext db) =>
-        {
-            db.Listings.Add(listing);
-            await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/Listing/{listing.ID}",listing);
-        })
-        .WithName("CreateListing")
-        .WithOpenApi();
+            group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, Listing listing, DataContext db) =>
+            {
+                var affected = await db.Listings
+                    .Where(model => model.ID == id)
+                    .ExecuteUpdateAsync(setters => setters
 
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (int id, DataContext db) =>
-        {
-            var affected = await db.Listings
-                .Where(model => model.ID == id)
-                .ExecuteDeleteAsync();
-            return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
-        })
-        .WithName("DeleteListing")
-        .WithOpenApi();
+                      .SetProperty(m => m.Name, listing.Name)
+                      .SetProperty(m => m.Description, listing.Description)
+                      .SetProperty(m => m.Hours, listing.Hours)
+                      .SetProperty(m => m.Location, listing.Location)
+                      .SetProperty(m => m.Phone, listing.Phone)
+                      .SetProperty(m => m.Email, listing.Email)
+                      .SetProperty(m => m.Order, listing.Order)
+                      .SetProperty(m => m.Reserve, listing.Reserve)
+                      .SetProperty(m => m.Site, listing.Site)
+                      .SetProperty(m => m.Min_Price, listing.Min_Price)
+                      .SetProperty(m => m.Max_Price, listing.Max_Price)
+                      .SetProperty(m => m.Start_Date, listing.Start_Date)
+                      .SetProperty(m => m.End_Date, listing.End_Date)
+                      );
+                return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
+            })
+            .WithName("UpdateListing")
+            .WithOpenApi();
 
-           
+            group.MapPost("/", async (Listing listing, DataContext db) =>
+            {
+                db.Listings.Add(listing);
+                await db.SaveChangesAsync();
+                return TypedResults.Created($"/api/Listing/{listing.ID}", listing);
+            })
+            .WithName("CreateListing")
+            .WithOpenApi();
+
+            group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (int id, DataContext db) =>
+            {
+                var affected = await db.Listings
+                    .Where(model => model.ID == id)
+                    .ExecuteDeleteAsync();
+                return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
+            })
+            .WithName("DeleteListing")
+            .WithOpenApi();
+
+
         }
-}}
+    }
+}

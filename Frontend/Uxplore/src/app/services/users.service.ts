@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User, interests, UserInteraction } from '../interfaces/interfaces';
 import { UserSetting } from '../interfaces/interfaces';
+import { API_BASE_URL } from 'src/APIBaseURL';
 
 @Injectable({
   providedIn: 'root',
@@ -31,25 +32,25 @@ export class UsersService {
 
   getUserInteractions(userId: number): Observable<UserInteraction[]> {
     return this.http.get<UserInteraction[]>(
-      `https://localhost:44315/api/User_Interactions/calender/${userId}`
+      `${API_BASE_URL}/api/User_Interactions/calender/${userId}`
     );
   }
 
   setInteraction(interaction: UserInteraction): Observable<UserInteraction> {
     return this.http.post<UserInteraction>(
-      `https://localhost:44315/api/User_Interactions`,
+      `${API_BASE_URL}/api/User_Interactions`,
       interaction
     );
   }
 
   getInteractionsOfType(type: string, userid: number, listingID: number = -1): Observable<UserInteraction[]> {
     return this.http.get<UserInteraction[]>(
-      `https://localhost:44315/api/User_Interactions/type?interactionType=${type}&UserID=${userid}&listingID=${listingID}`
+      `${API_BASE_URL}/api/User_Interactions/type?interactionType=${type}&UserID=${userid}&listingID=${listingID}`
     );
   }
 
   deleteUserInteraction(interactionID: number): Observable<string> {
-    const url = `https://localhost:44315/api/User_Interactions/${interactionID}`;
+    const url = `${API_BASE_URL}/api/User_Interactions/${interactionID}`;
     return this.http.delete<string>(url);
   }
   setUserSettings(settings: UserSetting): Observable<UserSetting> {

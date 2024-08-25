@@ -50,16 +50,19 @@ namespace UxploreAPI.Controllers
             if (user == null)
             {
                 return NotFound();
+            }else
+            {
+                if (HashPassword(password) == user.Password)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
 
-            if (HashPassword(password) == user.Password)
-            {
-                return Ok(user);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            
         }
 
         // POST: api/Users

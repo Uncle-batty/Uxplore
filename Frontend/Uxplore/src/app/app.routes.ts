@@ -17,6 +17,12 @@ import { ProfileDetailsComponent } from './profile-details/profile-details.compo
 import { ProfileEmailNotificationsComponent } from './profile-email-notifications/profile-email-notifications.component';
 import { ProfilePushNofitcationsComponent } from './profile-push-nofitcations/profile-push-nofitcations.component';
 import { ProfileHelpCentreComponent } from './profile-help-centre/profile-help-centre.component';
+import { BusinessAdvertComponent } from './pages/Business/business-advert/business-advert.component';
+import { BusinessCalendarComponent } from './pages/Business/business-calendar/business-calendar.component';
+import { BusinessDashboardComponent } from './pages/Business/business-dashboard/business-dashboard.component';
+import { BusinessNotificationsComponent } from './pages/Business/business-notifications/business-notifications.component';
+import { BusinessProfileComponent } from './pages/Business/business-profile/business-profile.component';
+import { AddEventComponent } from './pages/Business/add-event/add-event.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,20 +41,25 @@ const mainRoutes: Routes = [
   { path: 'landing', component: LandingComponent },
 ];
 
-const businessComponent: Routes = [];
+const businessComponent: Routes = [
+   {path: 'businessAdvert', component: BusinessAdvertComponent},
+  {path: 'AddEvent', component: AddEventComponent},
+  {path: 'businessProfile', component: BusinessProfileComponent},
+  {path: 'businessCalender', component: BusinessCalendarComponent} ,
+  {path: 'businessDashboard', component: BusinessDashboardComponent}
+];
 
 export const routes: Routes = [
   { path: 'user', children: userRoutes },
   { path: 'main', children: mainRoutes },
   { path: 'business', children: businessComponent },
-    { path: 'profile', component: ProfileComponent },
   { path: '', canActivate: [AuthGuard], children: [] }, // Use the guard for the root path
   { path: '**', canActivate: [AuthGuard], children: [] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes), HttpClientModule],
-  
+
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

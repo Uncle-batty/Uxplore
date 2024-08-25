@@ -176,9 +176,6 @@ namespace UxploreAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<float>("AVG_price")
-                        .HasColumnType("real");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -187,6 +184,9 @@ namespace UxploreAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("End_Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Hours")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -194,6 +194,12 @@ namespace UxploreAPI.Migrations
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Max_Price")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Min_Price")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -213,6 +219,12 @@ namespace UxploreAPI.Migrations
                     b.Property<string>("Site")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -436,6 +448,33 @@ namespace UxploreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User_Interests");
+                });
+
+            modelBuilder.Entity("UxploreAPI.Models.Business_Advert", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Business_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Event_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image_File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("business_Adverts");
                 });
 
             modelBuilder.Entity("UxploreAPI.Models.ListingImage", b =>

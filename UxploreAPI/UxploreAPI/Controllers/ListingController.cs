@@ -27,7 +27,7 @@ namespace UXplore.Controllers
             if (_gloveEmbeddings == null)
             {
                 string gloveFilePath = "../UxploreAPI/Models/glove.42B.300d.txt";
-               // _gloveEmbeddings = LoadGloveEmbeddings(gloveFilePath);
+                // _gloveEmbeddings = LoadGloveEmbeddings(gloveFilePath);
             }
 
             // Initialize _feelingsListings if it's null
@@ -202,5 +202,77 @@ namespace UXplore.Controllers
             var normB = np.sqrt(np.sum(np.square(vecB)));
             return dotProduct / (normA * normB);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Listing>> CreateListing(Listing listing)
+        {
+            if (listing == null)
+            {
+                return BadRequest("Listing cannot be null");
+            }
+
+            _context.Listings.Add(listing);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetOneListing), new { listingID = listing.ID }, listing);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateListing(int id, Listing listing)
+        {
+            if (id != listing.ID)
+            {
+                return BadRequest("Listing ID mismatch");
+            }
+
+            _context.Entry(listing).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ListingExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool ListingExists(int id)
+        {
+            return _context.Listings.Any(e => e.ID == id);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteListing(int id)
+        {
+            var listing = await _context.Listings.FindAsync(id);
+            if (listing == null)
+            {
+                return NotFound();
+            }
+
+            _context.Listings.Remove(listing);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Listing>>> GetListings()
+        {
+            return await _context.Listings.ToListAsync();
+        }
+
+
+
     }
 }

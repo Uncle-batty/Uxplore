@@ -11,10 +11,10 @@ import { API_BASE_URL } from 'src/APIBaseURL';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  baseurl: string = 'https://localhost:44315/api/Users';
-  intersteURL: string = 'https://localhost:44315/api/User_interests';
-  settingsURL: string ='https://localhost:44315/api/User_Setting';
-  settingUserIdURL:String='https://localhost:44315/api/User_Setting/user/'
+  baseurl: string = `${API_BASE_URL}/api/Users`;
+  intersteURL: string =API_BASE_URL + '/api/User_interests';
+  settingsURL: string = API_BASE_URL + '/api/User_Setting';
+  settingUserIdURL:String= API_BASE_URL + '/api/User_Setting/user/'
 
   loginuser(email: string, password: string): Observable<any> {
     return this.http.get<User>(

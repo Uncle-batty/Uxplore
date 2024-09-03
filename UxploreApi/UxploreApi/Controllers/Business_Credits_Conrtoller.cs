@@ -2,26 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using UXplore.Context;
 using UXplore.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Text;
 using UxploreAPI.Models;
-using Microsoft.IdentityModel.Tokens;
-using System.Web;
-using System.Net.Http.Headers;
-using System.Text.Json;
+
 
 namespace UxploreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Business_Credits : ControllerBase
+    public class Business_Credits_Conrtoller : ControllerBase
     {
 
         private readonly DataContext _context;
 
-        public Business_Credits(DataContext context)
+        public Business_Credits_Conrtoller(DataContext context)
         {
             _context = context;
         }
@@ -54,6 +47,24 @@ namespace UxploreAPI.Controllers
 
             return Ok(ad);
         }
+
+        [HttpPost]
+
+        public async Task <ActionResult<Business_Credits>> PostCredits(Business_Credits credits)
+        {
+            _context.business_Credits.Add(credits);
+            var businessCredits = await _context.SaveChangesAsync();
+            return Ok(businessCredits);
+        }
+
+
+        //[HttpPut]
+
+        //public async Task<ActionResult<Business_Credits>> UpdateCredits(Business_Credits credits)
+        //{
+
+        //}
+
 
 
 

@@ -37,9 +37,15 @@ export class BusinessAdvertsService {
   }
 
   updateAdvert(ads: BusinessAdvert): Observable<BusinessAdvert>{
-    const url = `${this.business_Ads_Api_URL}`
+    const url = `${this.business_Ads_Api_URL}/${ads.id}`
 
     return this.httpClient.put<BusinessAdvert>(url, ads)
+  }
+
+  deleteAdvert(adID: number): Observable<BusinessAdvert>{
+    const url = `${this.business_Ads_Api_URL}/${adID}`
+
+    return this.httpClient.delete<BusinessAdvert>(url)
   }
 
   createCheckoutWithGUID(amount: number, guid: string) {
@@ -52,6 +58,10 @@ export class BusinessAdvertsService {
       FailureUrl: `${ANGULAR_APP_BASE_URL}/business/notify`,
     }
     return this.httpClient.post(url,body);
+  }
+
+  getBusinessCredits(){
+
   }
 
   getGUID() {

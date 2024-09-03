@@ -9,16 +9,17 @@ import {
   IonTextarea,
   IonItem,
   IonLabel,
-  IonLoading
+  IonLoading,
+  IonToast
 } from '@ionic/angular/standalone';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BusinessAdvert, User } from 'src/app/interfaces/interfaces';
+import { BusinessAdvert, Listing, User } from 'src/app/interfaces/interfaces';
 import { BusinessAdvertsService } from 'src/app/services/business-adverts.service';
 import { CommonModule } from '@angular/common';
-
-
+import { ListingsService } from 'src/app/services/listings.service';
+import { BusinessEventCardComponent } from '../components/business-event-card/business-event-card.component';
 
 @Component({
   selector: 'app-business-advert',
@@ -37,35 +38,45 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     IonLoading,
-
-  CommonModule  ],
+    IonToast,
+  CommonModule,
+  BusinessEventCardComponent ],
   standalone: true,
-  providers: [BusinessAdvertsService]
+  providers: [BusinessAdvertsService, ListingsService]
 })
 export class BusinessAdvertComponent implements OnInit {
   aiInput: string = '';
   aiOutput: string = '';
   loading: boolean = false;
+  isToastOpen: boolean = false;
+  toastMessage: string = "";
+  selectedTier: string = "Event";
 
   adImage: string= "";
   croppedImage: any = '';
   imageChangedEvent: any = '';
   adDescription : string = "";
-  eventId : number = 0;
+  event! : Listing;
   businessID : number = 0;
 
   isModalOpen = false;
   isCreditsModalOpen = false;
+  isEventsModalOpen = false;
   editingAdvert = false;
+  allBusinessListings :Listing[] = [];
   allBusinessAdverts : BusinessAdvert[] =[];
   currentAdvert! : BusinessAdvert;
   credits: number = 0;
 
 
-  constructor(private adsService: BusinessAdvertsService) {}
+  constructor(
+    private adsService: BusinessAdvertsService,
+    private listingsService : ListingsService
+    ) {}
 
   ngOnInit() {
     this.getUser();
+    this.getAllBusinessEvents();
     const input = document.getElementById('upload') as HTMLInputElement;
     const filewrapper = document.getElementById('filewrapper') as HTMLElement;
 
@@ -85,34 +96,72 @@ export class BusinessAdvertComponent implements OnInit {
     this.isCreditsModalOpen = false;
   }
 
+  closeBusinessEventsModal(){
+    this.isEventsModalOpen = false;
+  }
+
   openModal(){
     this.isModalOpen = true;
-    this.getBusinessAdverts()
+    this.getBusinessAdverts();
 
   }
 
   openCreditsModal(){
     this.isCreditsModalOpen = true;
+    this.isModalOpen = false;
+    this.isEventsModalOpen = false;
   }
 
-  createCheckout(){
-
+  openBusinessEventsModal(){
+    this.isEventsModalOpen = true;
+    this.isModalOpen = false;
+    this.isCreditsModalOpen = false;
+    this.getAllBusinessEvents();
   }
 
+  // Gets and sets the business user
   getUser () {
     const userString = localStorage.getItem('user') ?? "";
     const user : User = JSON.parse(userString) ?? '';
     this.businessID = user.id ?? 0
   }
 
-
-
-
-
-  onSelectEvent(){
-
+  // Gets the correct ad description
+  getAdDescription(): string{
+    if (this.adDescription.trim() == ""){
+      return this.aiOutput;
+    }else {
+      return this.adDescription;
+    }
   }
 
+  // Gets all the business events
+  getAllBusinessEvents(){
+    this.listingsService.getalllistings(this.businessID).subscribe((listings) => {
+      this.allBusinessListings = listings;
+    })
+  }
+
+  // populates event
+  onSelectEvent(selectedListing: Listing){
+    this.event = selectedListing;
+    this.toastMessage = "Selected Event: " + selectedListing.name;
+    this.isToastOpen = true;
+  }
+
+  onTierSelect(tier: string){
+    if (tier == "Home"){
+      this.isToastOpen = true;
+      this.toastMessage = "Ads on your Event page is 1 Credit per day"
+    }
+    else {
+      this.isToastOpen = true;
+      this.toastMessage = "Ads on Home page are 2 Credits per day"
+
+    }
+  }
+
+  //Function for posting advert
   createAdvert (){
     console.log("Button clicked");
     if (this.adImage == null){
@@ -123,8 +172,8 @@ export class BusinessAdvertComponent implements OnInit {
       id : 0,
       business_ID: this.businessID,
       image_File: this.adImage,
-      description : this.aiOutput ?? this.adDescription ?? "",
-      event_ID: this.eventId
+      description : this.getAdDescription(),
+      event_ID: this.event.id
     }
 
     this.adsService.postAd(advert).subscribe((advert) => {
@@ -144,6 +193,7 @@ export class BusinessAdvertComponent implements OnInit {
 
   }
 
+  // Function for payment gateway to load credits
   creditsCheckout() {
   if (this.credits === 0) {
     return;
@@ -161,6 +211,7 @@ export class BusinessAdvertComponent implements OnInit {
   });
 }
 
+  // Retrieves all the adverts for the specific business
   getBusinessAdverts(){
     const BusinessAdvert = this.businessID;
 
@@ -169,15 +220,47 @@ export class BusinessAdvertComponent implements OnInit {
     })
   }
 
+  // Sets advert variables when advert is clicked
   onAdvertClick(advert: BusinessAdvert){
     this.currentAdvert =advert;
     this.adDescription = advert.description;
     this.adImage = advert.image_File;
+    this.editingAdvert = true;
     this.closeModal();
   }
 
+  onStopEditing(){
+    this.editingAdvert = false;
+  }
+
+  onDeleteAdvert(){
+    this.adsService.deleteAdvert(this.currentAdvert.id).subscribe((result) => {
+      console.log("Successfully deleted");
+      this.editingAdvert = false;
+    }, (error) => {
+      console.log("Error deleting advert: ", error)
+    })
+  }
+
+  onUpdateAdvert() {
+    const newAdvert : BusinessAdvert = {
+      id: this.currentAdvert.id,
+      description: this.getAdDescription(),
+      image_File : this.adImage,
+      event_ID: this.event.id,
+      business_ID: this.businessID
+    };
+
+    this.adsService.updateAdvert(newAdvert).subscribe((updatedAdvert) => {
+      console.log(updatedAdvert);
+      this.editingAdvert =false;
+    }, (error) => {
+      console.log("Error while updating advert: ",  error);
+    })
+  }
 
 
+  // Gets the image file and creates the image uri
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -195,7 +278,7 @@ export class BusinessAdvertComponent implements OnInit {
   }
 
 
-
+  // Uses AI to generate AI
   async generateContent() {
     this.loading = true; // Start loading
     const genAi = new GoogleGenerativeAI(
@@ -216,6 +299,7 @@ export class BusinessAdvertComponent implements OnInit {
     }
   }
 
+  // Shows the files uploaded
   public fileshow(
     fileName: string,
     filetype: string,

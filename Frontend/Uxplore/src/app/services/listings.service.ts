@@ -52,9 +52,9 @@ export class ListingsService {
     );
   }
 
-  getalllistings(): Observable<Listing[]> {
+  getalllistings(businessUserId = 0): Observable<Listing[]> {
     return this.http.get<Listing[]>(
-      `${API_BASE_URL}/api/Listing`
+      `${API_BASE_URL}/api/Listings?business_User_Id=${businessUserId}`
     );
   }
 

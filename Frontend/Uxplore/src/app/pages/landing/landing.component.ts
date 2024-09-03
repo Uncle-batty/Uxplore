@@ -201,6 +201,7 @@ interestCategoryMapping: { [key: string]: number } = {
       this.service.loginuser(this.email,this.password).subscribe(
         (response) => {
           if (response) {
+            console.log("Login response: ", response)
 
           localStorage.setItem('user', JSON.stringify(response));
 
@@ -221,7 +222,7 @@ interestCategoryMapping: { [key: string]: number } = {
               this.showEmailError = true;
             }
           }
-          console.error('Login request failed', error);
+          console.error('Login request failed', error.status);
 
         }
       );

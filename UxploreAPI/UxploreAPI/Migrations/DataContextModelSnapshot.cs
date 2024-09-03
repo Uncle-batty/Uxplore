@@ -476,6 +476,25 @@ namespace UxploreAPI.Migrations
                     b.ToTable("business_Adverts");
                 });
 
+            modelBuilder.Entity("UxploreAPI.Models.Business_Credits", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Available_Credits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("User_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("business_Credits");
+                });
+
             modelBuilder.Entity("UxploreAPI.Models.ListingImage", b =>
                 {
                     b.Property<int>("Id")

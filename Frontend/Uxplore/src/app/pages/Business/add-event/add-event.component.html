@@ -1,5 +1,5 @@
 <div class="main-content">
-  <h1>Create an Event.</h1>
+  <h1>Create an Event</h1>
   <div class="wrapper">
     <div class="card-container">
       <div class="box left-box">
@@ -17,7 +17,6 @@
             <label for="endDate">End Date*</label>
             <input type="date" id="endDate" [(ngModel)]="endDate" name="endDate">
           </div>
-
 
           <div class="input-container">
             <label for="hours">Operating Hours*</label>
@@ -48,7 +47,6 @@
               </div>
             </div>
           </div>
-
 
           <div class="input-container">
             <label for="location">Location</label>
@@ -101,7 +99,7 @@
 
           <div class="input-container">
             <label for="link">Link</label>
-            <input type="url" id="link" [(ngModel)]="link" name="link" placeholder="website Link">
+            <input type="url" id="link" [(ngModel)]="link" name="link" placeholder="Website Link">
           </div>
 
           <div class="upload-btn-container">
@@ -115,5 +113,46 @@
 
   <div class="btn-upload-ad">
     <button type="submit" (click)="onSubmit()">Confirm</button>
+  </div>
+
+  <div class="events-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Location</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Min Price</th>
+          <th>Max Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of paginatedEvents">
+          <td>{{ event.name }}</td>
+          <td>{{ event.start_date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ event.end_date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.phone }}</td>
+          <td>{{ event.email }}</td>
+          <td>{{ event.min_price | currency }}</td>
+          <td>{{ event.max_price ? (event.max_price | currency) : 'N/A' }}</td>
+          <td>
+            <button class="button edit" (click)="onEdit(event)">Edit</button>
+            <button class="button delete" (click)="onDelete(event.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginator -->
+    <div class="paginator">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
   </div>
 </div>

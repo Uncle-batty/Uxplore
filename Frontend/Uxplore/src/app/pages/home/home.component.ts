@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
   fetchAllCoordinates() {
     let fetchCount = 0;
     this.listings.forEach((listing) => {
-      this.fetchAddress(listing.id, listing.location, this.userLat, this.userLon, () => {
+      this.fetchAddress(listing.id ?? 0, listing.location, this.userLat, this.userLon, () => {
         fetchCount++;
         if (fetchCount === this.listings.length) {
           this.sortListingsByDistance(this.userLat, this.userLon);
@@ -150,12 +150,13 @@ export class HomeComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       this.listingService.getOneListing(detail.ListingID).subscribe(onelisting => {
         this.sortedListingDetails[index] = onelisting;
-        this.listingService.getlistingimages(onelisting.id).subscribe(item => {
+        this.listingService.getlistingimages(onelisting.id ?? 0).subscribe(item => {
           const event: Event = {
             Id: onelisting.id ?? 0,
             Name: onelisting.name,
             Location: `${onelisting.location.substring(0, 10)}...`,
-            PriceRange: onelisting.avG_price.toString(),
+            max_price: onelisting.max_price,
+            min_price: onelisting.min_price,
             Times: onelisting.hours,
             Rating: '',
             SafetyRating: '',

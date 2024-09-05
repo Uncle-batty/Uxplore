@@ -55,10 +55,11 @@ export class SavedComponent implements OnInit {
         this.listingService.getOneListing(item.listing_ID ?? 0).subscribe((event) => {
           this.listingService.getlistingimages(item.listing_ID ?? 0).subscribe((image) => {
             let newEvent : Event = {
-            Id : event.id,
+            Id : event.id ?? 0,
             Name : event.name,
             Location: event.location.substring(0, 10) + '...',
-            PriceRange: event.avG_price.toString(),
+            min_price: event.min_price,
+            max_price: event.max_price,
             Times: event.hours,
             Rating: "3",
             SafetyRating: "Chill",

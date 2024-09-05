@@ -78,13 +78,14 @@ export class IndividualCategoryComponent implements OnInit {
 
   popevents(currentListing: Listing[]): Event[] {
     currentListing.forEach((listing) => {
-      this.lservice.getlistingimages(listing.id).subscribe(
+      this.lservice.getlistingimages(listing.id ?? 0).subscribe(
         (data) => {
           let newEvent: Event = {
-            Id: listing.id,
+            Id: listing.id ?? 0,
             Name: listing.name,
             Location: listing.location.substring(0, 10) + '...',
-            PriceRange: listing.avG_price.toString(),
+            max_price: listing.max_price,
+            min_price: listing.min_price,
             Times: listing.hours,
             Rating: '',
             SafetyRating: '',

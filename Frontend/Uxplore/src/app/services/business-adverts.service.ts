@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessAdvert } from '../interfaces/interfaces';
+import { BusinessAdvert, BusinessCredits } from '../interfaces/interfaces';
 import { API_BASE_URL, ANGULAR_APP_BASE_URL } from 'src/APIBaseURL';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ export class BusinessAdvertsService {
   constructor(private httpClient: HttpClient ) { }
 
   business_Ads_Api_URL = `${API_BASE_URL}/api/Business_Adverts_/`
+  business_Credits_Api_URL = API_BASE_URL+ '/api/Business_Credits_'
 
   postAd(ad: BusinessAdvert): Observable<BusinessAdvert>{
     const url = this.business_Ads_Api_URL
@@ -60,8 +61,23 @@ export class BusinessAdvertsService {
     return this.httpClient.post(url,body);
   }
 
-  getBusinessCredits(){
 
+  getBusinessCredits(businessId: number): Observable<BusinessCredits[]>{
+    const url = this.business_Credits_Api_URL + "?businessUserId=" + businessId;
+
+    return this.httpClient.get<BusinessCredits[]>(url);
+  }
+
+  addNewBusinessCredits(credits:  BusinessCredits){
+    const url = this.business_Credits_Api_URL;
+
+    return this.httpClient.post(url, credits);
+  }
+
+  updateBusinessCredits(credits: BusinessCredits){
+    const url = this.business_Credits_Api_URL + `/${credits}`;
+
+    return this.httpClient.put(url, credits);
   }
 
   getGUID() {

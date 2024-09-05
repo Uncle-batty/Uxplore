@@ -15,11 +15,12 @@ import {
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BusinessAdvert, Listing, User } from 'src/app/interfaces/interfaces';
+import { BusinessAdvert, BusinessCredits, Listing, User } from 'src/app/interfaces/interfaces';
 import { BusinessAdvertsService } from 'src/app/services/business-adverts.service';
 import { CommonModule } from '@angular/common';
 import { ListingsService } from 'src/app/services/listings.service';
 import { BusinessEventCardComponent } from '../components/business-event-card/business-event-card.component';
+import { createSharp } from 'ionicons/icons';
 
 @Component({
   selector: 'app-business-advert',
@@ -58,6 +59,7 @@ export class BusinessAdvertComponent implements OnInit {
   adDescription : string = "";
   event! : Listing;
   businessID : number = 0;
+  availableCredits : number = 0;
 
   isModalOpen = false;
   isCreditsModalOpen = false;
@@ -77,6 +79,8 @@ export class BusinessAdvertComponent implements OnInit {
   ngOnInit() {
     this.getUser();
     this.getAllBusinessEvents();
+    this.getBusinessAdverts();
+    this.getBusinessCredits();
     const input = document.getElementById('upload') as HTMLInputElement;
     const filewrapper = document.getElementById('filewrapper') as HTMLElement;
 
@@ -88,6 +92,7 @@ export class BusinessAdvertComponent implements OnInit {
     });
   }
 
+  //#region ToggleModals
   closeModal() {
     this.isModalOpen = false;
   }
@@ -102,8 +107,6 @@ export class BusinessAdvertComponent implements OnInit {
 
   openModal(){
     this.isModalOpen = true;
-    this.getBusinessAdverts();
-
   }
 
   openCreditsModal(){
@@ -119,20 +122,17 @@ export class BusinessAdvertComponent implements OnInit {
     this.getAllBusinessEvents();
   }
 
+  onStopEditing(){
+    this.editingAdvert = false;
+  }
+  //#endregion
+
+
   // Gets and sets the business user
   getUser () {
     const userString = localStorage.getItem('user') ?? "";
     const user : User = JSON.parse(userString) ?? '';
     this.businessID = user.id ?? 0
-  }
-
-  // Gets the correct ad description
-  getAdDescription(): string{
-    if (this.adDescription.trim() == ""){
-      return this.aiOutput;
-    }else {
-      return this.adDescription;
-    }
   }
 
   // Gets all the business events
@@ -161,8 +161,47 @@ export class BusinessAdvertComponent implements OnInit {
     }
   }
 
+  //#region Business credits CRUD
+  // Get the current credits the business has
+  getBusinessCredits(){
+    this.adsService.getBusinessCredits(this.businessID).subscribe((creds) => {
+      if (creds.length != 0 && creds[0].Available_Credits != 0 ){
+        this.availableCredits = creds[0].Available_Credits;
+      }else {
+        this.availableCredits= 0;
+      }
+    })
+  }
+
+
+  // Function for payment gateway to load credits
+  creditsCheckout() {
+  if (this.credits === 0) {
+    return;
+  }
+
+  // Save credits to localStorage
+  localStorage.setItem('s', this.credits.toString());
+
+  this.adsService.getGUID().subscribe((guidResponse: any) => {
+    localStorage.setItem("YocoGUID", guidResponse);
+    this.adsService.createCheckoutWithGUID(this.credits, guidResponse).subscribe((paymentResponse: any) => {
+      console.log("Yoco redirect Url: ", paymentResponse.redirectUrl)
+      window.location.href = paymentResponse.redirectUrl;
+    });
+  });
+}
+
+  //#region Business Adverts CRUD
+
   //Function for posting advert
   createAdvert (){
+    if ((this.availableCredits <= 2 && this.selectedTier == "Home") ||
+     (this.availableCredits <= 1 && this.selectedTier == "Event") ){
+      this.toastMessage = "Insufficient credits, please load credits"
+      this.isToastOpen = true;
+      return;
+    }
     console.log("Button clicked");
     if (this.adImage == null){
       return;
@@ -173,7 +212,7 @@ export class BusinessAdvertComponent implements OnInit {
       business_ID: this.businessID,
       image_File: this.adImage,
       description : this.getAdDescription(),
-      event_ID: this.event.id
+      event_ID: this.event.id ?? 0
     }
 
     this.adsService.postAd(advert).subscribe((advert) => {
@@ -193,23 +232,15 @@ export class BusinessAdvertComponent implements OnInit {
 
   }
 
-  // Function for payment gateway to load credits
-  creditsCheckout() {
-  if (this.credits === 0) {
-    return;
+  // Gets the correct ad description
+  getAdDescription(): string{
+    if (this.adDescription.trim() == ""){
+      return this.aiOutput;
+    }else {
+      return this.adDescription;
+    }
   }
 
-  // Save credits to localStorage
-  localStorage.setItem('credits', this.credits.toString());
-
-  this.adsService.getGUID().subscribe((guidResponse: any) => {
-    localStorage.setItem("YocoGUID", guidResponse);
-    this.adsService.createCheckoutWithGUID(this.credits, guidResponse).subscribe((paymentResponse: any) => {
-      console.log("Yoco redirect Url: ", paymentResponse.redirectUrl)
-      window.location.href = paymentResponse.redirectUrl;
-    });
-  });
-}
 
   // Retrieves all the adverts for the specific business
   getBusinessAdverts(){
@@ -220,6 +251,7 @@ export class BusinessAdvertComponent implements OnInit {
     })
   }
 
+
   // Sets advert variables when advert is clicked
   onAdvertClick(advert: BusinessAdvert){
     this.currentAdvert =advert;
@@ -229,9 +261,6 @@ export class BusinessAdvertComponent implements OnInit {
     this.closeModal();
   }
 
-  onStopEditing(){
-    this.editingAdvert = false;
-  }
 
   onDeleteAdvert(){
     this.adsService.deleteAdvert(this.currentAdvert.id).subscribe((result) => {
@@ -247,7 +276,7 @@ export class BusinessAdvertComponent implements OnInit {
       id: this.currentAdvert.id,
       description: this.getAdDescription(),
       image_File : this.adImage,
-      event_ID: this.event.id,
+      event_ID: this.event.id ?? 0,
       business_ID: this.businessID
     };
 
@@ -258,8 +287,9 @@ export class BusinessAdvertComponent implements OnInit {
       console.log("Error while updating advert: ",  error);
     })
   }
+  //#endregion
 
-
+  //#region Frontend tasks
   // Gets the image file and creates the image uri
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -276,7 +306,6 @@ export class BusinessAdvertComponent implements OnInit {
       reader.readAsDataURL(file); // Converts the file to a base64 string
     }
   }
-
 
   // Uses AI to generate AI
   async generateContent() {
@@ -371,6 +400,7 @@ export class BusinessAdvertComponent implements OnInit {
       filewrapper.removeChild(showfileboxElem);
     });
   }
+  //#endregion
 
 
 }

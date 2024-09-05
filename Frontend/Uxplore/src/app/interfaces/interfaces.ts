@@ -19,7 +19,7 @@ export interface UserSetting {
   reminders: number;
 }
 export interface Listing {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   hours: string;
@@ -34,7 +34,7 @@ export interface Listing {
   min_price: number;
   max_price: number;
   user_id: number;
-  avG_price: number;
+  avG_price?: number;
 }
 
 
@@ -87,6 +87,11 @@ export interface BusinessAdvert {
   image_File: string;
   description: string;
   event_ID : number
+}
 
+export interface BusinessCredits {
+  id: number;
+  User_ID: number;
+  Available_Credits: number;
 }
 

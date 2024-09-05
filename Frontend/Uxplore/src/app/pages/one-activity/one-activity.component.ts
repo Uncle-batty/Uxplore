@@ -101,7 +101,7 @@ export class OneActivityComponent implements OnInit {
         this.activity = Response;
 
         if (this.activity) {
-          this.lservice.getlistingimages(this.activity.id).subscribe(
+          this.lservice.getlistingimages(this.activity.id ?? 0).subscribe(
             (data) => {
               this.images = data;
               this.startImageRotation(); // Start rotating images after fetching them
@@ -111,7 +111,7 @@ export class OneActivityComponent implements OnInit {
             }
           );
 
-          this.lservice.getactivityrateings(this.activity.id).subscribe(
+          this.lservice.getactivityrateings(this.activity.id ?? 0).subscribe(
             (res) => {
               console.log(res);
               this.rateings = res;
@@ -121,7 +121,7 @@ export class OneActivityComponent implements OnInit {
               console.log('Error fetching ratings:', error);
             }
           );
-          this.lservice.getactcomment(this.activity.id).subscribe((res) => {
+          this.lservice.getactcomment(this.activity.id ?? 0).subscribe((res) => {
             this.comments = res;
           });
         }
@@ -325,7 +325,7 @@ export class OneActivityComponent implements OnInit {
 
   refreshRatingsAndComments() {
     if (this.activity) {
-      this.lservice.getactivityrateings(this.activity.id).subscribe(
+      this.lservice.getactivityrateings(this.activity.id ?? 0).subscribe(
         (res) => {
           console.log('Updated ratings:', res);
           this.rateings = res;
@@ -335,7 +335,7 @@ export class OneActivityComponent implements OnInit {
           console.log('Error fetching updated ratings:', error);
         }
       );
-      this.lservice.getactcomment(this.activity.id).subscribe(
+      this.lservice.getactcomment(this.activity.id ?? 0).subscribe(
         (res) => {
           console.log('Updated comments:', res);
           this.comments = res;

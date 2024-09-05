@@ -37,7 +37,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.MapListingEndpoints();
+app.MapListingEndpoints();
 
 app.MapNotificationsEndpoints();
 

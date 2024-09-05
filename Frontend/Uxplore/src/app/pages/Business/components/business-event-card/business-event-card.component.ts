@@ -25,7 +25,7 @@ export class BusinessEventCardComponent  implements OnInit {
   }
 
   getListingImages(){
-    this.listingsService.getlistingimages(this.Event.id).subscribe((listingImages) => {
+    this.listingsService.getlistingimages(this.Event.id ?? 0).subscribe((listingImages) => {
       if (listingImages.length > 0){
         console.log("Image: ", listingImages)
         this.listingImage = listingImages[0];

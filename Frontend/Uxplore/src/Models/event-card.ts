@@ -2,7 +2,8 @@ export interface Event {
   Id: number;
   Name: string;
   Location: string;
-  PriceRange: string;
+  min_price: number;
+  max_price: number;
   Times: string;
   Rating: string;
   SafetyRating: string;

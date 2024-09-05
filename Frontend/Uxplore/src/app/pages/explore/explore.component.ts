@@ -72,10 +72,11 @@ export class ExploreComponent implements OnInit {
     this.events = [];
     currentListing.forEach((listing) => {
       let newEvent: Event = {
-        Id: listing.id,
+        Id: listing.id ?? 0,
         Name: listing.name,
         Location: listing.location.substring(0, 10) + '...',
-        PriceRange: listing.avG_price.toString(),
+        min_price: listing.min_price,
+        max_price: listing.max_price,
         Times: listing.hours,
         Rating: '',
         SafetyRating: '',

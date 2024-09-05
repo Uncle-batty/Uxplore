@@ -85,7 +85,7 @@ export class AddEventComponent implements OnInit {
             reader.onload = (e: any) => {
               const image: listingimages = {
                 id: 0,
-                listingid: response.id,
+                listingid: response.id ?? 0,
                 image: e.target.result
               };
               this.listingsService.addlistingimage(image).subscribe({

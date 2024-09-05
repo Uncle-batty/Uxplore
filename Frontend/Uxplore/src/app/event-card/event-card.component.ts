@@ -27,7 +27,8 @@ export class EventCardComponent  implements OnInit {
     Id: 0,
     Name: '',
     Location: '',
-    PriceRange: '',
+    min_price: 0,
+    max_price: 0,
     Times: '',
     Rating: '0',
     SafetyRating: '',
@@ -40,7 +41,7 @@ export class EventCardComponent  implements OnInit {
 
 
   constructor(private userService: UsersService, private listingService:ListingsService) {
-    addIcons({locationOutline, star, bookmark, shareSocial})
+    addIcons({locationOutline,star,shareSocial});
   }
 
   ngOnInit() {

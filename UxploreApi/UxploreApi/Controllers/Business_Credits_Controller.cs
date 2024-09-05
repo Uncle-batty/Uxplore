@@ -9,12 +9,12 @@ namespace UxploreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Business_Credits_Conrtoller : ControllerBase
+    public class Business_Credits_Controller : ControllerBase
     {
 
         private readonly DataContext _context;
 
-        public Business_Credits_Conrtoller(DataContext context)
+        public Business_Credits_Controller(DataContext context)
         {
             _context = context;
         }
@@ -34,7 +34,7 @@ namespace UxploreAPI.Controllers
             }
         }
 
-        // GET api/<Business_Adverts_Controller>/5
+   
         [HttpGet("{id}")]
         public async Task<ActionResult<Business_Credits>> GetBusinessCredits(int id)
         {
@@ -58,12 +58,20 @@ namespace UxploreAPI.Controllers
         }
 
 
-        //[HttpPut]
+        [HttpPut("{id}")]
 
-        //public async Task<ActionResult<Business_Credits>> UpdateCredits(Business_Credits credits)
-        //{
+        public async Task<ActionResult<Business_Credits>> updateCredits(int id ,Business_Credits credits)
+        {
+            if (id != credits.ID)
+            {
+                return BadRequest();
+            }
 
-        //}
+            _context.Entry(credits).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok(credits);
+        }
 
 
 

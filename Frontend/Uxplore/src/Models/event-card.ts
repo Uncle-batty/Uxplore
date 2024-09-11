@@ -7,5 +7,5 @@ export interface Event {
   Times: string;
   Rating: string;
   SafetyRating: string;
-  ImageData: string;
+  ImageData?: string;
 }

@@ -21,6 +21,34 @@ namespace UxploreAPI
 
         }
 
+
+        public void SendEmail(string email, string message, string subject)
+        {
+            string body = message;
+
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(email),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+
+            // Add recipient
+            mailMessage.To.Add(email);
+            try
+            {
+                // Send the email
+                smtpClient.Send(mailMessage);
+                Console.WriteLine("Email sent successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error sending email: " + ex.Message);
+            }
+
+        }
+
         public void sendConformationEmail(string useremail, string username)
         {
             string body = @"

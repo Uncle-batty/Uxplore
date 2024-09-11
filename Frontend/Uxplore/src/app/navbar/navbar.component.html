@@ -31,7 +31,7 @@
     <div class="modal-header">
       <button class="close-btn" (click)="closeModal()">X</button>
     </div>
-    <div class="modal-content">
+    <div *ngIf="!foundListing" class="modal-content">
       <h2>Select Your Feeling</h2>
       <div class="checkboxes">
         <div class="row" *ngFor="let feeling of feelings; let i = index">
@@ -44,6 +44,11 @@
         </div>
       </div>
       <button type="submit" class="sign-in-btn" (click)="submitFeelings()">Submit</button>
+    </div>
+    <div *ngIf="foundListing" class="modal-content">
+      <div class="event container">
+        <app-event-card [event]="selectedEvent"></app-event-card>
+      </div>
     </div>
   </div>
 </div>

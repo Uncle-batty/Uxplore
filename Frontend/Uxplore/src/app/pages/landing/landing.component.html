@@ -17,6 +17,10 @@
   </div>
 </div>
 
+<ion-toast [isOpen]="isToastOpen"
+  [message]="toastMessage" duration="5000"
+  (didDismiss)="setOpen(false)"></ion-toast>
+
 <!-- Registration Model -->
 <div class="modal-overlay" [ngClass]="{'show': isRegistrationModelOpen}" (click)="closeRegModel()">
   <div class="modal" [ngClass]="{'show': isRegistrationModelOpen}" (click)="$event.stopPropagation()">
@@ -27,17 +31,13 @@
       <h2>Register</h2>
       <div class="inputscon">
         <input class="input" placeholder="Name" type="text" [(ngModel)]="Fullname" />
-        <ion-toast [isOpen]='isEmailToast' message='Enter a valid email address' duration='5000'
-          (didDismiss)='setOpen(false)'>
-        </ion-toast>
+
         <input class="input" placeholder="Email" type="email" [(ngModel)]="email" />
-        <ion-toast [isOpen]="isPasswordToast"
-          message="Password must contain at least one upper case character and be over 8 characters" duration="5000"
-          (didDismiss)="setOpen(false)"></ion-toast>
+
         <input class="input" placeholder="Password" type="password" [(ngModel)]="password" />
         <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Confermpassword" />
         <button class="sign-in-btn" (click)="logregdetails()">Confirm</button>
-        <a style="text-align: center;" (click)="openModal()" class="forgot-password">Already Registered</a>
+        <a style="text-align: center;" (click)="openModal()" class="forgot-password"></a>
       </div>
     </div>
   </div>
@@ -60,9 +60,6 @@
           </label>
         </div>
       </div>
-      <ion-toast [isOpen]="isFailedtoast"
-        message="Failed to create user. Please make sure this email isn't used with another account." duration="5000"
-        (didDismiss)="setOpen(false)"></ion-toast>
       <div class="inputscon">
         <button class="sign-in-btn" (click)="submituser()">Confirm</button>
       </div>
@@ -85,7 +82,7 @@
         <input class="input" placeholder="Password" type="password" [(ngModel)]="password" required />
         <p class="error" [hidden]="!showPasswordError">Please enter a valid password</p>
 
-        <a class="forgot-password">Forgot Password?</a>
+        <a class="forgot-password" (click)="openForgotPasswordModal()">Forgot Password?</a>
         <button class="sign-in-btn" (click)="login()">Sign In</button>
         <a (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
       </div>
@@ -101,6 +98,34 @@
   </div>
 </div>
 
+
+<!-- Forgot Password -->
+<div class="modal-overlay" [ngClass]="{'show': isForgotPasswordModalOpen}" (click)="closeForgotPasswordModal()">
+  <div class="modal" [ngClass]="{'show': isForgotPasswordModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeForgotPasswordModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Enter email</h2>
+      <div class="inputscon">
+        <input *ngIf="showEmailTb" class="input" placeholder="Email" type="email" [(ngModel)]="email" required />
+        <input *ngIf="showCodeTb" class="input" placeholder="Code" type="number" [(ngModel)]="userForgotPasswordCode" required />
+        <input *ngIf="showNewPasswordTb" class="input" placeholder="Enter new password" type="text" [(ngModel)]="newPassword1" required />
+        <input *ngIf="showNewPasswordTb" class="input" placeholder="Re-enter new password" type="text" [(ngModel)]="newPassword2" required />
+
+
+
+        <button *ngIf="showEmailTb" class="sign-in-btn" (click)="onForgotPasswordEmailConfirm()">Confirm Email</button>
+        <button *ngIf="showCodeTb" class="sign-in-btn" (click)="onConfirmCode()">Confirm Code</button>
+        <button *ngIf="showNewPasswordTb" class="sign-in-btn" (click)="onNewPasswordClick()">Confirm Reset Password</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
 <!-- Business Registration Model -->
 <div class="modal-overlay" [ngClass]="{'show': isBusinessRegOpen}" (click)="closeBusinessRegModel()">
   <div class="modal" [ngClass]="{'show': isBusinessRegOpen}" (click)="$event.stopPropagation()">
@@ -112,9 +137,6 @@
       <div class="inputscon">
         <input class="input" placeholder="Owner Name" type="text" [(ngModel)]="Ownername" />
         <input class="input" placeholder="Business Name" type="text" [(ngModel)]="Businessname" />
-        <ion-toast [isOpen]='isEmailToast' message='Enter a valid email address' duration='5000'
-          (didDismiss)='setOpen(false)'>
-        </ion-toast>
         <input class="input" placeholder="Business Email" type="email" [(ngModel)]="Businessemail" />
         <input class="input" placeholder="Business Cell" type="tel" [(ngModel)]="Businesscell" />
         <input class="input" placeholder="Business Description" type="text" [(ngModel)]="Businessdescription" />
@@ -134,9 +156,7 @@
         </select>
         <input class="input" placeholder="Average Spending" type="text" [(ngModel)]="Averagespending" />
         <input class="input" placeholder="Website Link" type="url" [(ngModel)]="Websitelink" />
-        <ion-toast [isOpen]="isPasswordToast"
-          message="Password must contain at least one upper case character and be over 8 characters" duration="5000"
-          (didDismiss)="setOpen(false)"></ion-toast>
+
         <input class="input" placeholder="Password" type="password" [(ngModel)]="Businesspassword" />
         <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Businessconfirmpassword" />
         <label style="text-align: start; margin-top: 3%; margin-left: 2.5%;">Upload Image</label>
@@ -146,7 +166,7 @@
         </form>
 
         <button class="sign-in-btn" (click)="navpage('business/business-dashboard')">confirm</button>
-        <a style="text-align: center;" (click)="openBusinessModel()" class="forgot-password">Already Registered</a>
+        <a style="text-align: center;" (click)="openBusinessModel()" class="forgot-password"></a>
       </div>
       <div class="separator">
         <span>--------------------------------- OR ---------------------------------</span>

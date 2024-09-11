@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Azure.Core;
 
 namespace UxploreAPI.Controllers
 {
@@ -52,14 +54,22 @@ namespace UxploreAPI.Controllers
                 return NotFound();
             }
 
-            if (HashPassword(password) == user.Password)
+            if (password != "no password")
+            {
+                if (HashPassword(password) == user.Password)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }else
             {
                 return Ok(user);
             }
-            else
-            {
-                return BadRequest();
-            }
+
+            
 
 
         }
@@ -68,6 +78,14 @@ namespace UxploreAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+            if (existingUser != null)
+            {
+                return BadRequest(new { message = "User already exists" });
+            }
+
+
             user.Password = HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -87,6 +105,32 @@ namespace UxploreAPI.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
+
+        [HttpPost("sendForgotEmail")]
+
+        public async Task<ActionResult<User>> SendEmail(Email emailRequest)
+        {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == emailRequest.email);
+
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                SMTP smtp = new SMTP();
+                smtp.SendEmail(emailRequest.email, emailRequest.body, emailRequest.subject);
+                return Ok(existingUser);
+            }catch
+            {
+                return BadRequest();
+            }
+            
+
+        }
+
+
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
@@ -96,7 +140,7 @@ namespace UxploreAPI.Controllers
                 return BadRequest(new { message = "User ID mismatch" });
             }
 
-            var existingUser = await _context.Users.FindAsync(id);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (existingUser == null)
             {
                 return NotFound(new { message = "User not found" });
@@ -168,5 +212,14 @@ namespace UxploreAPI.Controllers
                 return builder.ToString();
             }
         }
+    }
+
+    public class Email
+    {
+        public string email { get; set; }
+
+        public string body { get; set; }
+
+        public string subject { get; set; }
     }
 }

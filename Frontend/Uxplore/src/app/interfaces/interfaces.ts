@@ -95,3 +95,9 @@ export interface BusinessCredits {
   Available_Credits: number;
 }
 
+export interface Email {
+  email: string,
+  body: string,
+  subject: string
+}
+

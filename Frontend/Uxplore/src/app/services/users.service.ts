@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, interests, UserInteraction } from '../interfaces/interfaces';
+import { User, interests, UserInteraction, Email } from '../interfaces/interfaces';
 import { UserSetting } from '../interfaces/interfaces';
 import { API_BASE_URL } from 'src/APIBaseURL';
 
@@ -16,7 +16,7 @@ export class UsersService {
   settingsURL: string = API_BASE_URL + '/api/User_Setting';
   settingUserIdURL:String= API_BASE_URL + '/api/User_Setting/user/'
 
-  loginuser(email: string, password: string): Observable<any> {
+  loginuser(email: string, password: string = "no password"): Observable<any> {
     return this.http.get<User>(
       this.baseurl + `/email/${email}?password=${password}`
     );
@@ -24,6 +24,18 @@ export class UsersService {
 
   registeruser(user: User | undefined): Observable<any> {
     return this.http.post<User>(this.baseurl, user);
+  }
+
+  sendEmail(email: Email): Observable<User>{
+    const url = this.baseurl + "/sendForgotEmail"
+
+    return this.http.post<User>(url, email);
+
+  }
+
+  updateUser(user: User): Observable<any>{
+    const url = this.baseurl + `/${user.id}`
+    return this.http.put<any>(url, user)
   }
 
   setuserinterests(interest: interests): Observable<any> {

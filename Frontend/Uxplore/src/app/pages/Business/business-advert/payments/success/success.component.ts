@@ -17,14 +17,17 @@ export class SuccessComponent  implements OnInit {
     private adsService: BusinessAdvertsService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.postNewCredits();
+  }
 
   postNewCredits(){
     const user : User = JSON.parse(localStorage.getItem('user') ?? "");
+    console.log("User: ", user);
     const creditsAmount : number = Number(localStorage.getItem('credits') ?? "0");
 
     this.adsService.getBusinessCredits(user.id ?? 0).subscribe((credits) => {
-      if (credits.length != 0){
+      if (credits.length == 0){
         const newCredits : BusinessCredits = {
           id: 0,
           User_ID : user.id ?? 0,
@@ -37,13 +40,15 @@ export class SuccessComponent  implements OnInit {
         const newCredits : BusinessCredits = {
           id: credits[0].id,
           User_ID: credits[0].User_ID,
-          Available_Credits: creditsAmount
+          Available_Credits: credits[0].Available_Credits + creditsAmount
         }
 
         this.adsService.updateBusinessCredits(newCredits).subscribe((res) => {
           console.log(res);
         })
       }
+
+      localStorage.removeItem('credits')
     })
   }
 }

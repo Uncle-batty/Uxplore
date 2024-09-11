@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { User, interests } from 'src/app/interfaces/interfaces';
+import { Email, User, interests } from 'src/app/interfaces/interfaces';
 import { logoGoogle, logoFacebook ,logoTwitter } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { UserSetting } from 'src/app/interfaces/interfaces';
@@ -31,10 +31,12 @@ export class LandingComponent implements OnInit {
   isBusinessRegOpen = false;
   userID : number = 0;
 
-    email: string = '';
+  email: string = '';
   password: string = '';
   Fullname: string = '';
   Confermpassword: string = '';
+  toastMessage = "";
+  isToastOpen = false;
 
 
   /* Business variables (containers) used in model for HTML page */
@@ -51,7 +53,15 @@ export class LandingComponent implements OnInit {
   Businesspassword: string = '';
   Businessconfirmpassword: string = '';
 
-
+  // Forgot password handlers
+  isForgotPasswordModalOpen = false;
+  forgotPasswordCode = '';
+  userForgotPasswordCode = '';
+  newPassword1 = '';
+  newPassword2 = '';
+  showEmailTb = false;
+  showCodeTb = false;
+  showNewPasswordTb = false;
 
 selectedInterests: string[] = [];
 interests: selectedInterest[] = [
@@ -142,6 +152,19 @@ interestCategoryMapping: { [key: string]: number } = {
     this.isBusinessRegOpen = false;
   }
 
+  openForgotPasswordModal(){
+      this.showEmailTb = true;
+    this.isForgotPasswordModalOpen = true;
+    this.closeBusinessModel();
+    this.closeBusinessRegModel();
+    this.closeInterestsModel();
+    this.closeModal();
+  }
+
+  closeForgotPasswordModal(){
+    this.isForgotPasswordModalOpen = false;
+  }
+
 
   toggleInterest(interest: selectedInterest) {
     interest.selected = !interest.selected;
@@ -177,9 +200,9 @@ interestCategoryMapping: { [key: string]: number } = {
         console.log("Caps found")
       }
     }
-   if (capsCount == 0) {
+  if (capsCount == 0) {
     return false;
-   }
+  }
     return true;
   }
 
@@ -210,16 +233,19 @@ interestCategoryMapping: { [key: string]: number } = {
           //
 
           } else {
-            this.showEmailError = true;
+            this.isToastOpen = true;
+            this.toastMessage = "Please enter a valid email";
           }
         },
         (error) => {
           if (error instanceof HttpErrorResponse){
             if (error.status == 400){
-              this.showPasswordError = true;
-            }
+                this.isToastOpen = true;
+              this.toastMessage = "Password is incorrect";
+              }
             if(error.status == 404){
-              this.showEmailError = true;
+              this.isToastOpen = true;
+              this.toastMessage = "Email not found, please register";
             }
           }
           console.error('Login request failed', error.status);
@@ -235,23 +261,40 @@ interestCategoryMapping: { [key: string]: number } = {
       {
         if (this.validatePassword(this.password) && this.password === this.Confermpassword)
           {
-            this.user = {
-                fName : this.Fullname.split(' ')[0],
-                lName : this.Fullname.split(' ')[1] ?? "",
-                email : this.email,
-                password : this.password,
-                userType : "user",
-              };
-              console.log(this.user);
-              this.openInterestsModel();
+            this.service.loginuser(this.email).subscribe((res) => {
+              if (res){
+                this.toastMessage = "User already exists, please login";
+                this.isToastOpen = true;
+              }
+            }, (error) => {
+              if (error instanceof HttpErrorResponse){
+                if (error.status == 404){
+                  this.user = {
+                    fName : this.Fullname.split(' ')[0],
+                    lName : this.Fullname.split(' ')[1] ?? "",
+                    email : this.email,
+                    password : this.password,
+                    userType : "user",
+                  };
+
+
+                  console.log(this.user);
+                  this.openInterestsModel();
+                }
+              }
+            })
+
+
           }
           else {
-              this.isPasswordToast = true;
+              this.toastMessage = "Password must contain at least one upper case character and be over 8 characters";
+              this.isToastOpen = true;
           }
       }
       else
       {
-          this.isEmailToast = true;
+          this.isToastOpen = true;
+          this.toastMessage = "This is an invalid email"
       }
   }
 
@@ -321,10 +364,107 @@ submituser() {
       }
     },
     (error) => {
-      console.error('Failed to register user:', error, this.user);
-      this.isFailedtoast = true;
+      if (error instanceof HttpErrorResponse){
+        if (error.status == 400){
+          console.error('Failed to register user:', error);
+          this.isToastOpen = true;
+          this.toastMessage = "Email already exists, please log in";
+        }
+      }
     }
   );
+}
+
+
+onForgotPasswordEmailConfirm(){
+  if (!this.validateEmail(this.email)||  this.email.trim() == ''){
+    this.toastMessage = "Please enter a valid email"
+    this.isToastOpen = true
+    return
+  }
+
+  this.forgotPasswordCode =  this.generateFiveDigitNumber().toString();
+  const newForgotEmail : Email = {
+    email : this.email,
+    body : ForgotPasswordEmail(this.forgotPasswordCode),
+    subject: "Forgot Password"
+  }
+
+  this.service.sendEmail(newForgotEmail).subscribe((res) => {
+    if (res) {
+      this.user = res;
+      this.toastMessage = "Code has been sen to your email";
+      this.isToastOpen = true;
+      this.showEmailTb = false;
+      this.showCodeTb = true;
+    }
+  }, (error) =>{
+    if (error instanceof HttpErrorResponse ){
+      if (error.status == 404){
+        this.toastMessage = "This is email is not registered, please register";
+        this.isToastOpen = true;
+      } else if (error.status == 400){
+        this.toastMessage = "Failed to send email";
+        this.isToastOpen = true;
+      }
+    }
+  })
+}
+
+onConfirmCode(){
+  if (this.userForgotPasswordCode.trim() == ""){
+
+    this.toastMessage = "Please fill in the code";
+    this.isToastOpen = true;
+    return;
+  }
+
+  if (this.userForgotPasswordCode != this.forgotPasswordCode){
+    this.toastMessage = "Code is incorrect"
+    this.isToastOpen = true;
+    return;
+  }
+
+  this.showNewPasswordTb = true;
+  this.showCodeTb = false;
+}
+
+onNewPasswordClick(){
+  if (this.newPassword1.trim() == '' || this.newPassword2.trim() == ''){
+    this.toastMessage = "Please enter all fields";
+    this.isToastOpen = true;
+    return;
+  }
+
+  if (!this.validatePassword(this.newPassword1)){
+    this.toastMessage = "Password must contain at least one upper case character and be over 8 characters";
+    this.isToastOpen = true;
+    return;
+  }
+
+
+  if (this.newPassword1.trim() != this.newPassword2.trim()){
+    this.toastMessage = "Please make sure passwords match"
+    this.isToastOpen = true;
+    return;
+  }
+
+
+  const newUser : User = {
+    id : this.user?.id,
+    fName: this.user?.fName,
+    lName: this.user?.lName,
+    email: this.user?.email ?? "",
+    password: this.newPassword1,
+    userType: this.user?.userType
+  }
+
+  this.service.updateUser(newUser).subscribe((res) => {
+    this.toastMessage = "Successfully reset password, please log";
+    this.isToastOpen = true;
+    this.showNewPasswordTb = false;
+    this.isForgotPasswordModalOpen = false;
+  })
 }
 
 
@@ -498,14 +638,131 @@ let user : User = {
     const errorMessage = error.message;
     console.error(`Error during sign-in with twitter: ${errorCode} - ${errorMessage}`);
 });
-
 }
 
-
+  generateFiveDigitNumber(): number {
+    return Math.floor(10000 + Math.random() * 90000);
+}
 
 }
 
 export interface selectedInterest {
   name: string;
   selected: boolean;
+}
+
+export const ForgotPasswordEmail = (code: string) : string => {
+
+  let email = `
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Thank You for Signing Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-image: radial-gradient(circle at center center, rgba(79,22,97, 0.05) 0%, rgba(79,22,97, 0.05) 15%,rgba(91,13,123, 0.05) 15%, rgba(91,13,123, 0.05) 34%,rgba(73,34,126, 0.05) 34%, rgba(73,34,126, 0.05) 51%,rgba(237, 237, 237,0.05) 51%, rgba(237, 237, 237,0.05) 75%,rgba(83,25,123, 0.05) 75%, rgba(83,25,123, 0.05) 89%,rgba(28,9,37, 0.05) 89%, rgba(28,9,37, 0.05) 100%),radial-gradient(circle at center center, rgb(8,8,8) 0%, rgb(8,8,8) 6%,rgb(8,8,8) 6%, rgb(8,8,8) 12%,rgb(8,8,8) 12%, rgb(8,8,8) 31%,rgb(8,8,8) 31%, rgb(8,8,8) 92%,rgb(8,8,8) 92%, rgb(8,8,8) 97%,rgb(8,8,8) 97%, rgb(8,8,8) 100%); background-size: 42px 42px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            }
+            .email-header {
+            background: linear-gradient(to right, #3f3d3d, rgb(8, 7, 7));
+            color: white;
+            padding: 10px 0;
+            border-radius: 5px 5px 0 0;
+            border: 3px solid #ffffff; /* Adjusted the border width and added the shorthand property */
+        }
+
+        .email-header img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+        .email-body {
+            padding: 20px;
+            color: white;
+        }
+        .email-footer {
+            background-color: #f4f4f4;
+            color: #888888;
+            padding: 10px;
+            border-radius: 0 0 5px 5px;
+        }
+        .btn-confirm {
+            background: linear-gradient(to right, black, #4CAF50);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-confirm:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class='email-container'>
+        <div class='email-header'>
+            <img src='https://i.ibb.co/qWsTJDv/Logo.png' alt='Your Company Logo'>
+        </div>
+        <div class='email-body'>
+            <p>Dear Customer,</p>
+            <p>This code is to allow you to reset your password. Enter this code into the UXplore app.</p>
+                <style>
+        @keyframes slide {
+            0% { transform: translateX(0%); }
+            20% { transform: translateX(0%); }
+            25% { transform: translateX(-100%); }
+            45% { transform: translateX(-100%); }
+            50% { transform: translateX(-200%); }
+            70% { transform: translateX(-200%); }
+            75% { transform: translateX(-300%); }
+            95% { transform: translateX(-300%); }
+            100% { transform: translateX(0%); }
+        }
+
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            width: 400%;
+            animation: slide 6s infinite;
+        }
+
+        .carousel img {
+            width: 25%;
+            transition: transform 4s;
+        }
+    </style>
+</head>
+<body>
+    <div class='email-body'>
+
+
+            <h3>Code: ${code}</h3>
+        </div>
+        <div class='email-footer'>
+            <p>&copy; 2024 Uxplore.All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+`;
+
+return email
 }

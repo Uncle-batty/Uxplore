@@ -1,11 +1,11 @@
-body {
+.body {
+  margin-top: 5rem;
   text-align: center;
   padding: 40px 0;
-  background: #EBF0F5;
 }
 
 h1 {
-  color: #88B04B;
+  color: #58e02e;
   font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
   font-weight: 900;
   font-size: 40px;
@@ -13,24 +13,33 @@ h1 {
 }
 
 p {
-  color: #404F5E;
+  color: #f1f1f1;
   font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
   margin: 0;
 }
 
 i {
-  color: #9ABC66;
+  color: #58e02e;
   font-size: 100px;
   line-height: 200px;
   margin-left: -15px;
 }
 
 .card {
-  background: white;
+  background: rgb(29, 29, 29);
   padding: 60px;
   border-radius: 4px;
-  box-shadow: 0 2px 3px #C8D0D8;
+  box-shadow: 0 2px 3px #757575;
   display: inline-block;
   margin: 0 auto;
+}
+
+.main-content {
+    margin-left: 15%;
+      /* Adjust margin-left to 15% */
+      width: 80%;
+      /* Adjust width to 70% */
+      float: right;
+      /* Float content to the right */
 }

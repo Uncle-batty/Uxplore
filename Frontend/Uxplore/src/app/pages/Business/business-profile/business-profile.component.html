@@ -1,3 +1,73 @@
-<p>
-  business-profile works!
-</p>
+<div class="main-content">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+  <ion-grid>
+    <ion-row justify-content-center align-items-center>
+      <ion-col size="2"></ion-col>
+      <ion-col size="12" sizeSm="12" sizeMd="5" sizeXl="5">
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-top">
+            <div class="profile-image"><img [src]="profileImage" alt=""></div>
+            <div class="profile-details"></div>
+          </div>
+          <div class="profile-name">{{username}}</div>
+          <button class="edit-profile-button" (click)="loadComponent('ProfileDetailsComponent')">Edit Profile</button>
+        </div>
+
+        <!-- Notifications -->
+        <div style="margin-top: 20px">
+          <div class="cardbody">
+            <div class="cardTitle">
+              <i class="bi bi-bell"></i>
+              Notifications
+            </div>
+            <div class="cardtext" (click)="loadComponent('PushNotificationsComponent')">
+              <p>Push Notifications</p>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="cardtext" (click)="loadComponent('EmailNotificationsComponent')">
+              <p>Email Notifications</p>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Privacy -->
+        <div style="margin-top: 180px">
+          <div class="cardAccount">
+            <div class="CardAccountTiltle">
+              <i class="bi bi-lock"></i>
+              Account Privacy
+            </div>
+            <div class="cardAccountText">
+              <p>Private Account</p>
+              <div class="toggle-background">
+                <span class="toggle" (click)="togglePrivateAccount()"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help Center -->
+        <div style="margin-top: 300px">
+          <div class="cardAccount">
+            <div class="CardAccountTiltle">
+              <i class="bi bi-life-preserver"></i>
+              Help Center
+            </div>
+            <div class="cardtext" (click)="loadComponent('HelpCenterComponent')">
+              <p>Let us help you</p>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+
+      <!-- Dynamic Component Container -->
+      <ion-col size="12" sizeSm="12" sizeMd="5" sizeXl="5">
+        <ng-container #dynamicComponentContainer></ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

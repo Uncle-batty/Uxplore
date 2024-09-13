@@ -31,12 +31,13 @@
     width: 100%;
 }
 
-.profile-image {
+.profile-image img {
     width: 104px;
     height: 104px;
     border-radius: 100%;
     border: 3px solid white;
     margin-right: 20px;
+    object-fit: contain;
 }
 
 .profile-name {
@@ -94,7 +95,7 @@
     font-family: 'League Spartan',sans-serif;
     font-style: normal;
     font-weight: 300;
-   
+
     line-height: 24px;
     color: #ffffff;
     display: flex;

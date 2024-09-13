@@ -8,10 +8,10 @@
         <!-- Profile Card -->
         <div class="profile-card">
           <div class="profile-top">
-            <div class="profile-image"></div>
+            <div class="profile-image"><img [src]="profileImage" alt=""></div>
             <div class="profile-details"></div>
           </div>
-          <div class="profile-name">Rapudi Hlakudi</div>
+          <div class="profile-name">{{username}}</div>
           <button class="edit-profile-button" (click)="loadComponent('ProfileDetailsComponent')">Edit Profile</button>
         </div>
 

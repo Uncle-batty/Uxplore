@@ -454,13 +454,14 @@ export class OneActivityComponent implements OnInit {
       }else {
 
         let currentDate = new Date(Date.now()).toLocaleDateString()
-        currentDate = currentDate.replace("/","-" )
+
         const interaction: UserInteraction = {
+          id: 0,
           event_ID: 0,
           listing_ID: Number(this.Actid),
           user_ID: user.id,
           interaction_Type: interactionType,
-          interaction_Date: currentDate.replace("/","-" )
+          interaction_Date: "2000-01-10"
         }
         console.log("Interaction: ",interaction)
 

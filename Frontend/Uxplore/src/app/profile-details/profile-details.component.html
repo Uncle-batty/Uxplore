@@ -1,6 +1,6 @@
 <div class="rectangle-202">
   <div>
-    <img class="profile-picture" src="profile-picture-url" alt="Profile Picture" />
+    <img class="profile-picture" [src]="profilePictureUrl" alt="Profile Picture" />
   </div>
   <div class="cardformInputs">
     <div class="form-group">
@@ -27,6 +27,10 @@
         <i class="eye-icon" (click)="togglePasswordVisibility('confirmNewPassword')"></i>
       </div>
     </div>
-    <button (click)="updateProfile()">Update Profile</button>
+    <ion-row>
+      <button (click)="updateProfile()">Update Profile</button>
+      <button style="margin-left: 160px;" *ngIf="isBusinessUser" >Deactivate Account</button>
+      <button style="margin-left: 320px;" *ngIf="isBusinessUser" >Delete Account</button>
+    </ion-row>
   </div>
 </div>

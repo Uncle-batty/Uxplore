@@ -4,19 +4,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../interfaces/interfaces';
 import { UserDetailsService } from '../services/user-details.service';
+import { IonRow } from "@ionic/angular/standalone";
+import { defaultProfileImage } from 'src/APIBaseURL';
 
 @Component({
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
   styleUrls: ['./profile-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule]
+  imports: [IonRow, CommonModule, FormsModule, HttpClientModule]
 })
 export class ProfileDetailsComponent implements OnInit {
   username: string = '';
   email: string = '';
   newPassword: string = '';
   confirmNewPassword: string = '';
+  isBusinessUser : boolean = false;
+  profilePictureUrl : string = defaultProfileImage;
 
   constructor(private userDetailsService: UserDetailsService, private http: HttpClient) {
     this.loadUserData();
@@ -27,9 +31,12 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   loadUserData(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user : User = JSON.parse(localStorage.getItem('user') || '{}');
     this.username = user.fName || '';
     this.email = user.email || '';
+    if (user.userType == "business"){
+      this.isBusinessUser = true;
+    }
     console.log("User data loaded");
   }
 
@@ -53,7 +60,7 @@ export class ProfileDetailsComponent implements OnInit {
   updateProfile(): void {
     if (this.validateForm()) {
         const userFromStorage = JSON.parse(localStorage.getItem('user') || '{}');
-        
+
         // Create the user object with updated details
         const user: User = {
             id:userFromStorage.id,

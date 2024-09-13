@@ -68,9 +68,9 @@ setUserNav(){
 
 isNotificationsModalOpen = false;
 notifications = [
-  { username: 'John', activity: 'liked your post', timestamp: '5 min ago' },
-  { username: 'Rocky', activity: 'commented on your photo', timestamp:'8 min ago' },
-  { username: 'Kanye', activity: 'liked your comment', timestamp:'12 min ago'}
+  { username: 'Rocomams', activity: 'Posted new wing challenge', timestamp: '5 min ago' },
+  { username: 'Level4 Restaurant', activity: 'Couples night', timestamp:'1 hour ago' },
+  { username: 'Orlando Towers Bungee', activity: '2-on-1 Special on Tuesdays', timestamp:'2 days ago'}
   // Add more notifications as needed
 ];
 
@@ -124,7 +124,10 @@ openModal() {
   getAllListings(){
     this.listingService.getalllistings().subscribe((foundListings) => {
       this.listings = foundListings;
+      this.events = this.popevents(this.listings);
     })
+
+
   }
 
    ngOnInit(): void {
@@ -137,7 +140,31 @@ openModal() {
 
     //Shows different Nav bars for different user types
     this.setUserNav();
+    this.getAllListings();
   }
 
+  popevents(currentListing: Listing[]): Event[] {
+    currentListing.forEach((listing) => {
+      this.listingService.getlistingimages(listing.id ?? 0).subscribe(
+        (data) => {
+          let newEvent: Event = {
+            Id: listing.id ?? 0,
+            Name: listing.name,
+            Location: listing.location.substring(0, 10) + '...',
+            max_price: listing.max_price,
+            min_price: listing.min_price,
+            Times: listing.hours,
+            Rating: '',
+            SafetyRating: '',
+            ImageData: data[0].image,
+          };
+          this.events.push(newEvent);
+        },
+        (error) => {}
+      );
+    });
+    console.log("Loaded events: ", this.events)
+    return this.events;
+  }
 
 }

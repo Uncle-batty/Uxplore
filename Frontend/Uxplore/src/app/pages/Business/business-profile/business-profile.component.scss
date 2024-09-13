@@ -1,0 +1,278 @@
+.main-content {
+  padding-right: 20px;
+  height: 100%;
+
+  body {
+    font-family: 'League Spartan', sans-serif;
+    background-image: linear-gradient(216deg, rgba(77, 77, 77, 0.05) 0%, rgba(77, 77, 77, 0.05) 25%, rgba(42, 42, 42, 0.05) 25%, rgba(42, 42, 42, 0.05) 38%, rgba(223, 223, 223, 0.05) 38%, rgba(223, 223, 223, 0.05) 75%, rgba(36, 36, 36, 0.05) 75%, rgba(36, 36, 36, 0.05) 100%), linear-gradient(44deg, rgba(128, 128, 128, 0.05) 0%, rgba(128, 128, 128, 0.05) 34%, rgba(212, 212, 212, 0.05) 34%, rgba(212, 212, 212, 0.05) 57%, rgba(25, 25, 25, 0.05) 57%, rgba(25, 25, 25, 0.05) 89%, rgba(135, 135, 135, 0.05) 89%, rgba(135, 135, 135, 0.05) 100%), linear-gradient(241deg, rgba(55, 55, 55, 0.05) 0%, rgba(55, 55, 55, 0.05) 14%, rgba(209, 209, 209, 0.05) 14%, rgba(209, 209, 209, 0.05) 60%, rgba(245, 245, 245, 0.05) 60%, rgba(245, 245, 245, 0.05) 69%, rgba(164, 164, 164, 0.05) 69%, rgba(164, 164, 164, 0.05) 100%), linear-gradient(249deg, rgba(248, 248, 248, 0.05) 0%, rgba(248, 248, 248, 0.05) 32%, rgba(148, 148, 148, 0.05) 32%, rgba(148, 148, 148, 0.05) 35%, rgba(202, 202, 202, 0.05) 35%, rgba(202, 202, 202, 0.05) 51%, rgba(181, 181, 181, 0.05) 51%, rgba(181, 181, 181, 0.05) 100%), linear-gradient(92deg, hsl(214, 0%, 11%), hsl(214, 0%, 11%));
+  }
+
+  overflow: auto;
+}
+
+
+.profile-card {
+  width: 511px;
+  height: 186px;
+  background: rgba(34, 32, 32, 0.77);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #FFFFFF;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.profile-top {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.profile-image img {
+  width: 104px;
+  height: 104px;
+  border-radius: 100%;
+  border: 3px solid white;
+  margin-right: 20px;
+  object-fit: contain;
+
+}
+
+.profile-name {
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 18px;
+}
+
+.edit-profile-button {
+  box-sizing: border-box;
+  width: 145px;
+  height: 40px;
+  background: linear-gradient(180deg, #7332B4 0%, #32164E 100%);
+  border: 5px solid #7332B4;
+  box-shadow: inset 0px 4px 4px rgba(217, 120, 220, 0.76);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.cardbody {
+  position: absolute;
+  width: 511px;
+  height: 133.64px;
+  background: #222020;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.cardTitle {
+  width: 183px;
+  height: 25px;
+  font-family: 'League Spartan', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.cardtext {
+  font-family: 'League Spartan', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+
+  line-height: 24px;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3px 0;
+}
+
+.cardtext i {
+  margin-right: 10px;
+  /* space between icon and text */
+}
+
+.cardtext p {
+  margin: 0;
+  /* remove default paragraph margin */
+  flex-grow: 1;
+  /* make text take up available space */
+}
+
+/* Rectangle 202 */
+.rectangle-202 {
+  position: absolute;
+  width: 511px;
+  height: 600px;
+  /* left: 884px;*/
+  /* top: 83px;*/
+  background: #222020;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* Profile Picture */
+.profile-picture {
+  position: absolute;
+  width: 128px;
+  height: 122px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10px;
+  border-radius: 100px;
+}
+
+/* Card Form Inputs */
+.cardformInputs {
+  position: absolute;
+  width: 100%;
+  top: 150px;
+  text-align: left;
+  padding: 0;
+}
+
+.cardformInputs .form-group {
+  margin-bottom: 20px;
+}
+
+.cardformInputs p {
+  font-family: 'League Spartan', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 10px;
+}
+
+.cardformInputs input {
+  width: 364px;
+  height: 60px;
+  background: #000000;
+  border-radius: 20px;
+  border: none;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  padding: 0 15px;
+  margin-bottom: 1px;
+}
+
+.cardformInputs button {
+  width: 183.08px;
+  height: 57.78px;
+  background: linear-gradient(180deg, #7332B4 0%, #32164E 100%);
+  border: none;
+  border-radius: 20px;
+  color: #ffffff;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  filter: drop-shadow(0px 4px 4px rgba(187, 14, 217, 0.25));
+  transform: rotate(0.17deg);
+  margin-top: 20px;
+}
+
+/*Account Privacy */
+/* Group 5 */
+.cardAccount {
+  position: absolute;
+  width: 511px;
+  height: 99.04px;
+  background: #222020;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* CardAccountTitle */
+.CardAccountTiltle {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+
+.CardAccountTiltle i {
+  margin-right: 10px;
+}
+
+/* CardAccountText */
+.cardAccountText {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardAccountText p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  color: #FFFFFF;
+}
+
+/* Lock Icon */
+.lock {
+  position: absolute;
+  width: 37px;
+  height: 42px;
+  left: 343px;
+  top: 500px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Rectangle 39 */
+.toggle-background {
+  position: relative;
+  width: 71px;
+  height: 30px;
+  background: rgba(103, 103, 103, 0.25);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+/* Toggle Switch (Ellipse 1) */
+.toggle {
+  position: relative;
+  width: 28px;
+  height: 24px;
+  background: linear-gradient(180deg, #7332B4 0%, #32164E 100%);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* When toggled */
+.toggle.toggled {
+  transform: translateX(41px);
+}
+
+@media (max-width:600px) {
+  .rectangle-202 {
+    margin-top: 120px;
+  }
+}

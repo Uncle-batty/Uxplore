@@ -92,7 +92,7 @@ namespace UxploreAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User_Interactions>> PostUser_Interactions(User_Interactions user_Interactions)
         {
-            
+            user_Interactions.Interaction_Date = DateTime.Now;
             _context.User_Interactions.Add(user_Interactions);
             await _context.SaveChangesAsync();
 

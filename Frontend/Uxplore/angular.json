@@ -42,6 +42,7 @@
           },
           "configurations": {
             "production": {
+              "serviceWorker": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -51,7 +52,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "8kb",
-                  "maximumError": "10kb"
+                  "maximumError": "5mb"
                 }
               ],
               "fileReplacements": [

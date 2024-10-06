@@ -330,3 +330,14 @@ button:hover {
     margin-top: 2%;
   }
 }
+
+.col img,
+.ourTeam img,
+.quote-section img {
+  margin-left: 2%;
+  width: 40%;
+  max-height: 100%;
+  object-fit: cover;
+  /* Ensures the image maintains its aspect ratio and fills the container */
+  border-radius: 10px;
+}

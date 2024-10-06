@@ -31,10 +31,11 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           app_location: "./Frontend/Uxplore" 
-          app_build_command: 'npm install --force'
+          app_build_command: 'ng build --force'
           api_location: "" # Api source code path - optional
           output_location: "www" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+          skip_api_build: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -46,13 +46,13 @@
     "g": "^2.0.1",
     "https-browserify": "^1.0.0",
     "ionicons": "^7.4.0",
-    "ng-apexcharts": "^1.6.0",
     "ngx-image-cropper": "^8.0.0",
     "os-browserify": "^0.3.0",
     "rxjs": "~7.8.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tslib": "^2.3.0",
+    "Uxplore": "file:",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {

@@ -1,0 +1,84 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 380px;
+  padding: 5px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #181818;
+  border-style: solid;
+  border-width: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  text-decoration: underline;
+  font-size: medium;
+}
+
+.section {
+
+      flex: 1;
+        /* Make sections grow and shrink as needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 0;
+        /* Prevent section from growing based on content */
+        max-height: 100%;
+        /* Ensure section height doesn't exceed allocated space */
+}
+
+.pillContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+    padding-left: 15px;
+  padding-right: 15px;
+}
+
+.pill {
+  background-color: ghostwhite;
+  color: #181818;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+.topSection{
+
+  height: 150px;
+}
+.middleSection{
+  margin-top: 50px;
+}
+
+.image {
+  border-radius: 1rem;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  /* Image takes full height of its section */
+  background-color: rgb(215, 215, 215);
+}
+
+@media screen and (max-width: 480px) {
+  // .card {
+  //   width: 180px;
+  //   height: 350px;
+  // }
+}
+
+.clickable {
+  cursor: pointer;
+}

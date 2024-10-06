@@ -1,0 +1,381 @@
+.main-content {
+  padding-right: 20px;
+    height: 100%;
+}
+@media (min-width: 960px) {
+  .main-content {
+    margin-left: 17%;
+    /* Adjust margin-left to 15% */
+    width: 83%;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* Style for the grayed-out input field */
+.grayed-out {
+  background-color: #f0f0f0;
+  /* Light gray background */
+  color: #a0a0a0;
+  /* Gray text */
+  cursor: not-allowed;
+  /* Change cursor to indicate the field is not editable */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.social-icons ion-icon {
+  font-size: 2rem;
+  color: #cacaca;
+  cursor: pointer;
+}
+
+.social-icons ion-icon:hover {
+  color: #7332B4
+  /* Change color on hover */
+}
+.descrip{
+  display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.buttonprimary{
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  font-size: 20px;
+  margin-left:30%;
+}
+
+.activity-details {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px;
+  border-radius: 10px;
+  color: white;
+}
+
+.activity-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.activity-info {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-meta p {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.activity-meta ion-icon {
+  margin-right: 8px;
+}
+
+.activity-rating {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.activity-rating ion-icon {
+  color: gold;
+}
+
+.activity-title {
+  font-size: 24px;
+  margin: 8px 0;
+  margin-right: 2rem;
+}
+
+.activity-description {
+  font-size: 16px;
+  margin: 8px 0;
+  width: 50%;
+}
+
+.book-now-button {
+  margin-top: 16px;
+}
+
+.deals-section {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.deals-section h3 {
+  margin-bottom: 16px;
+  color: white;
+}
+
+ion-slides {
+  height: 200px;
+}
+
+ion-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+ion-slide p {
+  margin-top: 8px;
+  color: white;
+}
+
+.comments-section {
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 10rem;
+}
+
+.comments-section h3 {
+  margin-bottom: 16px;
+  color: white;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 10px;
+
+}
+
+.comment ion-icon {
+  margin-right: 16px;
+  font-size: 36px;
+}
+
+.comment p {
+  flex: 1;
+  margin: 0;
+}
+.slides{
+  display: flex;
+    margin-bottom: 7rem;
+}
+
+.comment-rating ion-icon {
+  color: gold;
+  font-size: 24px;
+  margin-right: 4px;
+}
+
+.addrateing ion-icon {
+  font-size: 1rem;
+  align-self:flex-end;
+}
+@media (max-width: 767px) {
+
+  .activity-description {
+    width: 100%;
+  }
+
+  .descrip {
+    flex-direction: column;
+  }
+  .buttonprimary {
+    margin-left: 0%;
+
+}
+    .main-content {
+      margin-bottom: 20%;
+    }
+    .slides{
+      margin-bottom: 0%;
+      height: auto;
+
+    }
+    .deals-section{
+      margin-top: 2rem;
+    }
+    .comments-section{
+      margin-top: 0rem;
+      margin-bottom: 5rem;
+    }
+
+
+
+}
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: relative;
+  height: 70vh;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sign-in-btn {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+}
+
+
+
+
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 37%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+
+@media (max-width: 950px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 20%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+
+@media (max-width:400px) {
+  .modal {
+    height: auto;
+  }
+}
+ion-content {
+  --ion-background-color: #ffffff00;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+.stars {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+
+  ion-icon {
+      font-size: 2rem;
+      color: gold;
+      margin-right: 0.5rem;
+    }
+}
+

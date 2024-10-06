@@ -1,0 +1,300 @@
+@import url('https://fonts.cdnfonts.com/css/league-spartan');
+
+.main-content {
+  padding-right: 20px;
+  background-image: url("../../../assets/UXPloreLanding.jpg");
+  height: 100vh;
+  background-size: cover;
+  font-family: 'League Spartan';
+  display: flex;
+  flex-direction: column;
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10vh;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.19);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+  img {
+    width: 25vh;
+    height: 10vh;
+    cursor: pointer;
+  }
+
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px; // Space between buttons
+  }
+}
+
+.nav-button {
+  color: #fff;
+  padding-inline: 20px;
+  font-size: 2.5vh;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.Contentbox {
+  height: 100vh;
+  width: 50%;
+  padding: 40px;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  h1 {
+    font-weight: 400;
+    font-size: 7vh;
+  }
+
+  h6 {
+    font-size: 4vh;
+  }
+}
+
+.button {
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  font-size: 2.5vh;
+  cursor: pointer;
+}
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -100%;
+  margin-right: 5%;
+  height: 70vh;
+  transition: right 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  right: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+.forgot-password {
+  color: #fff;
+  margin-top: 10px;
+  text-decoration: none;
+  text-align: right;
+}
+
+.separator {
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
+
+.sign-in-btn {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+  align-self: center;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .Contentbox {
+    width: 90%;
+    padding: 10px;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 5vh;
+    }
+
+    h6 {
+      font-size: 3vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 950px) {
+  .Contentbox {
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 4.5vh;
+    }
+
+    h6 {
+      font-size: 2.5vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .navBar img {
+    width: 10vh;
+    height: 4vh;
+  }
+
+  .nav-button {
+    font-size: 2vh;
+    padding-inline: 10px;
+  }
+
+  .button,
+  .sign-in-btn {
+    width: 18vh;
+    height: 6vh;
+    font-size: 2vh;
+  }
+
+  .modal {
+    width: 95%;
+    height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .Contentbox {
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 4vh;
+    }
+
+    h6 {
+      font-size: 2vh;
+    }
+  }
+
+  .button,
+  .sign-in-btn {
+    width: 16vh;
+    height: 5vh;
+    font-size: 1.8vh;
+  }
+}
+
+/* Add this to your component's stylesheet (e.g., landing.component.scss) */
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+
+#passworderror,
+#emailerror {
+  visibility: hidden;
+}

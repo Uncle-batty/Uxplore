@@ -1,0 +1,87 @@
+<div class="side-nav" *ngIf="(isMobile$ | async) === false">
+  <div class="logo">
+    <img id="img" src="../../assets/Logo.png">
+  </div>
+  <div *ngIf="!isBusinessUser" class="links">
+    <button (click)="navpage('/user/home')" ><ion-icon size="large" name="home-outline"></ion-icon>       Home</button>
+    <button (click)="navpage('/user/explore')" ><ion-icon size="large" name="search-outline"></ion-icon>     Explore</button>
+    <button (click)="navpage('/user/saved')" ><ion-icon size="large"  name="bookmark-outline"></ion-icon>   Saved</button>
+    <button (click)="navpage('/user/calender')" ><ion-icon size="large" name="calendar-clear-outline"></ion-icon>     Calender</button>
+    <button (click)="openModal()"  ><ion-icon size="large" name="game-controller-outline"></ion-icon>    Game</button>
+    <button (click)="openNotificationsModal() " ><ion-icon size="large" name="notifications-outline"></ion-icon>    Notifications</button>
+    <button (click)="navpage('/user/profile')" ><ion-icon size="large" name="search"></ion-icon>       Profile</button>
+    <button (click)="logout()"><ion-icon size="large" name="log-out-outline"></ion-icon> Log-out</button>
+  </div>
+  <div *ngIf="isBusinessUser" class="links">
+    <button (click)="navpage('/business/businessDashboard')"><ion-icon size="large" name="bar-chart-outline"></ion-icon> Dashboard</button>
+    <button (click)="navpage('/business/AddEvent')"><ion-icon size="large" name="map-outline"></ion-icon>
+      Add Event</button>
+    <button (click)="navpage('/business/businessAdvert')"><ion-icon size="large" name="megaphone-outline"></ion-icon> Adverts</button>
+    <button (click)="navpage('/business/businessCalender')"><ion-icon size="large" name="calendar-clear-outline"></ion-icon>Calender</button>
+    <button (click)="openNotificationsModal() "><ion-icon size="large" name="notifications-outline"></ion-icon>Notifications</button>
+    <button (click)="navpage('/business/businessProfile')"><ion-icon size="large" name="search"></ion-icon> Profile</button>
+    <button (click)="logout()"><ion-icon size="large" name="log-out-outline"></ion-icon> Log-out</button>
+  </div>
+
+</div>
+
+<!-- Game Model -->
+<div class="modal-overlay" [ngClass]="{'show': isGameModelOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isGameModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div *ngIf="!foundListing" class="modal-content">
+      <h2>Select Your Feeling</h2>
+      <div class="checkboxes">
+        <div class="row" *ngFor="let feeling of feelings; let i = index">
+          <label class="container">
+            {{ feeling.name }}
+            <input class="checkmark" type="checkbox" [checked]="selectedFeeling === feeling.name"
+              (change)="toggleFeeling(feeling)">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="sign-in-btn" (click)="submitFeelings()">Submit</button>
+    </div>
+    <div *ngIf="foundListing" class="modal-content">
+      <div class="event container">
+        <app-event-card [event]="selectedEvent"></app-event-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Notifications model-->
+<div class="modal-overlay" [ngClass]="{'show': isNotificationsModalOpen}" (click)="closeNotificationsModal()">
+  <div class="modal" [ngClass]="{'show': isNotificationsModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeNotificationsModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Notifications</h2>
+      <ion-card class="notification-card" *ngFor="let notification of notifications" color="light">
+        <ion-card-header>
+          <div>
+            <ion-label>
+              <ion-card-title class="start">
+                <ion-icon class="" name="notifications-outline"></ion-icon>
+                <strong>{{ notification.username }}</strong> {{ notification.activity }}<br>
+                <ion-card-subtitle class="timestamp">{{ notification.timestamp }}</ion-card-subtitle>
+              </ion-card-title>
+            </ion-label>
+          </div>
+        </ion-card-header>
+      </ion-card>
+      <div>
+        <button class="view-all-button" (click)="navpage('/user/notifications')"> View All</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,495 @@
+.main-content {
+  margin-left: 17%;
+  /* Adjust margin-left to 15% */
+  width: 83%;
+
+  /* Adjust width to 70% */
+
+  /* Float content to the right */
+
+  overflow-y: scroll;
+
+  height: auto;
+}
+
+h1{
+  font-family: 'League Spartan';
+  font-size: 45px;
+  line-height: 46px;
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: 400;
+  text-decoration: underline ;
+}
+.wrapper{
+  display: flex;
+  padding:15px;
+  width: 100%;
+  min-height: 20vh;
+  height: 370px;
+}
+.filewrapper{
+  border: 1px solid #ffffff;
+}
+
+.box{
+  max-width: 800px;
+  background: #121212;
+  padding: 30px;
+  width: 100%;
+  border-radius:10px;
+  border: #999 solid 2px;
+}
+.upload-area-title{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+
+}
+.ai-title {
+  text-align: start;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 4%;
+  margin-top: 40px;
+
+}
+.uploadlabel{
+  width: 100%;
+  min-height: 100px;
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed white;
+  cursor: pointer;
+}
+.uploadlabel span{
+  font-size: 70px;
+  color: white;
+}
+.uploadlabel p{
+  color: gray;
+  font-size: 20px;
+  font-weight: 800;
+}
+.uploaded{
+  margin: 30px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color:gray;
+}
+.showfilebox{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 10px 15px;
+  box-shadow: #000000 0px 0px 0px 1px inset;
+  border: 1px solid #ffffff;
+}
+.showfilebox .left{
+  display:flex;
+  align-items : center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+}
+.filetype{
+  background: white;
+  color: black;
+  padding: 5px 15px;
+  font-size: 20px;
+  text-transform: capitalize;
+  font-weight: 700;
+  border-radius: 3px;
+}
+.left h3{
+  font-weight: 600;
+  font-size: 18px;
+  color: gray;
+  margin: 0;
+}
+.right span{
+  background: white;
+  color: gray;
+  width: 25px;
+  height: 25px;
+  font-size: 25px;
+  line-height: 25px;
+  display: inline-block;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.description-textarea {
+  flex-grow: 1;
+  border: #999 solid 2px;
+  color: #fff;
+  padding: 10px;
+  margin-top: 15px;
+  margin-left: 4%;
+  resize: none;
+  outline: none;
+  height: 360px;
+  font-size: 16px;
+  font-family: inherit;
+  width: 500px;
+  background-color: #121212;
+  border-radius:10px;
+}
+
+.description-textarea::placeholder {
+  color: #999;
+}
+
+.emoji-button-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.emoji-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+ngx-emoji-mart {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+}
+
+
+
+label {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.input-container {
+  display: flex;
+  margin-bottom: 10px;
+
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: #999 solid 2px;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  width: 600px;
+  height: 50px;
+  margin-left: 2%;
+  border-radius:50px 0 0 50px;
+
+}
+
+button {
+  background-color: #555;
+  color: #fff;
+  border: #999 solid 2px;
+  color: white;
+  border-radius: 0 50px 50px 0;
+  padding: 10px 15px;
+  cursor: pointer;
+  outline: none;
+
+}
+
+button:hover {
+  background-color: #777;
+}
+
+textarea {
+  flex-grow: 1;
+  border: #999 solid 2px;
+  color: #fff;
+  padding: 10px;
+  margin-top: 15px;
+  margin-left: 2%;
+  resize: none;
+  outline: none;
+  height: 300px;
+  font-size: 16px;
+  font-family: inherit;
+  width: 500px;
+  background-color: #121212;
+  border-radius:10px;
+}
+
+.btn-upload-ad{
+  //background-color: #555;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  //color: #fff;
+  //border: #999 solid 2px;
+  border-radius: 15px;
+  padding: 10px 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  outline: none;
+  height: 8%;
+  width: 10%;
+  font-weight: bold;
+
+}
+.btn-upload-ad:hover{
+  background-color: #b980f3;
+}
+
+.event-select-container{
+  padding: 25px;
+}
+
+.event-select {
+  width: 100;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  border-radius: 5%;
+}
+
+.button {
+  border-radius: 10px;
+  width: 22vh;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  font-size: 2.5vh;
+  cursor: pointer;
+}
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -100%;
+  margin-right: 5%;
+  height: 70vh;
+  transition: right 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  right: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.inputscon {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .Contentbox {
+    width: 90%;
+    padding: 10px;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 5vh;
+    }
+
+    h6 {
+      font-size: 3vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 950px) {
+  .Contentbox {
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+      font-size: 4.5vh;
+    }
+
+    h6 {
+      font-size: 2.5vh;
+    }
+  }
+
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0;
+    transform: translateY(0);
+  }
+}
+
+
+/* From Uiverse.io by PriyanshuGupta28 */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #7332b4;
+  background-image: linear-gradient(90deg, #7332b4 , #967fac);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+
+.ad-Popup-Image-Container {
+  overflow: hidden;
+}
+
+.ad-Popup-Image {
+  object-fit: cover;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.ad-Image  {
+  object-fit: cover;
+  max-height: 400px;
+  max-width: 300px;
+}
+
+
+/* From Uiverse.io by Yaya12085 */
+.radio-inputs {
+  color: #fff;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+  background-color: #272727;
+  box-sizing: border-box;
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+  padding: 0.25rem;
+  width: 100%;
+  font-size: 14px;
+}
+
+.radio-inputs .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.radio-inputs .radio input {
+  display: none;
+}
+
+.radio-inputs .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: .5rem 0;
+  color: rgb(255, 255, 255);
+  transition: all .15s ease-in-out;
+}
+
+.radio-inputs .radio input:checked+.name {
+  background-color: #616161;
+  font-weight: 600;
+}

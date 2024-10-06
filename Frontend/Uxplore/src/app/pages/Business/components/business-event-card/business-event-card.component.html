@@ -1,0 +1,8 @@
+<div class="card">
+    <img class="cover" *ngIf="listingImage" [src]="listingImage.image" />
+
+  <div class="card__content">
+    <p class="card__title">{{Event.name}}</p>
+    <p class="card__description" >{{Event.description}}</p>
+  </div>
+</div>

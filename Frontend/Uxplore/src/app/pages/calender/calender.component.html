@@ -1,0 +1,51 @@
+<div class="main-content container">
+  <div class="Heading">
+    <h2>{{ Month }}</h2>
+  </div>
+
+  <div class="weather-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let weather of weatherData">
+          <ion-card class="weather-card">
+            <h6>{{ weather.date | date: 'shortDate' }}</h6>
+            <p>Max: {{ weather.maxTemperature }}°C</p>
+            <p>Min: {{ weather.minTemperature }}°C</p>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid class="grid">
+    <ion-row class="header ion-align-items-center row">
+      <ion-col *ngFor="let header of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" size="1.7"
+        class="ion-align-items-center">
+        <ion-card class="card headercard">
+          <p>{{ header }}</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let week of weeks" class="ion-align-items-center row">
+      <ion-col *ngFor="let day of week" size="1.7" class="ion-align-items-center col">
+        <ion-card class="card" [ngClass]="{'highlight': isCurrentDay(day)}" (click)="openDayPopup(day)">
+          <h6 class="card-header">{{ day || '&nbsp;' }}</h6>
+          <div *ngIf="day && events[day]" class="event-list">
+            <ion-card class="attendingcard" *ngFor="let event of events[day]">{{ event }}</ion-card>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="closeModal()">
+  <div class="modal-content">
+    <h3>Events on {{ selectedDay }}</h3>
+    <div class="eventholders" *ngIf="selectedDay !== null && events[selectedDay]">
+      <ion-card class="fullcard" *ngFor="let event of events[selectedDay]">{{ event }}</ion-card>
+    </div>
+  </div>
+</ion-modal>
+

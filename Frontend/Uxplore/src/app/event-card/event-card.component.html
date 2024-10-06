@@ -1,0 +1,38 @@
+<ion-card class="card clickable" [ngStyle]="{'border-color': bgColor, 'box-shadow': boxShadow}">
+  <div class="topSection">
+    <img class="image" alt="Silhouette of mountains" [src]="event.ImageData" />
+    <ion-card-header>
+      <ion-card-title class="title">{{event.Name}}</ion-card-title>
+    </ion-card-header>
+  </div>
+
+  <div class="middleSection">
+    <div class="pillContainer">
+      <div class="pill"><ion-icon name="location-outline" color="black"></ion-icon>{{event.Location}} </div>
+      <div class="pill">R {{event.min_price}} - {{event.max_price}}</div>
+    </div>
+    <ion-card-content>
+      Times: {{event.Times}}
+      <br>
+      Safety Rating: {{event.SafetyRating}}
+    </ion-card-content>
+  </div>
+
+  <div class="cardFooter">
+      <ion-row *ngIf="!showNoRating">
+        <div >{{event.Rating}}</div>
+        <div style="margin-left: 5px;"> <ion-icon *ngFor="let star of getStars()" name="star"></ion-icon></div>
+      </ion-row>
+
+      <ion-row *ngIf="showNoRating">
+        <div>No rating available</div>
+      </ion-row>
+      <ion-row >
+        <div>
+        <ion-icon name={{savedImage}}></ion-icon>
+
+        </div>
+        <ion-icon style="margin-left: 5px;" name="share-social"></ion-icon>
+      </ion-row>
+    </div>
+</ion-card>

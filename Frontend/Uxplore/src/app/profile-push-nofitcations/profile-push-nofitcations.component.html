@@ -1,0 +1,45 @@
+<div class="rectangle-202">
+  <div class="section account-suggestions">
+    <div class="title">Account suggestions</div>
+    <div class="item">
+      <input type="radio" id="account-off" name="account" class="circle"
+        [checked]="(userSettings$ | async)?.account_Suggestions === 0"
+        (change)="updateSettings('account_Suggestions', 0)">
+      <label for="account-off" class="status">Off</label>
+    </div>
+    <div class="item">
+      <input type="radio" id="account-on" name="account" class="circle"
+        [checked]="(userSettings$ | async)?.account_Suggestions === 1"
+        (change)="updateSettings('account_Suggestions', 1)">
+      <label for="account-on" class="status">On</label>
+    </div>
+  </div>
+
+  <div class="section trending-places">
+    <div class="title">Trending Places</div>
+    <div class="item">
+      <input type="radio" id="places-off" name="places" class="circle"
+        [checked]="(userSettings$ | async)?.trending_Places === 0" (change)="updateSettings('trending_Places', 0)">
+      <label for="places-off" class="status">Off</label>
+    </div>
+    <div class="item">
+      <input type="radio" id="places-on" name="places" class="circle"
+        [checked]="(userSettings$ | async)?.trending_Places === 1" (change)="updateSettings('trending_Places', 1)">
+      <label for="places-on" class="status">On</label>
+    </div>
+  </div>
+
+  <div class="section reminders">
+    <div class="title">Reminders</div>
+    <div class="item">
+      <input type="radio" id="reminders-off" name="reminders" class="circle"
+        [checked]="(userSettings$ | async)?.reminders === 0" (change)="updateSettings('reminders', 0)">
+      <label for="reminders-off" class="status">Off</label>
+    </div>
+    <div class="item">
+      <input type="radio" id="reminders-on" name="reminders" class="circle"
+        [checked]="(userSettings$ | async)?.reminders === 1" (change)="updateSettings('reminders', 1)">
+      <label for="reminders-on" class="status">On</label>
+    </div>
+  </div>
+</div>

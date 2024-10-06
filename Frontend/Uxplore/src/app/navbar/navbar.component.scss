@@ -1,0 +1,263 @@
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Black with 70% opacity */
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  /* Drop shadow */
+
+  .logo {
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+  align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 15px;
+      color: white;
+      font-size: 23px;
+      display: flex;
+      align-items: center;
+      /* Align icon and text vertically */
+      gap: 10px;
+      /* Add space between icon and text */
+
+      &:hover {
+        color: #7332B4;
+      }
+    }
+  }
+}
+
+
+/* General styles for the modal overlay and modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.825);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: #0000001b;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(253, 253, 253, 0.5);
+  width: 30%;
+  padding: 20px;
+  position: relative;
+  height: 70vh;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.modal.show {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sign-in-btn {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+}
+.container {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 25px;
+  /* Adjust height to match checkmark */
+  width: 25px;
+  /* Adjust width to match checkmark */
+  top: 0;
+  left: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border: 2px solid #7332B4;
+  border-radius: 5px;
+}
+
+.checkmark:after {
+  content: "+";
+  font-size: 20px;
+  color: #7332B4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container input:checked~.checkmark:after {
+  content: "-";
+}
+
+.container input:checked~.checkmark {
+  background-color: linear-gradient(to right, #7332b4, #32164e);
+}
+
+.container:hover input~.checkmark {
+  background-color: #ccc;
+}
+
+.container:hover input~.checkmark:after {
+  color: #32164e;
+}
+
+
+/* Styles for smaller screens */
+@media (max-width: 1150px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 37%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+
+@media (max-width: 950px) {
+  .modal {
+    width: 90%;
+    height: 50vh;
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-right: 0%;
+    transform: translateY(0);
+
+    #modelbtn {
+      margin-left: 20%;
+    }
+  }
+
+  /* General styles for the modal overlay and modal */
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.935);
+  }
+}
+@media (max-width:400px)
+{
+  .modal {
+    height: auto;
+}
+}
+
+.notification-card {
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.start {
+  text-align: left;
+}
+
+.icon-container {
+  margin-right: 10px;
+}
+
+.timestamp {
+  text-align: left;
+  margin-top: 5%;
+  margin-left: 13%;
+
+}
+
+.view-all-button {
+  margin-top: 16px;
+  background-color: #6b3bd9;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}

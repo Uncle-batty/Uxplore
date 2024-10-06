@@ -1,0 +1,183 @@
+<link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+
+<div class="main-content container">
+  <div class="navBar">
+    <img (click)="navpage('/main/landing')" id="img" src="../../assets/Logo.png">
+    <nav class="nav-buttons">
+      <a (click)="navpage('/main/about')" class="nav-button">About</a>
+      <a (click)="openBusinessregModel()" class="nav-button">Are you a Business</a>
+      <a class="nav-button" (click)="openModal()">Login</a>
+    </nav>
+  </div>
+
+  <div class="Contentbox">
+    <h1>Discover and Experience <br>the hidden gems right <br>at your fingertips.</h1>
+    <h6>"We find... U Explore!"</h6>
+    <button class="button" (click)="openRegModel()" id="open-modal">SIGN UP</button>
+  </div>
+</div>
+
+<ion-toast [isOpen]="isToastOpen"
+  [message]="toastMessage" duration="5000"
+  (didDismiss)="setOpen(false)"></ion-toast>
+
+<!-- Registration Model -->
+<div class="modal-overlay" [ngClass]="{'show': isRegistrationModelOpen}" (click)="closeRegModel()">
+  <div class="modal" [ngClass]="{'show': isRegistrationModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeRegModel()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Register</h2>
+      <div class="inputscon">
+        <input class="input" placeholder="Name" type="text" [(ngModel)]="Fullname" />
+
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" />
+
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" />
+        <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Confermpassword" />
+        <button class="sign-in-btn" (click)="logregdetails()">Confirm</button>
+        <a style="text-align: center;" (click)="openModal()" class="forgot-password"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interests Model -->
+<div class="modal-overlay" [ngClass]="{'show': isInterestsModelOpen}" (click)="closeInterestsModel()">
+  <div class="modal" [ngClass]="{'show': isInterestsModelOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeInterestsModel()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>What are your Interests</h2>
+      <div class="checkboxes">
+        <div class="checkItem" *ngFor="let interest of interests; let i = index">
+          <label class="container">
+            <input class="checkmark" type="checkbox" [checked]="interest.selected" (change)="toggleInterest(interest)">
+            <span class="checkmark"></span>
+            {{ interest.name }}
+          </label>
+        </div>
+      </div>
+      <div class="inputscon">
+        <button class="sign-in-btn" (click)="submituser()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Login</h2>
+      <div class="inputscon">
+        <input class="input" placeholder="Email" type="email" [(ngModel)]="email" required />
+        <p class="error" [hidden]="!showEmailError">Please enter a valid email address</p>
+
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="password" required />
+        <p class="error" [hidden]="!showPasswordError">Please enter a valid password</p>
+
+        <a class="forgot-password" (click)="openForgotPasswordModal()">Forgot Password?</a>
+        <button class="sign-in-btn" (click)="login()">Sign In</button>
+        <a (click)="openRegModel()" style="text-align: center;" class="forgot-password">Don't have an account?</a>
+      </div>
+      <div class="separator">
+        <span>--------------------------------- OR ---------------------------------</span>
+      </div>
+      <div style="display: flex; justify-content: space-evenly; margin-top: 10px">
+        <ion-icon size="large" name="logo-google" (click)="signInWithGoogle()"></ion-icon>
+        <!-- <ion-icon name="logo-facebook" size="large" (click)="signInWithFacebook()"></ion-icon> -->
+        <ion-icon name="logo-twitter" size="large" (click)="signInWithTwitter()"></ion-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Forgot Password -->
+<div class="modal-overlay" [ngClass]="{'show': isForgotPasswordModalOpen}" (click)="closeForgotPasswordModal()">
+  <div class="modal" [ngClass]="{'show': isForgotPasswordModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeForgotPasswordModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Enter email</h2>
+      <div class="inputscon">
+        <input *ngIf="showEmailTb" class="input" placeholder="Email" type="email" [(ngModel)]="email" required />
+        <input *ngIf="showCodeTb" class="input" placeholder="Code" type="number" [(ngModel)]="userForgotPasswordCode" required />
+        <input *ngIf="showNewPasswordTb" class="input" placeholder="Enter new password" type="text" [(ngModel)]="newPassword1" required />
+        <input *ngIf="showNewPasswordTb" class="input" placeholder="Re-enter new password" type="text" [(ngModel)]="newPassword2" required />
+
+
+
+        <button *ngIf="showEmailTb" class="sign-in-btn" (click)="onForgotPasswordEmailConfirm()">Confirm Email</button>
+        <button *ngIf="showCodeTb" class="sign-in-btn" (click)="onConfirmCode()">Confirm Code</button>
+        <button *ngIf="showNewPasswordTb" class="sign-in-btn" (click)="onNewPasswordClick()">Confirm Reset Password</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Business Registration Model -->
+<div class="modal-overlay" [ngClass]="{'show': isBusinessRegOpen}" (click)="closeBusinessRegModel()">
+  <div class="modal" [ngClass]="{'show': isBusinessRegOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeBusinessRegModel()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Business Registration</h2>
+      <div class="inputscon">
+        <input class="input" placeholder="Owner Name" type="text" [(ngModel)]="Ownername" />
+        <input class="input" placeholder="Business Name" type="text" [(ngModel)]="Businessname" />
+        <input class="input" placeholder="Business Email" type="email" [(ngModel)]="Businessemail" />
+        <input class="input" placeholder="Business Cell" type="tel" [(ngModel)]="Businesscell" />
+        <input class="input" placeholder="Business Description" type="text" [(ngModel)]="Businessdescription" />
+        <input class="input" placeholder="Location" type="text" [(ngModel)]="Location" />
+        <!-- <input class="input" placeholder="Operating Hours" type="time" [(ngModel)]="Operatinghours" />-->
+        <label style="text-align: start; margin-top: 3%; margin-left: 2.5%;">Start Time</label>
+        <input class="input-time" placeholder="start-time" type="time" id="start-time" name="start-time" required />
+
+        <label style="text-align: start; margin-top: 3%; margin-left: 2.5%;">End Time</label>
+        <input class="input-time" placeholder="end-time" type="time" id="end-time" name="end-time" required />
+        <!-- <input class="input" placeholder="Reservation" type="" [(ngModel)]="Reservation" /> -->
+
+        <select class="input" placeholder="Reservations allowed?" id="reservation" name="reservation" required>
+          <option value="" disabled selected style="color: gray;">Reservations allowed?</option>
+          <option value="yes" class="selectoptions">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <input class="input" placeholder="Average Spending" type="text" [(ngModel)]="Averagespending" />
+        <input class="input" placeholder="Website Link" type="url" [(ngModel)]="Websitelink" />
+
+        <input class="input" placeholder="Password" type="password" [(ngModel)]="Businesspassword" />
+        <input class="input" placeholder="Confirm Password" type="password" [(ngModel)]="Businessconfirmpassword" />
+        <label style="text-align: start; margin-top: 3%; margin-left: 2.5%;">Upload Image</label>
+        <form class="input-file">
+          <input type="file" />
+          <button class="btn-upload" type="submit">Upload</button>
+        </form>
+
+        <button class="sign-in-btn" (click)="navpage('business/business-dashboard')">confirm</button>
+        <a style="text-align: center;" (click)="openBusinessModel()" class="forgot-password"></a>
+      </div>
+      <div class="separator">
+        <span>--------------------------------- OR ---------------------------------</span>
+      </div>
+      <div style="display: flex; justify-content: space-evenly; margin-top: 10px">
+        <ion-icon size="large" name="logo-google" (click)="signInWithGoogle()"></ion-icon>
+        <ion-icon name="logo-facebook" size="large" (click)="signInWithFacebook()"></ion-icon>
+        <ion-icon name="logo-twitter" size="large" (click)="signInWithTwitter()"></ion-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This is the Business registration modal -->

@@ -1,0 +1,82 @@
+<ion-content *ngIf="!isLoading">
+  <ion-grid class="main-content">
+
+    <ion-row >
+      <app-ads-header style="width: 100%;"></app-ads-header>
+    </ion-row>
+
+
+    <h1>Upcoming Events</h1>
+
+
+  </ion-grid>
+  <ion-grid class="cardalign">
+    <ion-row>
+      <ion-col size="12" size-sm="4">
+        <ion-card class="explore-card">
+          <img src="assets/Images/CottonFest.png" />
+          <div class="gradient-overlay"></div>
+          <div class="card-title">
+            Cotton Fest
+            <ion-icon name="arrow-forward-circle-outline" class="arrow-icon"></ion-icon>
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <ion-card class="explore-card">
+          <img src="assets/Images/addrenaline.jpg" />
+          <div class="gradient-overlay"></div>
+          <div class="card-title">
+            Mountain Deck
+            <ion-icon name="arrow-forward-circle-outline" class="arrow-icon"></ion-icon>
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <ion-card class="explore-card">
+          <img src="assets/Images/Chess.jpeg" />
+          <div class="gradient-overlay"></div>
+          <div class="card-title">
+            Chess ground
+            <ion-icon name="arrow-forward-circle-outline" class="arrow-icon"></ion-icon>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <h1>Places you may like</h1>
+  </ion-grid>
+
+
+
+
+
+
+  <ion-grid class="cardalign">
+    <ion-row>
+      <app-event-card style="margin-left: 6%;" *ngFor="let item of events" [event]="item" bgColor="{{color}}"
+        (click)="navpage('/user/activity', item.Id)"></app-event-card>
+      <!-- </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12"> -->
+
+    </ion-row>
+
+
+  </ion-grid>
+
+</ion-content>
+<div *ngIf="isLoading" style="margin-left: 6%; display: flex; justify-content: center;align-items: center; width:100%; height: 100%;">
+    <div class="loader" >
+<svg viewBox="0 0 240 240" height="240" width="240" class="loader">
+  <circle stroke-linecap="round" stroke-dashoffset="-330" stroke-dasharray="0 660" stroke-width="20" stroke="#000"
+    fill="none" r="105" cy="120" cx="120" class="loader-ring loader-ring-a"></circle>
+  <circle stroke-linecap="round" stroke-dashoffset="-110" stroke-dasharray="0 220" stroke-width="20" stroke="#000"
+    fill="none" r="35" cy="120" cx="120" class="loader-ring loader-ring-b"></circle>
+  <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120"
+    cx="85" class="loader-ring loader-ring-c"></circle>
+  <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120"
+    cx="155" class="loader-ring loader-ring-d"></circle>
+</svg>
+  </div>
+</div>
+

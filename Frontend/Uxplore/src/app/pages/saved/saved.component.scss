@@ -1,0 +1,36 @@
+.main-content {
+  margin-left: 17%;
+  /* Adjust margin-left to 15% */
+  width: 83%;
+  /* Adjust width to 70% */
+  float: right;
+  /* Float content to the right */
+
+  overflow-y: scroll;
+
+  height: auto;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  height: auto;
+
+}
+
+h1{
+    text-align: center;
+}
+
+@media screen and (max-width: 960px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .cardContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+  }
+}

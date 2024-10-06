@@ -1,0 +1,168 @@
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Upload File</title>
+  <link rel="stylesheet" href="business-advert.component.scss">
+</head>
+<ion-toast [isOpen]='isToastOpen' message={{toastMessage}} duration='2000' (didDismiss)="isToastOpen = false">
+</ion-toast>
+<div class="main-content">
+  <h1 *ngIf="!editingAdvert">Create an Advert</h1>
+  <h1 *ngIf="editingAdvert">Edit/Remove Advert</h1>
+  <ion-grid>
+    <!-- Upload Image -->
+    <ion-row >
+      <ion-col size="6">
+        <div class="wrapper">
+          <div class="box">
+            <div class="input-bx">
+              <h2 *ngIf="!editingAdvert" class="upload-area-title">Upload File</h2>
+              <h2 *ngIf="editingAdvert" class="upload-area-title">Chang File</h2>
+              <form action="">
+              <input type="file" id="upload" (change)="onFileSelected($event)" accept=".jpeg, .jpg, .png, .gif" hidden>
+                <label for="upload" class="uploadlabel">
+                  <span><i class="fa fa-cloud-upload" style="font-size:36px"></i></span>
+                  <p>Click to upload</p>
+                </label>
+              </form>
+            </div>
+            <div id="filewrapper">
+              <h3 class="uploaded">Items Uploaded</h3>
+            </div>
+          </div>
+
+        </div>
+
+
+      </ion-col>
+      <ion-col>
+        <div style="display: flex; justify-content:center; align-items: center;" class="description-textarea">
+          <img class="ad-Image" src={{adImage}} alt="">
+        </div>
+      </ion-col>
+      </ion-row>
+
+        <ion-row>
+          <ion-grid>
+            <ion-row style="margin-right: 4rem">
+              <!-- Description Textarea Column -->
+              <ion-col size="6">
+                <div>
+                  <h2 class="ai-title">Create a description</h2>
+                  <textarea class="description-textarea" placeholder="Write a description for your advert..."
+                    [(ngModel)]="adDescription"></textarea>
+                </div>
+              </ion-col>
+
+              <!-- AI Generator Column -->
+              <ion-col size="5">
+                <div>
+                  <h2 class="ai-title">....or...  Use AI for ideas</h2>
+                  <div class="input-container">
+                    <input type="text" [(ngModel)]="aiInput" id="ai-ideas-input"
+                      placeholder="Write a description of what you want..." />
+                    <button id="open-loading" (click)="generateContent()">&#x27A4;</button>
+                    <ion-loading trigger="open-loading" message="Loading..." [duration]="5000" spinner="circles"></ion-loading>
+                  </div>
+                  <textarea style="margin-right: 4rem;" lass="description-textarea" [(ngModel)]="aiOutput"
+                    readonly>
+                    <ion-loading trigger="open-loading" message="Dismissing after 3 seconds..." duration="3000"></ion-loading></textarea>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+
+          <ion-row style="width: 100%; justify-self:start">
+            <ion-col style="width: 100%">
+              <button *ngIf="!editingAdvert" style="width: 80%; height: 60px;" id="Create Advert" (click)="openBusinessEventsModal()" class="btn-upload-ad">Upload Advert</button>
+              <button *ngIf="editingAdvert" style="width: 80%; height: 60px;" id="Create Advert" (click)="openBusinessEventsModal()" class="btn-upload-ad">Submit changes</button>
+            </ion-col >
+            <ion-col style="width: 100%">
+              <button *ngIf="!editingAdvert" style="width: 80%; height: 60px;" id="Load Credits" (click)="openCreditsModal()" class="btn-upload-ad">Load Credits</button>
+              <button *ngIf="editingAdvert" style="width: 80%; height: 60px;" id="Load Credits" (click)="onDeleteAdvert()" class="btn-upload-ad">Delete Advert</button>
+            </ion-col>
+            <ion-col style="width: 100%">
+              <button *ngIf="editingAdvert" style="width: 80%; height: 60px;" id="Edit Ads" (click)="onStopEditing()" class="btn-upload-ad">Stop Editing</button>
+              <button *ngIf="!editingAdvert" style="width: 80%; height: 60px;" id="Edit Ads" (click)="openModal()" class="btn-upload-ad">Edit/Remove Ads</button>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+<!--       </ion-col>
+ -->
+  </ion-grid>
+</div>
+
+
+<!-- All ads model -->
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+  <div class="modal" [ngClass]="{'show': isModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-content ad-Popup-Image-Container">
+      <img class="ad-Popup-Image" (click)="onAdvertClick(ad)" *ngFor="let ad of allBusinessAdverts" src={{ad.image_File}} alt="" >
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Credits Model -->
+<div class="modal-overlay" [ngClass]="{'show': isCreditsModalOpen}" (click)="closeCreditsModal()">
+  <div class="modal" [ngClass]="{'show': isCreditsModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeCreditsModal()">X</button>
+    </div>
+    <div class="modal-content">
+      <h2>Load Credits</h2>
+      <div class="inputscon">
+        <input id="myRange" class="slider" [(ngModel)]="credits" max="200" min="0" type="range"  >
+        <p>Credits: {{credits}}</p>
+        <h4>1 Credit : R 1 </h4>
+        <p>Ads on Home Screen: R 2 per day</p>
+        <p>Ads on Event Page: R 1 per day</p>
+      </div>
+
+      <button id="Upload credits" style="width: 80%; height: 60px;" (click)="creditsCheckout()" class="btn-upload-ad">Confirm credits</button>
+    </div>
+  </div>
+</div>
+
+<!-- All Events -->
+<div class="modal-overlay" [ngClass]="{'show': isEventsModalOpen}" (click)="closeBusinessEventsModal()">
+  <div class="modal" [ngClass]="{'show': isEventsModalOpen}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <button class="close-btn" (click)="closeBusinessEventsModal()">X</button>
+    </div>
+    <div class="modal-content ad-Popup-Image-Container">
+      <h3>Select a Event it's for</h3>
+      <button *ngIf="!editingAdvert" style="width: 80%; height: 60px;" id="Create Advert" (click)="createAdvert()"
+        class="btn-upload-ad">Upload Advert</button>
+      <button *ngIf="editingAdvert" style="width: 80%; height: 60px;" id="Create Advert" (click)="onUpdateAdvert()"
+        class="btn-upload-ad">Submit changes</button>
+        <div class="radio-inputs">
+          <label class="radio">
+            <input type="radio" name="radio" (click)="onTierSelect(selectedTier)" checked="" value="Home" [(ngModel)]="selectedTier">
+            <span class="name">On Home Page</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="radio" (click)="onTierSelect(selectedTier)" value="Event" [(ngModel)]="selectedTier">
+            <span class="name">On Your Event Page</span>
+          </label>
+
+
+        </div>
+        <div style="padding-left: 3rem;">
+
+          <app-business-event-card *ngFor="let event of allBusinessListings" [Event]="event" ></app-business-event-card>
+        </div>
+
+
+
+    </div>
+  </div>
+</div>

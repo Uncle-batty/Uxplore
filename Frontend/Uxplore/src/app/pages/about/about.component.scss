@@ -1,0 +1,332 @@
+@import url('https://fonts.cdnfonts.com/css/league-spartan');
+
+.main-content {
+
+  font-family: 'League Spartan';
+  height: auto;
+  overflow: auto;
+  background-color: #131313;
+  background-image: linear-gradient(326deg, rgba(236, 236, 236, 0.04) 0%, rgba(236, 236, 236, 0.04) 6%, rgba(157, 157, 157, 0.04) 6%, rgba(157, 157, 157, 0.04) 29%, rgba(77, 77, 77, 0.04) 29%, rgba(77, 77, 77, 0.04) 100%), linear-gradient(164deg, rgba(236, 236, 236, 0.04) 0%, rgba(236, 236, 236, 0.04) 36%, rgba(157, 157, 157, 0.04) 36%, rgba(157, 157, 157, 0.04) 61%, rgba(77, 77, 77, 0.04) 61%, rgba(77, 77, 77, 0.04) 100%), linear-gradient(336deg, rgba(236, 236, 236, 0.04) 0%, rgba(236, 236, 236, 0.04) 64%, rgba(157, 157, 157, 0.04) 64%, rgba(157, 157, 157, 0.04) 69%, rgba(77, 77, 77, 0.04) 69%, rgba(77, 77, 77, 0.04) 100%), linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0));
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10vh;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.19);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+  img {
+    width: 25vh;
+    height: 10vh;
+    cursor: pointer;
+  }
+
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px; // Space between buttons
+  }
+}
+
+.nav-button {
+  color: #fff;
+  padding-inline: 20px;
+  font-size: 2.5vh;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.quote-section {
+    background-image: url("../../../assets/UXPloreLanding.jpg");
+      background-size: cover;
+  height: 100vh;
+ align-content: center;
+ align-self: center;
+ justify-content: center;
+ justify-items: center;
+  text-align: center;
+  padding: 3%;
+}
+
+.quote {
+  h2 {
+    font-size: 10vh;
+  }
+font-family: 'League Spartan';
+font-size: 6vh;
+align-self: center;
+}
+
+
+@media (max-width: 1150px) {
+  .quote-section {
+     padding-inline: 2%;
+    }
+  .quote {
+      h2 {
+        font-size: 6vh;
+      }
+
+      font-family: 'League Spartan';
+      font-size: 2vh;
+      align-self: center;
+    }
+}
+.what-we-do-section {
+  height: 85vh;
+  padding-inline: 3%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.col {
+  width: 100%;
+  /* Each column takes full width */
+  height: 28vh;
+  /* Each row takes about 33% of the viewport height */
+  display: flex;
+  align-items: center;
+  margin-top: 2%;
+  background-color: rgba(0, 0, 0, 0.408);
+    border: 2px solid rgba(255, 255, 255, 0.19);
+    box-shadow: 0 0 20px rgba(62, 62, 62, 0.5);
+    border-radius: 10px;
+}
+
+.col img {
+  margin-left: 2%;
+  width: 35%;
+  /* Image takes about 30% of the column width */
+  max-height: 90%;
+  /* Ensure the image doesn't exceed column height */
+}
+
+.des {
+  width: 55%;
+  /* Text takes about 70% of the column width */
+  margin-left: 10px;
+  /* Add some space between image and text */
+  font-size: 3vh;
+}
+@media (max-width: 1200px) {
+  .des {
+    margin-left: 10px;
+    /* Add some space between image and text */
+    font-size: 2.5vh;
+  }
+}
+@media (max-width: 1000px) {
+  .des {
+    margin-left: 10px;
+    /* Add some space between image and text */
+    font-size: 2vh;
+  }
+}
+@media (max-width: 600px) {
+  .des {
+      margin-left: 10px;
+      /* Add some space between image and text */
+      font-size: 1.5vh;
+    }
+}
+.ourTeam {
+  border: 3px solid rgba(255, 255, 255, 0.414);
+    box-shadow: 0 0 20px rgba(62, 62, 62, 0.5);
+  margin-top: 10%;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  padding-inline: 2%;
+  border-radius: 10px;
+  img {
+    padding: 20px;
+    height: 90%;
+    width: 50%;
+  }
+
+  .des {
+    margin-left: 5%;
+    width: 35%;
+  }
+  h2 {
+    font-size: 6vh;
+    color:  #ffffff;
+  }
+  p {
+    color: #c0c0c0;
+    font-size: 4vh;
+  }
+}
+
+
+@media (max-width: 1150px) {
+  .ourTeam {
+    border: 3px solid rgba(255, 255, 255, 0.414);
+    box-shadow: 0 0 20px rgba(62, 62, 62, 0.5);
+    margin-top: 10%;
+    height: auto;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    /* Add display flex to make items flex items */
+    flex-direction: column;
+    /* Stack items vertically */
+
+
+    img {
+      padding: 20px;
+      height: 90%;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+
+    .des {
+      margin-left: 5%;
+      width: 90%;
+    }
+
+    h2 {
+      font-size: 4vh;
+      color: #ffffff;
+      font-weight: 400;
+    }
+
+    p {
+      color: #c0c0c0;
+      font-size: 2vh;
+    }
+  }
+
+}
+
+/* form section css */
+.contact-section {
+  text-align: center;
+  padding: 20px;
+
+}
+
+@media (max-width: 768px) {
+  .navBar img {
+    width: 10vh;
+    height: 4vh;
+  }
+
+  .nav-button {
+    font-size: 2vh;
+    padding-inline: 10px;
+  }
+
+  .button,
+  .sign-in-btn {
+    width: 18vh;
+    height: 6vh;
+    font-size: 2vh;
+  }
+
+  .modal {
+    width: 95%;
+    height: 60vh;
+  }
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.image-container {
+  width: 40%;
+  margin-right: 20px;
+}
+
+.image-container img {
+  width: 100%;
+}
+
+.form {
+  width: 60%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input,
+select,
+textarea {
+  color: #fff;
+  border: 2px solid gray;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 5px;
+  background: transparent;
+}
+
+button {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 10px;
+  width: 50%;
+  height: 7vh;
+  background: linear-gradient(to right, #7332b4, #32164e);
+  border: 4px solid #7332B4;
+  color: white;
+  cursor: pointer;
+  align-self: center;
+}
+
+button:hover {
+  background-color: #2e2a2f;
+}
+
+/* Responsive Styles */
+@media (max-width: 1150px) {
+  .contact-section {
+    padding-inline: 2%;
+  }
+
+  .form-container {
+    flex-direction: column;
+  }
+
+  .image-container {
+    width: 80%;
+    margin: 0 auto 20px;
+  }
+
+  .form {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  input,
+  select,
+  textarea {
+    margin-top: 2%;
+  }
+}
